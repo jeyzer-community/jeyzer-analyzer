@@ -1,0 +1,17 @@
+# ignore maven build directory
+**/target/
+# ignore maven build directory
+**/target-prod/
+# ignore gradle settings directory
+**/.gradle/
+# ignore gradle build directory
+**/build/
+# ignore Excel temp resources
+**/~$*.xlsx
+# ignore Sonar settings
+analyzer/.settings/org.sonar.ide.eclipse.core.prefs
+# ignore private configurations
+analyzer/src/main/config/**/*.private.xml
+# ignore AWS configurations
+web/release/tomcat/src/main/scripts/bin/setenv-portal-aws.sh
+web/release/tomcat/src/main/config/server-aws.xml
