@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.jeyzer.web</groupId>
+    <artifactId>jeyzer-web</artifactId>
+    <name>Jeyzer Web</name>
+    <version>3.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+	<url>https://jeyzer.org</url>
+    <description>The Jeyzer Web Analyzer project</description>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
+        <vaadin.version>13.0.11</vaadin.version>
+    </properties>
+
+    <repositories>
+        <!-- Repository used by many Vaadin add-ons -->
+        <repository>
+             <id>Vaadin Directory</id>
+             <url>http://maven.vaadin.com/vaadin-addons</url>
+        </repository>
+    </repositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-bom</artifactId>
+                <type>pom</type>
+                <scope>import</scope>
+                <version>${vaadin.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-core</artifactId>
+        </dependency>
+        
+        <dependency>
+    		<groupId>com.github.juchar</groupId>
+    		<artifactId>color-picker-field-flow</artifactId>
+    		<version>1.0.0</version>
+		</dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Jetty plugin for easy testing without a server -->
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.4.11.v20180605</version>
+                <configuration>
+                    <scanIntervalSeconds>1</scanIntervalSeconds>
+                </configuration>
+            </plugin>
+			<!-- Required. Must override any Vaadin one that makes it failing otherwise -->
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.6.0.1398</version>
+			</plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>productionMode</id>
+
+            <dependencies>
+                
+				<dependency>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>flow-server-production-mode</artifactId>
+                </dependency>
+				
+				<!-- Moved to production mode to let Eclipse using the Jeyzer-Analyzer project for direct debugging 
+				      otherwise Eclipse will load the Jeyzer-Analyzer snapshot jar from the Maven REPO, 
+					  which requires mvn project rebuild on every change and prevents from easy debugging -->
+				<dependency>
+					<groupId>org.jeyzer</groupId>
+					<artifactId>jeyzer-analyzer</artifactId>
+					<version>${project.version}</version>
+					<exclusions>
+						<!-- Exclude Proguard libraries as it is GPL -->
+						<exclusion>
+							<groupId>net.sf.proguard</groupId>
+							<artifactId>proguard-base</artifactId>
+						</exclusion>
+						<exclusion>
+							<groupId>net.sf.proguard</groupId>
+							<artifactId>proguard-retrace</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+				
+            </dependencies>
+
+            <build>
+				
+				<!-- Do not mix the Eclipse dev target directory with the production build one. -->
+				<!-- Eclipse (and Vaadin) are using the m2e-wtp plugin to deploy the Jeyzer-web war file in the Tomcat working directory -->
+				<!-- Unfortunately, the m2e-wtp plugin is not able to work with a different target directory. This remains to fix -->
+				<!-- Therefore, the production build is screwing the Eclipse one by removing the jeyzer-analyzer above entry from the m2e-wtp pom.xml: it requires to re-add manually the Jeyzer Analyzer in the Deployment Assembly panel of the Jeyzer Web project -->
+				<!-- At least the below permits to not delete the m2e-wtp directory (where a Manifest file must be kept for the Eclipse build), fixing this point : -->
+				<!-- https://stackoverflow.com/questions/14659891/m2e-wtp-error-path-target-m2e-wtp-web-resources-meta-inf-manifest-mf-no-such -->
+                <directory>target-prod</directory>
+				
+                <plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>license-maven-plugin</artifactId>
+						<version>1.14</version>
+						<configuration>
+							<licenseName>mpl-2.0</licenseName>
+        		            <licenseResolver>${project.baseUri}/../analyzer/src/license</licenseResolver>
+		                    <processStartTag>---------------------------LICENSE_START---------------------------</processStartTag>
+					        <processEndTag>----------------------------LICENSE_END----------------------------</processEndTag>
+					        <sectionDelimiter>--</sectionDelimiter>
+							<roots>
+								<root>src/main/java</root>
+							</roots>
+						</configuration>
+						<executions>
+							<execution>
+								<id>first</id>
+								<goals>
+									<goal>update-file-header</goal>
+									<goal>update-project-license</goal>
+								</goals>
+								<phase>process-sources</phase>
+							</execution>
+						</executions>			
+					</plugin>
+	                <plugin>
+	                	<!-- Workaround required as the generated image url paths in the vaadinproduction mode differ from the development one -->
+	                	<!-- In production mode, the vaadin-maven-plugin copies the frontend directory in the target directory to build the war : let's add our img files there as well -->
+					    <artifactId>maven-resources-plugin</artifactId>
+					    <version>3.0.1</version>
+					    <executions>
+					         <execution>
+					            <id>frontend</id>
+					            <phase>validate</phase>
+					            <goals>
+					               <goal>copy-resources</goal>
+					            </goals>
+					            <configuration>
+					               <outputDirectory>${basedir}/target-prod/frontend/img</outputDirectory>
+					               <resources>
+					                    <resource>
+					                        <directory>src/main/webapp/img</directory>
+					                    </resource>
+					               </resources>
+					            </configuration>
+					        </execution>
+					     </executions>
+					</plugin>
+                    <plugin>
+                    	<!-- For documentation, execute : mvn help:describe -Dplugin=com.vaadin:vaadin-maven-plugin -Ddetail -->
+                    	<!--  The frontendDirectory parameter below has no effect. Bug ? -->
+                        <groupId>com.vaadin</groupId>
+                        <artifactId>vaadin-maven-plugin</artifactId>
+                        <version>${vaadin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>copy-production-files</goal>
+                                    <goal>package-for-production</goal>
+                                </goals>
+                                <!-- 
+                                <configuration>
+            		        		<frontendDirectory>${basedir}/target-prod/frontend-template</frontendDirectory>
+    		            		</configuration>
+    		            		 -->
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+	
+    <organization>
+  		<name>Jeyzer</name>
+  		<url>https://jeyzer.org</url>
+  	</organization>
+  	<inceptionYear>2020</inceptionYear>
+	
+</project>

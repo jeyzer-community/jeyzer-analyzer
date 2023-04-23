@@ -1,0 +1,49 @@
+JEYZER_ANALYZER_GRAPH_VIEWER_ENABLED false
+JEYZER_ANALYZER_KEEP_DEOBFUSCATED_FILES true
+JEYZER_MASTER_PROFILES_DIR_ROOTS 
+C:/Dev/src/jeyzer/jeyzer-external/profiles/repository/master;C:/Dev/src/jeyzer/jeyzer-repo/demo/master;C:/Dev/src/jeyzer/jeyzer-repo/base/master;C:/Dev/src/jeyzer/jeyzer-repo/base/helper
+
+JEYZER_ANALYZER_REPLAY_ENABLED false
+JEYZER_JZR_REPORT_ENABLED true
+JEYZER_ANALYZER_TEAM_EMAIL_ENABLED false
+JEYZER_ANALYZER_CONFIG_DIR C:/Dev/src/jeyzer/jeyzer-analyzer/analyzer/src/main/config
+JEYZER_DEOBSFUCATION_CONFIG_DIR C:/Dev/data/jeyzer/deobfuscation
+JEYZER_DYNAMIC_GRAPH_MODE action_single
+JEYZER_GRAPH_REFRESH_PERIOD 3s
+JEYZER_REPOSITORY_MANAGER_URL http://localhost:8080
+JEYZER_WEB_ANALYZER_WORK_DIR C:/Dev/data/jeyzer/web/analysis
+JEYZER_EXTERNAL_REPOSITORY_SETUP_DIRECTORY C:/Dev/src/jeyzer/jeyzer-demo-shared/src/main/config/repositories;C:/Dev/src/jeyzer/jeyzer-external/repositories
+JEYZER_EXTERNAL_MASTER_PROFILES_DIR C:/Dev/src/jeyzer/jeyzer-external/profiles/repository/master
+JEYZER_EXTERNAL_SHARED_PROFILES_DIR C:/Dev/src/jeyzer/jeyzer-external/profiles/repository/shared
+JEYZER_BASE_MASTER_PROFILES_DIR C:/Dev/src/jeyzer/jeyzer-repo/base/master
+JEYZER_BASE_SHARED_PROFILES_DIR C:/Dev/src/jeyzer/jeyzer-repo/base/shared
+JEYZER_BASE_HELPER_PROFILES_DIR C:/Dev/src/jeyzer/jeyzer-repo/base/helper
+JEYZER_DEMO_MASTER_PROFILES_DIR C:/Dev/src/jeyzer/jeyzer-repo/demo/master
+JEYZER_DEMO_SHARED_PROFILES_DIR C:/Dev/src/jeyzer/jeyzer-repo/demo/shared
+JEYZER_MONITOR_ANALYZER_STICKERS code_quality, performance, security, environment, analysis
+JEYZER_WEB_DEBUG true
+JEYZER_INTERNAL_REPORT_PASSWORD testtest
+
+JEYZER_WEB_UPLOAD_RECORDING_MAX_SIZE 10
+JEYZER_WEB_UPLOAD_RECORDING_UNCOMPRESSED_MAX_SIZE 150
+JEYZER_WEB_UPLOAD_RECORDING_UNCOMPRESSED_MAX_FILES 2882
+JEYZER_WEB_ANALYZER_THREAD_POOL_SIZE 3
+JEYZER_WEB_DISPLAY_UFO_STACK_FILE_LINK true
+JEYZER_WEB_DISPLAY_FUNCTION_DISCOVERY true
+JEYZER_WEB_TEMP_UPLOAD_DIRECTORY C:\tmp\Jeyzer\web\upload
+JEYZER_WEB_TEMP_UPLOAD_RECORDING_MAX_RETENTION_TIME 5m
+
+rem required for backup.xml
+JEYZER_WEB_ANALYZER_LOG_DIR C:/Dev/test/jeyzer/work/log
+
+JEYZER_ANALYZER_DEFAULT_PROFILE Portal
+JEYZER_WEB_PORTAL_TITLE_DISPLAY true
+JEYZER_WEB_PORTAL_PROFILES_DISPLAY true
+JEYZER_WEB_PORTAL_PERIOD_DISPLAY true
+JEYZER_WEB_PORTAL_TIME_ZONE_DISPLAY true
+JEYZER_WEB_PORTAL_AGREEMENT_DISPLAY false
+JEYZER_WEB_PORTAL_PRIVACY_POLICY_URL http://127.0.0.1/wordpress/privacy-policy
+JEYZER_WEB_PORTAL_CAPTCHA_DISPLAY false
+rem local host keys
+JEYZER_WEB_PORTAL_CAPTCHA_SKEY 6Lc4SN0UAAAAANyKMYYe0rEnzMjv7Zf5cMwENc4v
+JEYZER_WEB_PORTAL_CAPTCHA_WEBSITE_KEY 6Lc4SN0UAAAAANBa8rz3Ch7qBLaLO-6nZU1OvDb_

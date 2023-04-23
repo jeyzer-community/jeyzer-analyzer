@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<parent>
+		<groupId>org.jeyzer</groupId>
+		<artifactId>jeyzer-project</artifactId>
+		<version>3.0-SNAPSHOT</version>
+		<relativePath>../../../pom.xml</relativePath>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jeyzer</groupId>
+	<artifactId>jeyzer-tomcat</artifactId>
+	<packaging>pom</packaging>
+	<version>3.0-SNAPSHOT</version>
+	<name>Jeyzer Tomcat</name>
+	
+	<properties>
+	</properties>
+
+	<build>
+		<plugins>
+      		<plugin>
+        		<artifactId>maven-resources-plugin</artifactId>
+        		<version>3.1.0</version>
+       			<executions>
+          			<execution>
+            			<id>copy-config-resources</id>
+            			<phase>package</phase>
+            			<goals>
+              				<goal>copy-resources</goal>
+            			</goals>
+            			<configuration>
+              				<outputDirectory>${basedir}/target/installer/templates/tomcat/conf</outputDirectory>
+              				<resources>          
+                				<resource>
+                  					<directory>src/main/config</directory>
+                  					<includes>
+          								<include>server.installer.xml</include>
+       								</includes>
+                  					<filtering>false</filtering>
+                				</resource>
+              				</resources>
+            			</configuration>
+					</execution>
+          			<execution>
+            			<id>copy-bin-resources</id>
+            			<phase>package</phase>
+            			<goals>
+              				<goal>copy-resources</goal>
+            			</goals>
+            			<configuration>
+              				<outputDirectory>${basedir}/target/installer/templates/tomcat/bin</outputDirectory>
+              				<resources>          
+                				<resource>
+                  					<directory>src/main/scripts/bin</directory>
+                  					<includes>
+          								<include>setenv.installer.bat</include>
+										<include>setenv.installer.sh</include>
+       								</includes>
+                  					<filtering>false</filtering>
+                				</resource>
+              				</resources>
+            			</configuration>
+					</execution>
+          			<execution>
+            			<id>copy-analyzer-bin-resources</id>
+            			<phase>package</phase>
+            			<goals>
+              				<goal>copy-resources</goal>
+            			</goals>
+            			<configuration>
+              				<outputDirectory>${basedir}/target/installer/templates/analyzer/bin</outputDirectory>
+              				<resources>          
+                				<resource>
+                  					<directory>src/main/scripts/bin</directory>
+                  					<includes>
+                  					    <include>jeyzer-analyzer-web-client-readme.installer.txt</include>
+          								<include>jeyzer-analyzer-web-client.installer.bat</include>
+										<include>jeyzer-analyzer-web-server.installer.bat</include>
+										<include>jeyzer-analyzer-web-server.installer.sh</include>
+										<include>jeyzer-analyzer-web.installer.service</include>
+       								</includes>
+                  					<filtering>false</filtering>
+                				</resource>
+              				</resources>
+            			</configuration>
+					</execution>
+        		</executions>
+      		</plugin>
+		</plugins>
+		<pluginManagement>
+		</pluginManagement>
+	</build>
+
+
+</project>

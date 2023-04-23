@@ -1,0 +1,12 @@
+Arguments
+
+Program Arguments
+
+start
+
+VM Arguments
+
+-Dcatalina.base="C:\Dev\data\eclipse-jeyzer-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0" 
+-Dcatalina.home="C:\Dev\programs\Web\apache-tomcat-9.0.73" 
+-Dwtp.deploy="C:\Dev\data\eclipse-jeyzer-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps" 
+-Djava.endorsed.dirs="C:\Dev\programs\Web\apache-tomcat-9.0.73\endorsed"

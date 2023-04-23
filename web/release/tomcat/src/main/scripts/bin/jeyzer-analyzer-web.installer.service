@@ -1,0 +1,20 @@
+[Unit]
+Description=Jeyzer Web Analyzer (Tomcat)
+After=network.target
+
+[Service]
+Type=forking
+
+Environment=JAVA_HOME=%{jeyzer.installer.java.home}
+Environment=CATALINA_PID=%{tomcat.home.dir.unix}/temp/tomcat.pid
+Environment=CATALINA_HOME=%{tomcat.home.dir.unix}
+Environment=CATALINA_BASE=%{tomcat.home.dir.unix}
+
+ExecStart=%{tomcat.home.dir.unix}/bin/startup.sh
+ExecStop=%{tomcat.home.dir.unix}/bin/shutdown.sh
+
+RestartSec=15
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
