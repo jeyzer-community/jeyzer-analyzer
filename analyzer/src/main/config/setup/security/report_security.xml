@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<!-- Excel report password default protection. -->
+		<security>
+			
+			<!-- Possible modes : -->
+			<!--   none               : no password protection -->
+			<!--   external_optional  : password is optional and provided through API only. -->
+			<!--   external_mandatory : password protection enforced. Password is mandatory and provided through API. -->
+			<!--   internal_mandatory : password protection enforced. Internal password is used. -->
+			<!-- Password must contain 8+ characters -->
+			<password mode="none"/>
+			<!-- password mode="external_mandatory" value="${JEYZER_REPORT_PASSWORD}"/-->
+			<!-- password mode="external_optional" value="${JEYZER_REPORT_PASSWORD}"/-->
+			<!-- password mode="internal_mandatory" value="${JEYZER_DEFAULT_REPORT_PASSWORD}"/-->
+			
+			<!-- Supported algorithms : binary_RC4, AES_256 -->
+			<!--   binary_RC4 is weak protection. -->
+			<!--   AES_256 is strong protection. Requires Unlimited JCE. -->
+			<encryption algorithm="binary_RC4" />
+			
+		</security>

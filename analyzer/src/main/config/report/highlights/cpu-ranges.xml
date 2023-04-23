@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<highlights>
+		
+			<highlight name="01-15%" color="RGB-225-255-225"/>
+			<highlight name="16-30%" color="GREEN"/>
+			<highlight name="31-40%" color="ORANGE"/>
+			<highlight name="41-50%" color="RED"/>
+			<highlight name="51-75%" color="RED"/>
+			<highlight name="76-100%" color="RED"/>
+
+		</highlights>

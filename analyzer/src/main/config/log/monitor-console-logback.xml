@@ -1,0 +1,33 @@
+<configuration scan="true" scanPeriod="30 seconds">
+
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+	<file>${JEYZER_OUTPUT_DIR}/log/jeyzer_monitor_console-${JEYZER_TARGET_PROFILE}.log</file>
+	<encoder>
+	  <pattern>[%thread] %d{MM/dd/yyyy HH:mm:ss} %level %msg%n</pattern>
+	</encoder>
+  </appender>
+
+  <root level="debug">
+	<appender-ref ref="FILE" />
+  </root>  
+
+  <!--  Console log -->
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+       <pattern>[%thread] %d{MM/dd/yyyy HH:mm:ss} %level %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <root level="WARN">
+    <appender-ref ref="STDOUT" />
+  </root>
+  
+  <!-- Log categories : DEBUG, INFO, WARN, ERROR, ALL, OFF -->  
+  <logger name="org.jeyzer.analyzer" level="INFO" />
+  
+  <!-- Log categories : DEBUG, INFO, WARN, ERROR, ALL, OFF -->  
+  <logger name="org.jeyzer.monitor" level="INFO" />  
+  
+</configuration>
+
+

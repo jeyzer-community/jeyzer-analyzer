@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<action_counter 
+				threshold="20" 
+				color="ORANGE"
+		    	math_function_max_threshold="20" 
+		    	math_function_max_color="ORANGE">
+			
+			<!-- Factor defined in percentage gain or loss -->
+			<delta 
+					increase_factor="50" 
+					increase_color="RGB-255-180-129" 
+					decrease_factor="50" 
+					decrease_color="RGB-167-255-167"/>
+				
+		</action_counter>
+		
+	</header>

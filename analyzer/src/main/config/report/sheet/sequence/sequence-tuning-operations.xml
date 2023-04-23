@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="sequence" name="Operation tuning" link_type="TOp">
+		
+			<description>Displays actions in a time line manner, focusing on operations of interest.&#10;Permits to build and refine applicative profiles.</description>		
+		
+			<row_headers freeze="true">
+				<thread_name/>
+				<operation_principal action_link="true">
+					<highlight name="(OTBI)" color="GREY_25_PERCENT"/>
+				</operation_principal>
+				<action_consumed_memory color="ORANGE" threshold="100" color_activity="RGB-225-255-225"/>
+				<action_consumed_cpu color="ORANGE" threshold="1" color_activity="RGB-225-255-225"/>
+				<lock_state>
+					<highlight name="Action in deadlock situation" regex="D" color="RED"/>
+					<highlight name="Action in locking situation" regex="L" color="ORANGE"/>
+					<highlight name="Action suspended on debug breakpoint" regex="S" color="RED"/>
+				</lock_state>
+			</row_headers>
+		
+			<display>
+
+				<otbi_of_interest threshold="12" color="RGB-146-208-80"/>
+				
+				<!-- Identical consecutive stacks : add colored borders  -->
+				<frozen_code_state color="RED" stats="true"/>
+				
+				<cpu_usage stats="true" value_activity="true">
+					<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/cpu-ranges.xml"/>
+				</cpu_usage>
+				
+				<!-- Consumed memory in Mb -->
+				<!-- color and threashold are associated, color_activity is for any value greater than 0 -->
+				<consumed_memory color="ORANGE" threshold="100" color_activity="RGB-225-255-225" stats="true" value_activity="true"/>
+				
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+
+			</display>
+		</sheet>

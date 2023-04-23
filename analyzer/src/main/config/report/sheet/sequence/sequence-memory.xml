@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="sequence" name="Memory" formats="Advanced JMX,Advanced Agent,JFR Recording" link_type="Mem">
+		
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays actions in a time line manner, focusing on process and thread memory consumption.&#10;Permits to identify high memory consuming actions. Includes memory graphs.</description>		
+		
+			<!-- Optional -->
+			<headers title_column_index="1" formats="Advanced JMX,Advanced Agent">
+			
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<max/>
+				</math_functions>
+			
+				<!-- Headers -->
+				<!-- System -->
+				<system_physical_used_memory         header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/system-physical-used-memory.xml"/>
+				<system_physical_used_memory_percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/system-physical-used-memory-percent.xml"/>
+				
+				<!-- Process -->
+				<section_delimiter title="Process" color="RGB-201-208-168"/>
+				<computed_process_memory     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/computed-process-memory.xml"/>
+				<applicative_memory_activity header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/applicative-memory-activity.xml"/>
+				<memory_pool                 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-non-heap-used.xml"/>
+				<object_pending_finalization_counter  header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/object-pending-finalization-counter.xml"/>
+				
+				<!-- Heap -->
+				<section_delimiter title="Heap" color="RGB-201-208-168"/>
+				<memory_pool                 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-heap-used.xml"/>
+				<memory_pool                 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-heap-max.xml"/>
+				<memory_pool_heap 			 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/memory-pool-heap.xml"/>
+				<memory_pool_heap_ratio      header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/memory-pool-heap-ratio.xml"/>
+				
+				<!-- Eden -->
+				<section_delimiter title="Young gen" color="RGB-201-208-168"/>
+				<memory_pool                 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-eden-used.xml"/>
+				
+				<!-- Old Gen -->
+				<section_delimiter title="Old gen" color="RGB-201-208-168"/>
+				<memory_pool                 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-old-used.xml"/>
+				<memory_pool_ratio           header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-old-used-percent.xml"/>
+				<memory_pool                 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-old-committed.xml"/>
+				<memory_pool                 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-old-max.xml"/>
+				<memory_pool                 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-old-peak-used.xml"/>
+				<memory_pool                 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-old-after-collection-used.xml"/>
+				
+			</headers>
+			
+			<!-- Optional -->
+			<headers title_column_index="1" formats="JFR Recording">
+			
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<max/>
+				</math_functions>
+			
+				<!-- Headers -->
+				<!-- System -->
+				<system_physical_used_memory         header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/system-physical-used-memory.xml"/>
+				<system_physical_used_memory_percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/system-physical-used-memory-percent.xml"/>
+				
+				<!-- Process -->
+				<section_delimiter title="Process" color="RGB-201-208-168"/>
+				<computed_process_memory     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/computed-process-memory.xml"/>
+				<applicative_memory_activity header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/applicative-memory-activity.xml"/>
+				
+				<!-- Heap -->
+				<section_delimiter title="Heap" color="RGB-201-208-168"/>
+				<memory_pool                 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-heap-used.xml"/>
+				<memory_pool                 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-heap-max.xml"/>
+				<memory_pool_heap 			 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/memory-pool-heap.xml"/>
+				<memory_pool_heap_ratio      header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/memory-pool-heap-ratio.xml"/>
+				
+				<!-- Eden -->
+				<section_delimiter title="Young gen" color="RGB-201-208-168"/>
+				<memory_pool                 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-eden-used.xml"/>
+				
+				<!-- Old Gen -->
+				<section_delimiter title="Old gen" color="RGB-201-208-168"/>
+				<memory_pool                 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-old-used.xml"/>
+				<memory_pool_ratio           header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-old-used-percent.xml"/>
+				<memory_pool                 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-old-committed.xml"/>
+				<memory_pool                 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-old-max.xml"/>
+				<memory_pool                 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-old-peak-used.xml"/>
+				<memory_pool                 header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-old-after-collection-used.xml"/>
+				
+			</headers>
+			
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+				<action_consumed_memory color="ORANGE" threshold="100" color_activity="RGB-225-255-225"/>
+			</row_headers>
+		
+			<display>
+				<!-- Function display. Color applies for ATBI -->
+				<function color="GREY_25_PERCENT" />
+				
+				<advanced_operation>
+					<highlight name="(OTBI)" color="GREY_25_PERCENT"/>
+				</advanced_operation>
+
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+
+				<!-- Consumed memory in Mb -->
+				<!-- color and threashold are associated, color_activity is for any value greater than 0 -->
+				<consumed_memory color="ORANGE" threshold="100" color_activity="RGB-225-255-225" stats="true"/>
+				
+				<!-- Applicative memory activity percentage -->
+				<applicative_memory_activity color="ORANGE" threshold="50" stats="true"/>
+				
+			</display>
+
+			<charts>
+				<chart title="Memory old">
+					<serie header="memory_pool-old-gen-used"/>
+					<serie header="memory_pool-old-gen-committed"/>
+					<serie header="memory_pool-old-gen-max"/>
+					<serie header="memory_pool-old-gen-after-collection"/>
+				</chart>
+				<chart title="Memory old and young used">
+					<serie header="memory_pool-old-gen-used"/>
+					<serie header="memory_pool-eden-used"/>
+				</chart>
+				<chart title="Memory heap vs Memory old used %" y_axis_max="100">
+					<serie header="memory_pool_heap_ratio"/>
+					<serie header="memory_pool_ratio-old-gen-usage-%"/>
+				</chart>
+				<chart title="Memory heap">
+					<serie header="memory_pool-vm-heap-used"/>
+					<serie header="memory_pool-vm-non-heap-used"/>
+				</chart>
+			</charts>
+			
+		</sheet>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<!--  display the distinct actions and their related stacks as a tree.
+		      Actions get considered if their size is greater than threshold. 
+		      Provides profiling info : frequency, average CPU and memory if available -->
+		<sheet type="action_distinct_profiling" name="Long Action Profiling" threshold="10">
+			<display>
+			
+				<!-- display operation tag (optional). color is mandatory -->
+				<operations color="RGB-249-223-195"/>
+				
+				<!-- display function tag (optional). color is mandatory -->
+				<functions  color="RGB-208-228-244"/>
+				
+				<!-- display java modules. Java 9+ -->
+				<java_modules strip="true"/>
+				
+			</display>
+			
+		</sheet>

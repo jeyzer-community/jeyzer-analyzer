@@ -1,0 +1,3 @@
+## Apache Velocity template
+
+$application_type / $application_id : $event.Name

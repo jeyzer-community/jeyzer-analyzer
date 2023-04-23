@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="sequence" name="Garbage Collection" formats="Advanced JMX,Advanced Agent,JFR Recording">
+
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays exhaustive garbage collecting details.&#10;Includes GC graphs.</description>		
+		
+			<!-- Optional -->
+			<headers>
+
+				<!-- Use type all to display the garbage collectors executed since last JZR recording snapshot -->
+				<!-- Use type last to display the last garbage collector executed since last JZR recording snapshot -->
+				<garbage_collection_executed_garbage_collector type="all" display="Executed garbage collector(s)"/>
+
+				<section_delimiter title="Health indication" color="RGB-201-208-168"/>				
+
+				<!-- Set gc to :                                                                --> 
+				<!--    # old or young to display the figures of the related garbage collectors -->
+				<!--    # last to display the figures of the last executed garbage collector    -->
+				<!--    # the exact garbage collector name. Ex : PS Scavenge                    -->
+				<!-- Set pool to :                                                              --> 
+				<!--    # all to display the figures of all the memory pools                    -->
+				<!--    # old or young to display the figures of the related memory             -->
+				<!--    # the exact memory pool name. Ex : PS Old Gen                           -->				
+				<garbage_collection_health_indication gc="last" pool="all" display="GC health indication" threshold="80" color="RED"/>
+				<garbage_collection_health_indication gc="PS MarkSweep" pool="PS Old Gen" display="PS MarkSweep - GC health indication Old gen" threshold="80" color="RED"/>
+				
+				<section_delimiter title="Execution count" color="RGB-201-208-168"/>				
+				
+				<!-- Set gc to display the gc count since the last thread dump with : -->
+				<!--    # all to display it for all the garbage collectors                     -->				 
+				<!--    # old or young to display it for the corresponding garbage collector   -->
+				<!--    # last to display it for the last executed garbage collector           -->
+				<!--    # the exact garbage collector name. Ex : PS Scavenge                   -->
+				<garbage_collection_count gc="all" display="GC # occurrences" threshold="5" color="RED"/>
+				<garbage_collection_count gc="old" display="GC # occurrences in Old gen" threshold="20" color="ORANGE"/>
+				<garbage_collection_count gc="young" display="GC # occurrences in Young gen" threshold="5" color="ORANGE"/>
+				
+				<section_delimiter title="Execution time" color="RGB-201-208-168"/>
+				
+				<!-- Set gc to display the sum of the gc times since the last thread dump (or equivalent percentage) with : -->
+				<!--    # all to display it for all the garbage collectors                     -->				 
+				<!--    # old or young to display it for the corresponding garbage collector   -->
+				<!--    # last to display it for the last executed garbage collector           -->
+				<!--    # the exact garbage collector name. Ex : PS Scavenge                   -->
+				<garbage_collection_time gc="all" display="GC execution time" threshold="200" color="RED"/>
+				<garbage_collection_time gc="old" display="GC execution time on Old gen" threshold="300" color="RED"/>
+				<garbage_collection_time gc="young" display="GC execution time on Young gen" threshold="300" color="RED"/>
+				<garbage_collection_time_percent gc="all" display="GC execution time percentage" threshold="20" color="RED"/>
+				<garbage_collection_time_percent gc="old" display="GC execution time percentage for the Old gen" threshold="20" color="RED"/>
+				<garbage_collection_time_percent gc="young" display="GC execution time percentage for the Young gen" threshold="20" color="RED"/>
+
+				<section_delimiter title="Memory used &#10;Last GC" color="RGB-201-208-168"/>
+
+				<!-- Set gc to :                                                                --> 
+				<!--    # old or young to display the figures of the related garbage collectors -->
+				<!--    # last to display the figures of the last executed garbage collector    -->
+				<!--    # the exact garbage collector name. Ex : PS Scavenge                    -->
+				<!-- Set pool to :                                                              --> 
+				<!--    # all to display the figures of all the memory pools                    -->
+				<!--    # old or young to display the figures of the related memory             -->
+				<!--    # the exact memory pool name. Ex : PS Old Gen                           -->
+				<garbage_collection_executed_garbage_collector type="last" display="Last executed garbage collector"/>				
+				<garbage_collection_memory_used_after_gc gc="last" pool="all" display="Last GC/All after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc gc="last" pool="PS Old Gen" display="Last GC/Old after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc gc="last" pool="old" display="Last GC/Old after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc gc="last" pool="PS Eden Space" display="Last GC/Eden after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc gc="last" pool="young" display="Last GC/Eden after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc_percent gc="last" pool="all" display="%% Last GC/All after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc_percent gc="last" pool="PS Old Gen" display="%% Last GC/Old after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc_percent gc="last" pool="old" display="%% Last GC/Old after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc_percent gc="last" pool="PS Eden Space" display="%% Last GC/Eden after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc_percent gc="last" pool="young" display="%% Last GC/Eden after GC" threshold="80" color="RED"/>
+				
+				<section_delimiter title="Memory used &#10;All GCs" color="RGB-201-208-168"/>
+				
+				<garbage_collection_executed_garbage_collector type="all" display="Executed garbage collector(s)"/>				
+				<garbage_collection_memory_used_after_gc gc="PS MarkSweep" pool="PS Old Gen" display="PS MarkSweep/Old after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc gc="old" pool="young" display="PS MarkSweep/Old after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc gc="PS MarkSweep" pool="PS Eden Space" display="PS MarkSweep/Eden after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc gc="old" pool="young" display="PS MarkSweep/Eden after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc gc="PS Scavenge" pool="PS Old Gen" display="PS Scavenge/Old after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc gc="young" pool="old" display="PS Scavenge/Old after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc gc="PS Scavenge" pool="PS Eden Space" display="PS Scavenge/Eden after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc gc="young" pool="young" display="PS Scavenge/Eden after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc_percent gc="PS MarkSweep" pool="PS Old Gen" display="%% PS MarkSweep/Old after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc_percent gc="old" pool="old" display="%% PS MarkSweep/Old after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc_percent gc="PS MarkSweep" pool="PS Eden Space" display="%% PS MarkSweep/Eden after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc_percent gc="old" pool="young" display="%% PS MarkSweep/Eden after GC" threshold="80" color="RED"/>				
+				<garbage_collection_memory_used_after_gc_percent gc="PS Scavenge" pool="PS Old Gen" display="%% PS Scavenge/Old after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc_percent gc="young" pool="old" display="%% PS Scavenge/Old after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc_percent gc="PS Scavenge" pool="PS Eden Space" display="%% PS Scavenge/Eden after GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_after_gc_percent gc="young" pool="young" display="%% PS Scavenge/Eden after GC" threshold="80" color="RED"/>
+
+				<section_delimiter title="Memory released &#10;Last GC" color="RGB-201-208-168"/>
+
+				<garbage_collection_executed_garbage_collector type="last" display="Last executed garbage collector"/>				
+				<garbage_collection_memory_released gc="last" pool="all" display="Last GC/All released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released gc="last" pool="PS Old Gen" display="Last GC/Old released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released gc="last" pool="old" display="Last GC/Old released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released gc="last" pool="PS Eden Space" display="Last GC/Eden released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released gc="last" pool="young" display="Last GC/Eden released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released_percent gc="last" pool="all" display="%% Last GC/All released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released_percent gc="last" pool="PS Old Gen" display="%% Last GC/Old released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released_percent gc="last" pool="old" display="%% Last GC/Old released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released_percent gc="last" pool="PS Eden Space" display="%% Last GC/Eden released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released_percent gc="last" pool="young" display="%% Last GC/Eden released" threshold="80" color="RGB-149-208-80"/>
+				
+				<section_delimiter title="Memory released &#10;All GCs" color="RGB-201-208-168"/>
+				
+				<garbage_collection_executed_garbage_collector type="all" display="Executed garbage collector(s)"/>
+				<garbage_collection_memory_released gc="PS MarkSweep" pool="PS Old Gen" display="PS MarkSweep/Old released " threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released gc="old" pool="old" display="PS MarkSweep/Old released " threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released gc="PS MarkSweep" pool="PS Eden Space" display="PS MarkSweep/Eden released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released gc="old" pool="young" display="PS MarkSweep/Eden released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released gc="PS Scavenge" pool="PS Old Gen" display="PS Scavenge/Old released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released gc="young" pool="old" display="PS Scavenge/Old released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released gc="PS Scavenge" pool="PS Eden Space" display="PS Scavenge/Eden released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released gc="young" pool="young" display="PS Scavenge/Eden released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released_percent gc="PS MarkSweep" pool="PS Old Gen" display="%% PS MarkSweep/Old released " threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released_percent gc="old" pool="old" display="%% PS MarkSweep/Old released " threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released_percent gc="PS MarkSweep" pool="PS Eden Space" display="%% PS MarkSweep/Eden released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released_percent gc="old" pool="young" display="%% PS MarkSweep/Eden released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released_percent gc="PS Scavenge" pool="PS Old Gen" display="%% PS Scavenge/Old released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released_percent gc="young" pool="old" display="%% PS Scavenge/Old released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released_percent gc="PS Scavenge" pool="PS Eden Space" display="%% PS Scavenge/Eden released" threshold="80" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released_percent gc="young" pool="young" display="%% PS Scavenge/Eden released" threshold="80" color="RGB-149-208-80"/>
+
+				<!-- Set gc to :                                                                --> 
+				<!--    # old or young to display the figures of the related garbage collectors -->
+				<!--    # last to display the figures of the last executed garbage collector    -->
+				<!--    # the exact garbage collector name. Ex : PS Scavenge                    -->
+				<!-- Set pool to :                                                              --> 
+				<!--    # all to display the figures of all the memory pools                    -->
+				<!--    # old or young to display the figures of the related memory             -->
+				<!--    # the exact memory pool name. Ex : PS Old Gen                           -->
+				<garbage_collection_executed_garbage_collector type="last" display="Last executed garbage collector"/>				
+				<garbage_collection_memory_used_before_gc gc="last" pool="all" display="Last GC/All before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc gc="last" pool="PS Old Gen" display="Last GC/Old before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc gc="last" pool="old" display="Last GC/Old before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc gc="last" pool="PS Eden Space" display="Last GC/Eden before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc gc="last" pool="young" display="Last GC/Eden before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc_percent gc="last" pool="all" display="%% Last GC/All before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc_percent gc="last" pool="PS Old Gen" display="%% Last GC/Old before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc_percent gc="last" pool="old" display="%% Last GC/Old before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc_percent gc="last" pool="PS Eden Space" display="%% Last GC/Eden before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc_percent gc="last" pool="young" display="%% Last GC/Eden before GC" threshold="80" color="RED"/>
+				
+				<section_delimiter title="Memory used &#10;All GCs" color="RGB-201-208-168"/>
+				
+				<garbage_collection_executed_garbage_collector type="all" display="Executed garbage collector(s)"/>				
+				<garbage_collection_memory_used_before_gc gc="PS MarkSweep" pool="PS Old Gen" display="PS MarkSweep/Old before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc gc="old" pool="young" display="PS MarkSweep/Old before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc gc="PS MarkSweep" pool="PS Eden Space" display="PS MarkSweep/Eden before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc gc="old" pool="young" display="PS MarkSweep/Eden before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc gc="PS Scavenge" pool="PS Old Gen" display="PS Scavenge/Old before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc gc="young" pool="old" display="PS Scavenge/Old before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc gc="PS Scavenge" pool="PS Eden Space" display="PS Scavenge/Eden before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc gc="young" pool="young" display="PS Scavenge/Eden before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc_percent gc="PS MarkSweep" pool="PS Old Gen" display="%% PS MarkSweep/Old before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc_percent gc="old" pool="old" display="%% PS MarkSweep/Old before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc_percent gc="PS MarkSweep" pool="PS Eden Space" display="%% PS MarkSweep/Eden before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc_percent gc="old" pool="young" display="%% PS MarkSweep/Eden before GC" threshold="80" color="RED"/>				
+				<garbage_collection_memory_used_before_gc_percent gc="PS Scavenge" pool="PS Old Gen" display="%% PS Scavenge/Old before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc_percent gc="young" pool="old" display="%% PS Scavenge/Old before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc_percent gc="PS Scavenge" pool="PS Eden Space" display="%% PS Scavenge/Eden before GC" threshold="80" color="RED"/>
+				<garbage_collection_memory_used_before_gc_percent gc="young" pool="young" display="%% PS Scavenge/Eden before GC" threshold="80" color="RED"/>
+
+				<section_delimiter title="Memory pools &#10; Max size" color="RGB-201-208-168"/>
+
+				<!-- Set gc to :                                                                --> 
+				<!--    # old or young to display the figures of the related garbage collectors -->
+				<!--    # last to display the figures of the last executed garbage collector    -->
+				<!--    # the exact garbage collector name. Ex : PS Scavenge                    -->
+				<!-- Set pool to :                                                              --> 
+				<!--    # all to display the figures of all the memory pools                    -->
+				<!--    # old or young to display the figures of the related memory             -->
+				<!--    # the exact memory pool name. Ex : PS Old Gen                           -->
+				<garbage_collection_memory_max gc="last" pool="all" display="Total max size" threshold="100000" color="RED"/>				
+				<garbage_collection_memory_max gc="last" pool="old" display="Old pool max size" threshold="100000" color="RED"/>
+				<garbage_collection_memory_max gc="last" pool="young" display="Young pool max size" threshold="100000" color="RED"/>
+
+				<section_delimiter title="Memory pool &#10;details" color="RGB-201-208-168"/>
+				
+				<garbage_collection_memory_pool category="PS Scavenge:last gc:before:PS Old Gen:usage:used" display="PS Scavenge Old Gen before used" color="RED" description="Old generation used space in Mb before PS Scavenge execution."/>
+				<garbage_collection_memory_pool category="PS Scavenge:last gc:after:PS Old Gen:usage:used" display="PS Scavenge Old Gen after used" color="RED" description="Old generation used space in Mb after PS Scavenge execution."/>
+				<garbage_collection_memory_pool category="PS MarkSweep:last gc:before:PS Old Gen:usage:used" display="PS MarkSweep Old Gen before used" color="RED" description="Old generation used space in Mb before PS MarkSweep execution."/>
+				<garbage_collection_memory_pool category="PS MarkSweep:last gc:after:PS Old Gen:usage:used" display="PS MarkSweep Old Gen after used" color="RED" description="Old generation used space in Mb after PS MarkSweep execution."/>
+				<garbage_collection_memory_pool category="PS MarkSweep:last gc:after:PS Old Gen:usage:max" display="PS MarkSweep Old Gen after max" color="RED" description="Old generation max space in Mb."/>
+
+				<garbage_collection_memory_pool category="PS Scavenge:last gc:before:PS Eden Space:usage:used" display="PS Scavenge PS Eden Space before used" color="RED" description="Young generation used space in Mb before PS Scavenge execution."/>
+				<garbage_collection_memory_pool category="PS Scavenge:last gc:after:PS Eden Space:usage:used" display="PS Scavenge Eden Space after used" color="RED" description="Young generation used space in Mb after PS Scavenge execution."/>
+				<garbage_collection_memory_pool category="PS MarkSweep:last gc:before:PS Eden Space:usage:used" display="PS MarkSweep PS Eden Space before used" color="RED" description="Young generation used space in Mb before PS MarkSweep execution."/>
+				<garbage_collection_memory_pool category="PS MarkSweep:last gc:after:PS Eden Space:usage:used" display="PS MarkSweep Eden Space after used" color="RED" description="Young generation used space in Mb after PS MarkSweep execution."/>
+				<garbage_collection_memory_pool category="PS MarkSweep:last gc:after:PS Eden Space:usage:max" display="PS MarkSweep Eden Space after max" color="RED" description="Young generation max space in Mb."/>
+								
+			</headers>
+			<headers formats="Jstack 1.6+,Jstack 1.6+ Hung,JMX,Jstack 1.5,TDA,JRMC">
+				<capture_time color="RED">
+					<delta increase_factor="10" increase_color="RGB-255-180-129" decrease_factor="10" decrease_color="RGB-167-255-167"/>
+				</capture_time>
+				<thread_counter color="RED">
+					<delta increase_factor="10" increase_color="RGB-255-180-129" decrease_factor="10" decrease_color="RGB-167-255-167"/>
+				</thread_counter>
+				<recording_snapshot_file_name/>
+			</headers>
+		
+			<row_headers>
+				<thread_id/>
+				<thread_name/>
+			</row_headers>
+		
+			<display>
+			</display>
+			
+			<charts>
+				<chart title="GC health" y_axis_max="100">
+					<serie header="garbage_collection_health_indication-last-all"/>
+				</chart>
+				<chart title="GC old vs released">
+					<serie header="garbage_collection_memory_used_after_gc-last-all"/>
+					<serie header="garbage_collection_memory_released-last-all"/>
+					<serie header="garbage_collection_memory_before-last-all"/>
+				</chart>
+				<chart title="GC time">
+					<serie header="garbage_collection_time-all"/>
+				</chart>
+				<chart title="GC time %" y_axis_max="100">
+					<serie header="garbage_collection_time_percent-all"/>
+					<serie header="garbage_collection_memory_used_after_gc_percent-last-all"/>
+					<serie header="garbage_collection_memory_released_percent-last-all"/>
+				</chart>
+				<chart title="GC count">
+					<serie header="garbage_collection_count-last"/>
+				</chart>
+			</charts>
+			
+		</sheet>

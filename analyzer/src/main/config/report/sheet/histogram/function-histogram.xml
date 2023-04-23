@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<!--  display the functions and operations, ordered by number of appearances -->
+		<sheet type="function_operation_histogram" name="Function histogram"/>

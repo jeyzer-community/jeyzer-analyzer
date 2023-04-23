@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<used_disk_space 
+				id="work" 
+				display="App partition / Used disk space"
+				comment="Used disk space on the partition where the application stands, in Gb."/>
+		
+	</header>

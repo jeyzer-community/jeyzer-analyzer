@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<translator>
+
+		<!-- SAMPLE file : copy it under your profile translators/obfuscation directory and tune it for your needs -->
+
+		<!-- Deobfuscation -->
+		<deobfuscation enabled="true" directory="${JEYZER_RECORD_DIRECTORY}/deobfuscated" keep_files="${JEYZER_ANALYZER_KEEP_DEOBFUSCATED_FILES}">
+
+			<!--   Practice is to declare a plugin set per obfuscated software library provider -->
+			<!--   Plugin configurations should typically be made available from a repository web server like Nexus -->
+			<plugins>
+				
+				<plugin_set config_file="${JEYZER_ANALYZER_CONFIG_DIR}/translators/obfuscation/plugin_set.xml"/>
+				
+				<!-- Other software providers, other plugins --> 
+				<!-- plugin_set config_file="${JEYZER_ANALYZER_CONFIG_DIR}/translators/obfuscation/other_plugin_set.xml"/-->
+				
+			</plugins>
+			
+			<property_card_mappers>
+
+				<!-- Sample -->
+				<property_card_mapper_set config_file="${JEYZER_ANALYZER_CONFIG_DIR}/translators/obfuscation/property_card_mapper_set.xml"/>
+			
+				<!-- Other software providers, other mappings -->
+				<!-- property_card_mapper_set config_file="${JEYZER_ANALYZER_CONFIG_DIR}/translators/obfuscation/other_property_card_mapper_set.xml"/-->
+				
+			</property_card_mappers>
+			
+		</deobfuscation>
+
+</translator>

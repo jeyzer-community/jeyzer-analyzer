@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<!--  display the Java modules with a module dependency graph -->
+		<sheet type="process_modules" name="Modules">
+			
+			<!-- generate module graph picture -->
+			<module_graph>
+
+				<graph>
+					<!-- Default settings override -->
+					<!-- see default_setup.xml for complete parameter documentation -->
+					<!-- let's override the resolution as graph will contain more nodes -->
+					<rendering>
+						<style_sheet file="${JEYZER_ANALYZER_CONFIG_DIR}/graph/static/style_modules.css"/>
+						<!-- Mode possible values : graph -->
+						<mode type="graph"/>
+						<!-- display node value (stack count) if value is greater than threshold -->
+						<node_value_display size_threshold="1"/>
+						<!-- rendering area percentage growth to prevent graph elements loss on borders -->
+						<graph_area_extend top="5" bottom="5" right="10" left="5"/>
+					</rendering>
+					<conditions>
+						<nodes threshold="1"/>
+					</conditions>
+				</graph>
+				
+			</module_graph>
+			
+		</sheet>

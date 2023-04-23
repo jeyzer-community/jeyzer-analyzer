@@ -1,0 +1,81 @@
+graph { 
+	fill-color: #FFC;
+}
+
+edge { 
+	fill-color: #80bfff; 
+	size: 100px;
+	shape:angle;
+}
+
+sprite { 
+	fill-mode: none;
+	stroke-mode: none;
+}
+
+sprite.Count { 
+	text-size: 36; 
+}
+
+node {
+	shape: circle;
+	size: 10px, 15px;
+	fill-color: green;
+	stroke-mode: plain;
+	stroke-color: yellow;
+	
+	text-size: 28;
+}
+
+
+node.Function {
+	text-alignment: at-right; 
+	text-padding: 3px, 2px; 
+	text-background-mode: rounded-box; 
+	text-background-color: #EB2; 
+	text-color: #222;
+	text-offset: 5px, 0px;
+	
+	size: 200px, 200px;
+	shape: circle;
+	fill-color: #3399ff;
+	stroke-mode: plain;
+	stroke-color: yellow;
+}
+
+
+
+node.ContentionType {
+	text-alignment: at-right; 
+	text-padding: 3px, 2px; 
+	text-background-mode: rounded-box; 
+	text-background-color: #EB2; 
+	text-color: #222;
+	text-offset: 20px, 0px;
+	
+	size-mode: dyn-size;
+	shape: circle;
+	stroke-mode: plain;
+	stroke-color: yellow;
+
+	visibility-mode:normal;
+}
+
+node.ContentionTypePhantom {
+	text-size: 12;
+	text-alignment: at-right; 
+	text-padding: 3px, 2px; 
+	text-background-mode: rounded-box; 
+	text-background-color: #d1d1e0; 
+	text-color: #222;
+	text-offset: 20px, 0px;
+	
+	size-mode: dyn-size;
+	shape: circle;
+	fill-color: #d1d1e0;
+	stroke-mode: plain;
+	stroke-color: #d1d1e0;
+	
+	visibility-mode:normal;
+}
+

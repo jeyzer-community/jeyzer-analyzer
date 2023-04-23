@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<function_graph>
+			
+		<function_graph_player graph_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/graph/player/function_graph_player.xml"/>			
+			
+		<graph>
+			<!-- Default settings override -->
+			<!-- Limited set of parameters required and coming as complementary to the contention graph player one -->
+			<rendering>
+				<!-- resolution in number of standard rows and columns. -->
+				<excel_resolution height="47" width="16"/>
+			</rendering>
+			<conditions>
+				<generation maximum="10"/>
+			</conditions>
+		</graph>
+			
+	</function_graph>

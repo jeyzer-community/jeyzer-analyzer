@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<contention_graph_player>
+
+		<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/contention-types.xml"/>
+
+		<!-- Graph configuration -->
+		<rendering>
+			<!-- default style sheet -->
+			<style_sheet file="${JEYZER_ANALYZER_CONFIG_DIR}/graph/dynamic/style_contention_types.css"/>
+			<!-- Display node value (contention percentage) if value is greater than threshold -->
+			<node_value_display size_threshold="10"/>
+			<!-- resolution in pixels for motion snapshot pictures -->
+			<picture_resolution width="1542" height="1536" />
+			<!-- rendering area percentage growth to prevent graph elements loss on borders -->
+			<graph_area_extend top="5" bottom="5" right="10" left="5"/>
+		</rendering>
+
+		<!-- Contention graph stream viewer. Not supported -->
+		<viewer enabled="false"/>
+
+		<!-- Contention graph image generation -->
+		<picture file="${JEYZER_TARGET_NAME}_global_contention.jpg" html_file="${JEYZER_TARGET_NAME}_global_contention.html">
+			<!-- HTML template which displays periodically the generated picture -->
+			<template directory="${JEYZER_ANALYZER_CONFIG_DIR}/graph/player" name="global_contention.vm"/>
+		</picture>
+		
+	</contention_graph_player>

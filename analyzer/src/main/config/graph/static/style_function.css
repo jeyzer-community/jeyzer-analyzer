@@ -1,0 +1,162 @@
+graph { 
+	fill-color: #FFC; 
+}
+
+edge { 
+	fill-color: #00004d; 
+	size: 2px; 
+}
+
+sprite { 
+	fill-mode: none;
+	stroke-mode: none;
+}
+
+sprite.Count { 
+	text-size: 36; 
+}
+
+sprite.ActionDetails {
+	text-size: 36;
+	text-style: bold;
+	text-alignment: at-left;
+	text-padding: 5px, 4px;
+	text-background-mode: rounded-box; 
+	text-background-color: #EB2; 
+	text-color: #222;
+}
+
+node {
+	shape: circle;
+	size: 10px, 15px;
+	fill-color: green;
+	stroke-mode: plain;
+	stroke-color: yellow;
+	
+	text-size: 24;
+}
+
+node.Executor {
+	text-alignment: at-right; 
+	text-padding: 3px, 2px; 
+	text-background-mode: rounded-box; 
+	text-background-color: #EB2; 
+	text-color: #222;
+	text-offset: 5px, 0px;	
+	
+	size: 50px;
+	shape: box;
+	fill-color: #C6F;
+	stroke-mode: plain;
+	stroke-color: yellow;
+}
+
+node.Function {
+	text-alignment: at-right; 
+	text-padding: 3px, 2px; 
+	text-background-mode: rounded-box; 
+	text-background-color: #EB2; 
+	text-color: #222;
+	text-offset: 5px, 0px;
+	
+	size-mode: dyn-size;
+	shape: circle;
+	fill-color: #3399ff;
+	stroke-mode: plain;
+	stroke-color: yellow;
+}
+
+node.Operation {
+	text-alignment: at-right; 
+	text-padding: 3px, 2px; 
+	text-background-mode: rounded-box; 
+	text-background-color: #EB2; 
+	text-color: #222;
+	text-offset: 5px, 0px;	
+	
+	size-mode: dyn-size;
+	shape: circle;
+	fill-color: #093;
+	stroke-mode: plain;
+	stroke-color: yellow;
+}
+
+/* Node with MyOperation name */
+node#MyOperation {
+	fill-color: blue;
+}
+
+/* Node with MyFunction name */
+node#MyFunction {
+	fill-color: blue;
+}
+
+/* Node with thread state */
+node.Running {
+	text-alignment: at-right;
+	text-style : italic;
+	
+	size-mode: dyn-size;
+	stroke-width: 6px; 
+	stroke-color: #585;
+	fill-color: #585;
+	shape: rounded-box;
+	
+	visibility-mode:normal;
+}
+
+/* Node with thread state */
+node.Waiting {
+	text-alignment: at-right;
+	text-style : italic;
+	
+	size-mode: dyn-size;
+	stroke-width: 6px; 
+	stroke-color: #585;
+	fill-color: #0073e6;
+	shape: rounded-box;
+	
+	visibility-mode:normal;
+}
+
+/* Node with thread state */
+node.TimedWaiting {
+	text-alignment: at-right;
+	text-style : italic;
+	
+	size-mode: dyn-size;
+	stroke-width: 6px; 
+	stroke-color: #585;
+	fill-color: #66ccff;
+	shape: rounded-box;
+	
+	visibility-mode:normal;
+}
+
+/* Node with thread state */
+node.Locked {
+	text-alignment: at-right;
+	text-style : italic;
+	
+	size-mode: dyn-size;
+	stroke-width: 6px; 
+	stroke-color: orange;
+	fill-color: orange;	
+	shape: rounded-box;
+	
+	visibility-mode:normal;
+}
+
+/* ATBI Node */
+node.ATBI {
+	text-alignment: at-right;
+	text-style : italic;
+	
+	size-mode: dyn-size;
+	stroke-width: 6px; 
+	stroke-color: orange;
+	fill-color: orange;
+	shape: rounded-box;
+	
+	visibility-mode:normal;
+}

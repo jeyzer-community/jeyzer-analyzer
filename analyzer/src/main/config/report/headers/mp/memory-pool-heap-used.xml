@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<memory_pool 
+				category="heap:used" 
+				display="VM heap used" 
+				color="RED" description="VM heap used in Mb.">
+			
+			<!-- Factor defined in percentage gain or loss -->
+			<delta 
+				increase_factor="10" 
+				increase_color="ORANGE" 
+				decrease_factor="10" 
+				decrease_color="GREEN"/>
+		
+		</memory_pool>
+		
+	</header>

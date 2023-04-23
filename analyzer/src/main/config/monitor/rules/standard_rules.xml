@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Standard basic">
+
+		<!-- ************************************************************************ -->
+		<!--                              STANDARD RULES                              -->
+		<!-- ************************************************************************ -->
+		<!--  If number of threads greater than [value], generate event -->
+		<rule name="Global thread limit" ref="JZR-STD-001">
+			<thresholds>
+				<threshold type="global value" 
+						   count="20"
+				           value="2000"
+				           level="WARNING" 
+				           message="High number of threads created (2000+). Please send the Jeyzer recording to your Support service and monitor closely the application."/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If total number of threads is greater than [value] for [count] times and is increasing every [expected_increase_frequency] thread dumps, generate event. -->
+		<rule name="Global thread leak" ref="JZR-STD-002">
+			<thresholds>
+				<threshold type="session custom with context"
+						   count="50"
+						   value="3000"
+						   delta_x="10"
+						   delta_y="5"
+				           level="CRITICAL"
+				           message="Huge number of threads, increasing : potential thread leakage. &#10;Check the Pools sheet. &#10;Risk of process crash. &#10;Please plan applicative restart."/>
+			</thresholds>
+		</rule>
+	
+		<!--  If task stack is identical for [count] snapshots or [time], optionally for function principal=[regex], generate event -->
+		<rule name="Frozen stacks" ref="JZR-STD-003">
+			<thresholds>
+				<threshold 	type="stack signal"
+							count="30" 
+							level="CRITICAL" 
+							message="Task showing identical consecutive stacks for very long time. Please check the activity report."/>
+				<threshold 	type="stack signal"
+							count="10" 
+							level="WARNING" 
+							message="Task showing identical consecutive stacks for long time. Provide your software provider with the JZR report for review."/>
+			</thresholds>
+		</rule>
+
+		<!--  If successive missing thread dumps observed for [count] times or [time], generate event -->
+		<rule name="Missing thread dump" ref="JZR-STD-004">
+			<thresholds>
+				<threshold type="session diff"
+						   count="5"
+				           level="WARNING" 
+				           message="Application may run out of memory : check GC and memory figures."/>
+			</thresholds>
+		</rule>
+
+		<!--  If application not available longer than [value] in seconds , generate event. Count must be set to 1. Value must be greater than 60 -->
+		<rule name="Hiatus time" ref="JZR-STD-005">
+			<thresholds>
+				<threshold type="session value"
+						   count="1"
+						   value="1800" 
+				           level="INFO" 
+				           message="No thread dumps found for long period.&#10; The application has probably been stopped and restarted after some time (or the thread dump recording was simply not running)."/>
+			</thresholds>
+		</rule>
+
+ 		<!--  If deadlock is detected, generate event. This rule should be only set to CRITICAL. -->
+		<rule name="Deadlock" ref="JZR-STD-006">
+			<thresholds>
+				<threshold type="session signal"
+						   count="1" 
+				           level="CRITICAL" 
+				           message="A Java deadlock has been detected. Please send the Jeyzer recording to your Support service and restart the application."/>
+			</thresholds>
+		</rule>
+
+		<!--  If task is locking [value] threads for [count] thread dumps or [time], generate event. -->
+		<rule name="Locker task" ref="JZR-STD-007">
+			<thresholds>
+				<threshold type="action value"
+						   time="3m"
+						   value="1" 
+				           level="WARNING"
+				           message="A Java lock has been detected for long time. Please check the activity report."/>
+				<threshold type="stack value"
+						   time="1m"
+						   value="5"
+				           level="WARNING" 
+				           message="A Java lock impacting several threads has been detected for some time. Please check the activity report."/>
+				<threshold type="stack value"
+						   count="1"
+						   value="20"
+				           level="WARNING" 
+				           message="A Java lock impacting more than 20 threads has been detected for some time. Please check the activity report."/>
+			</thresholds>
+		</rule>
+
+		<!--  If number of locked threads, whatever the the involved lock owners, is greater than [value], generate event -->
+		<rule name="Locks contention" ref="JZR-STD-008">
+			<thresholds>
+				<threshold type="session value" 
+						   count="1"
+				           value="10" 
+				           level="INFO" 
+				           message="High number of locked threads."/>
+				<threshold type="session value" 
+						   count="5"
+				           value="10"
+				           level="WARNING" 
+				           message="High number of locked threads. Application may be under load. Monitor closely the application."/>
+   			</thresholds>
+		</rule>
+
+		<!--  If task duration longer than [count] thread dumps or [time], generate event. Value has no meaning -->
+		<rule name="Long running task" ref="JZR-STD-009">
+			<thresholds>
+				<threshold type="action value"
+						   time="30m"
+						   value="1"
+				           level="WARNING"
+				           message="Very long running action detected. Please check the activity report and applicative logs."/>
+				<!-- 
+				<threshold type="action value"
+						   time="10h"
+						   value="1"
+						   function=".*any function known as slow.*" 
+				           level="WARNING"
+				           message="Long specific running action detected. Please check the activity report and applicative logs."/>
+				-->
+			</thresholds>
+		</rule>
+		
+		<!--  If stack shows long recursive call which exceeds [value] limit for [count] thread dumps or [time], generate event-->
+		<rule name="Stack overflow" ref="JZR-STD-010">
+			<thresholds>
+				<threshold type="action value"
+						   count="5"
+						   value="400" 
+				           level="WARNING"
+				           message="Thread stack too high. Check the activity report to see if there is stack overflow risk. Please communicate it to R&amp;D for code review."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If stack shows long recursive call which exceeds [value] limit for [count] thread dumps or [time], generate event-->
+		<rule name="Stack overflow" ref="JZR-STD-011">
+			<thresholds>
+				<threshold type="action value"
+						   count="1"
+						   value="1000" 
+				           level="WARNING"
+				           message="Thread stack too high detected once. Please communicate it to R&amp;D for code review."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If suspended threads are detected, generate event. This rule should be only set to CRITICAL. -->
+		<rule name="Suspended threads" ref="JZR-STD-012" stickers="environment">
+			<thresholds>
+				<threshold type="session signal"
+						   count="1" 
+				           level="CRITICAL" 
+				           message="Suspended threads have been detected. Someone has paused some threads through a Java debugger connected to the application. It may impact the applicative processing."/>
+			</thresholds>
+		</rule>
+
+		<!--  If number of recording snapshots or thread dumps is lower or equal to [value], generate event. -->
+		<rule name="Recording size" extra_info="Small recording" param_display="Recording size" operator="lower_or_equal" ref="JZR-STD-013" stickers="analysis, !jfr-recording">
+			<thresholds>
+				<threshold type="system value"
+						   count="1" 
+				           level="INFO"
+				           value="1"
+				           message="Recording is too small : analyzing a single thread dump is often no sufficent.&#10;Please collect periodic thread dumps : it will permit to reveal the cinematic of the issues.&#10;To do so, it is recommended to use the Jeyzer Recorder.&#10;Those will also collect extra figures (CPU, memory, GC..) to help in the diagnosis.&#10;At last, this is not invasive, even for a production environment (unless hard real time)."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the contention type is detected across current session, generate event. -->
+		<rule name="Contention type presence" param_display="External process execution wait" param="External process execution" ref="JZR-STD-014" stickers="performance">
+			<narrative>This rule detects any external process execution wait.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           sub_level="7"
+				           message="Some forked process execution is detected.&#10; It may affect the performance of your Java application if this external process is too slow.&#10;  Please make sure it does not impact the application workflow."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If there are no detected actions, with the exception of principal functions defined with the given pattern, generate event. -->
+		<rule name="Quiet activity" extra_info="Standard inactivity detection" ref="JZR-STD-015">
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="JFR publish events|JFR platform stop recording|JFR start recording|JFR stop recording" 
+				           level="INFO"
+				           message="No internal activity of interest is detected within the provided recording.&#10; You may either look at other processes in case of incident troubleshooting in a distributed system or increase the logging level of your application if the incident is sudden."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of recording snapshots or thread dumps is lower or equal to [value], generate event. -->
+		<rule name="Recording size" extra_info="Small JFR recording" param_display="Recording size" operator="lower_or_equal" ref="JZR-STD-016" stickers="analysis, jfr-recording">
+			<thresholds>
+				<threshold type="system value"
+						   count="1" 
+				           level="INFO"
+				           value="2"
+				           message="Your JFR recording could be improved by collecting periodic thread dumps.&#10;It will permit to reveal the cinematic of the issues and also collect extra figures (CPU, memory, GC..) to help in the diagnosis.&#10;To do so, it is recommended to use the Jeyzer profile for JFR available at https://jeyzer.org/resources/jfr/jeyzer.jfc.&#10;Note this is not invasive, even for a production environment (unless hard real time)."/>
+			</thresholds>
+		</rule>
+
+		<!--  If number of active threads greater than [value] for [count] thread dumps or [time], generate event -->
+		<!--
+		<rule name="Active thread limit" ref="JZR-STD-014">
+			<thresholds>
+				<threshold type="session value" 
+						   count="5"
+				           value="200" 
+				           level="CRITICAL" 
+				           message="Very high number of active threads. Application is under load. Please monitor closely the application."/>
+				<threshold type="session value" 
+						   count="5"
+				           value="50" 
+				           level="WARNING" 
+				           message="High number of active threads. Application may be under load. Monitor closely the application."/>
+   			</thresholds>
+		</rule>
+		-->		
+
+		<!--  If number of threads greater than [value] for [count] thread dumps or [time], generate event -->
+		<!--
+		<rule name="Global thread limit" ref="JZR-STD-015">
+			<thresholds>
+				<threshold type="global value" 
+						   count="10"
+				           value="1000" 
+				           level="WARNING" 
+				           message="High number of threads created.&#10; Please send the Jeyzer recording to your Support service and monitor closely the application."/>
+   			</thresholds>
+		</rule>
+		-->
+		
+		<!--  If number of threads matching the [pattern] is greater than [value] for [count] times, generate event. Applies for active and inactive threads. Pattern is regex -->
+		<!--
+		<rule name="Named thread limit" extra_info="Java timers" ref="JZR-STD-016">
+			<thresholds>
+				<threshold type="session custom"
+						   count="5"
+						   value="100"
+						   pattern="^Timer-.*" 
+				           level="WARNING"
+				           message="High number of timer threads. Check the Pools sheet."/>
+				<threshold type="session custom"
+						   count="10"
+						   value="300"
+						   pattern="^Timer-.*"
+				           level="CRITICAL"
+				           message="Huge number of timer threads. Potential timer leakage. Check the Pools sheet. Risk of process crash."/>
+			</thresholds>
+		</rule>
+		-->
+		
+		<!--  If function regex pattern in the current task is seen more than [value] for [count] thread dumps or [time], generate event. Pattern is regex  -->
+		<!--
+		<rule name="Function pattern" extra_info="Specific action" ref="JZR-STD-017">
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="1"
+				           pattern="(function 1)|(function 2)" 
+				           level="INFO" 
+				           message="Specific action detected. Action required."/>
+			</thresholds>
+		</rule>
+		-->
+		
+		<!--  If operation regex pattern in the current task is seen more than [value], generate event. Pattern is regex -->
+		<!--
+		<rule name="Operation pattern" extra_info="Specific operation" ref="JZR-STD-018">
+			<thresholds>
+				<threshold type="stack pattern" 
+						   count="5"
+				           pattern="(operation 1)|(operation 2)" 
+				           level="INFO" 
+				           message="Specific operation detected. Action required."/>
+			</thresholds>
+		</rule>
+		-->
+		
+		<!--  If function regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<!--
+		<rule name="Function parallel contention" extra_info="Incoming message processing" ref="JZR-STD-019">
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="10"
+				           pattern=".*my_function.*" 
+				           level="INFO" 
+				           message="Contention on personal function."/>
+				<threshold type="session custom"
+						   count="3"
+						   value="10"
+				           pattern=".*my_function.*"  
+				           level="WARNING"
+				           message="Huge contention on personal function.&#10;There is a risk of performance decrease.&#10;Check the logs and monitoring figures."/>
+			</thresholds>
+		</rule>
+		-->
+		
+	</rules>
+
+</monitor>

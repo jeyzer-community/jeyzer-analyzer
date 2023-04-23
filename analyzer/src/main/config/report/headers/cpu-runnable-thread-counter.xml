@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<cpu_runnable_thread_counter 				
+				threshold="5" 
+				color="ORANGE" 
+				math_function_max_threshold="5" 
+				math_function_max_color="ORANGE"/>				
+		
+	</header>

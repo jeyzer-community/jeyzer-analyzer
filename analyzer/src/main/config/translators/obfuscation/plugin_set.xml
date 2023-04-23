@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin_set>
+
+		<!-- Deobfuscation plugin configuration sample -->
+		
+		<!-- Parameter : abort_on_error instructs if the analysis must abort or not in case the deobfuscation failed for any reason -->
+		<!--   If set to true, the analysis will pursue anyway with obfuscated stack lines. -->
+		<!--   This parameter is of interest if access to mapper configurations is not always available. -->
+		<!-- Parameter : fail_if_config_not_found controls the strictness of configuration file presence. -->
+		<!--   Typically with property card mappers, invalid configuration files may be instantiated. -->
+		<!-- Parameter : type determines the deobfuscator to use. Possible values:  -->
+		<!--             retrace-alt : an alternative of the Proguard retrace tool, under MT license. Shipped with Jeyzer -->
+		<!--             proguard-retrace : the original Proguard retrace tool under GPL license. NOT shipped with Jeyzer -->
+
+		<!-- plugin id="${JEYZER_TARGET_PROFILE}" type="proguard-retrace" fail_if_config_not_found="false" abort_on_error="true"-->		
+		<plugin id="${JEYZER_TARGET_PROFILE}" type="retrace-alt" fail_if_config_not_found="false" abort_on_error="true">
+
+			<!-- Configuration files -->
+			<!-- Plugin will be executed for each configuration file (url or file path) -->
+			<configurations>
+						
+				<!-- When specified, property mappers can decline multiple variants of the configuration path based on @@ tokens -->
+				<!--   This permits to access configuration paths that do follow the same pattern, usually based on library/project name and minor/major versions -->
+				<!--   @@property@@ is read from the declared property card mapper(s). See below. -->
+				<!-- Standard properties like ${property} are read respectively from process card properties, system properties and environment variables -->
+				<!-- Process jar versions are accessible with the process jar name enclosed by %%. Example : %%ext-lib-2%% -->
+				<!-- Java module versions are accessible with the Java module name enclosed by ##. Example : ##java-module-3## -->
+				<!-- Example :                                                                      -->
+				<!-- Url template : http://localhost:8081/proguard/mappings/${jzr.process.name}/@@module@@-@@version@@-@@build_number@@-proguard_map.txt  -->
+				<!-- Url instance : http://localhost:8081/proguard/mappings/Jeyzer-demo/Jeyzer-demo-1.0-16-proguard_map.txt  -->
+				<!--   jzr.process.name is read directly from the process card                       -->
+				<!--   module is derived from the jzr.process.name through the property card mapper  -->
+				
+				<!-- Local file -->
+				<config file="${JEYZER_DEOBSFUCATION_CONFIG_DIR}/${jzr.process.name}/library/proguard_map.txt"/>
+				
+				<!-- Web repository file with mappers -->
+				<config file="${JEYZER_REPOSITORY_MANAGER_URL}/@@module@@/@@module@@-@@version@@-@@build_number@@-proguard_map.txt" property_card_mappers="mapper-name, mapper-version, mapper-build-number"/>
+
+			</configurations>
+					
+		</plugin>
+			
+		<!-- 
+		<plugin id="ext-lib-1" type="proguard-retrace"  fail_if_config_not_found="false" abort_on_error="true">
+			<configurations>
+				<config file="${NEXUS_REPOSITORY_URL}/ext-lib-1/proguard_map.txt" property_card_mappers="mapper1, mapper2"/>
+			</configurations>
+		</plugin>
+		
+		<plugin id="ext-lib-2" type="proguard-retrace"  fail_if_config_not_found="false" abort_on_error="true">
+			<configurations>
+				<config file="${NEXUS_REPOSITORY_URL}/ext-lib-2/%%ext-lib-2%%/proguard_map.txt"/>
+			</configurations>
+		</plugin>
+		
+		<plugin id="ext-lib-3" type="retrace-alt"  fail_if_config_not_found="false" abort_on_error="true">
+			<configurations>
+				<config file="${NEXUS_REPOSITORY_URL}/java-module-3/##java-module-3##/proguard_map.txt"/>
+			</configurations>
+		</plugin>
+		-->
+
+</plugin_set>

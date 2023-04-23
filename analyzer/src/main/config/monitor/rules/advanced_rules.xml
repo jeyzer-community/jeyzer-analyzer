@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Standard advanced">
+
+		<!-- ************************************************************************ -->
+		<!--                              ADVANCED RULES                              -->
+		<!-- ************************************************************************ -->
+
+		<!--  If System CPU usage is greater than [value] % for [count] or [time], generate event. -->
+		<rule name="System CPU overload" ref="JZR-ADV-001">
+			<thresholds>
+				<threshold type="global value"
+						   time="30s"
+						   value="90" 
+				           level="CRITICAL"
+				           message="System CPU very high. Check system usage and possibly stop the root cause application."/>
+				<threshold type="global value"
+						   time="60s"
+						   value="60"
+				           level="WARNING" 
+				           message="System CPU high. Check system usage."/>
+			</thresholds>
+		</rule>
+	
+		<!--  If process consuming more than [value] CPU % for [count] or [time], generate event. -->
+		<rule name="CPU consuming process" ref="JZR-ADV-002">
+			<thresholds>
+				<threshold type="session value" 
+						   time="1m"
+				           value="90" 
+				           level="CRITICAL" 
+				           message="Process consuming high amount of CPU (>90%) on long period. Check process activity usage."/>
+				<threshold type="global value" 
+						   time="2m"
+				           value="50" 
+				           level="WARNING" 
+				           message="Process consuming high CPU (>60%) on very long period. If too frequent, please contact support."/>
+   			</thresholds>
+		</rule>		
+		
+		<!--  If task consuming more than [value] CPU % for [count] or [time], generate event. -->
+		<rule name="CPU consuming task" ref="JZR-ADV-003">
+			<thresholds>
+				<threshold type="stack value"
+						   time="1m"
+				           value="90" 
+				           level="CRITICAL" 
+				           message="CPU consuming action (>90%) on long period. Please check activity report."/>
+   			</thresholds>
+			<thresholds>
+				<threshold type="action value" 
+						   time="2m"
+				           value="60" 
+				           level="WARNING" 
+				           message="CPU consuming action (>60%) on very long period. If too frequent, please contact support."/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If system consuming more than [value] system memory % for [count] or [time], generate event. -->
+		<rule name="Memory consuming system" ref="JZR-ADV-004">
+			<thresholds>
+				<threshold type="session value"
+						   time="3m20s"
+						   value="70"
+				           level="CRITICAL"
+				           message="System consuming high amount of memory (>70%) on long period. Please check all running process states on this server."/>
+				<threshold type="global value"
+						   time="10m"
+						   value="50"
+				           level="WARNING" 
+				           message="System consuming high amount of memory (>50%) on very long period. If too frequent, please check all running process states on this server."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process consuming more than [value] heap memory % for [count] or [time], generate event. -->
+		<rule name="Memory consuming process" ref="JZR-ADV-005">
+			<thresholds>
+				<threshold type="session value"
+						   time="5m"
+						   value="70" 
+				           level="CRITICAL"
+				           message="Process consuming high amount of memory (>70%) on long period. Please check the activity report."/>
+				<threshold type="global value"
+						   time="10m"
+						   value="50"
+				           level="WARNING" 
+				           message="Process consuming high amount of memory (>50%) on very long period. If too frequent, please contact support."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If task consuming more than [value] heap applicative memory % for [count] or [time], generate event. -->
+		<rule name="Memory consuming task" ref="JZR-ADV-006">
+			<thresholds>
+				<threshold type="action value"
+						   time="1m"
+						   value="60"
+				           level="CRITICAL"
+				           message="Action consuming high amount of memory. Please check the activity report."/>
+				<threshold type="action value"
+						   time="2m"
+						   value="40"
+				           level="WARNING" 
+				           message="Memory consuming action. If too frequent, please contact support."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If Garbage Collection takes more than [value] ms for [count or time] times, generate event. -->
+		<rule name="Excessive GC time" ref="JZR-ADV-007">
+			<thresholds>
+				<threshold type="session value"
+						   count="1"
+						   value="2500" 
+				           level="CRITICAL"
+				           message="GC time high. Check memory figures. If too high, restart may be foreseen."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If Old GC execution count is greater than [value] for [count or time] times, generate event. -->
+		<rule name="Excessive old GC execution" ref="JZR-ADV-008">
+			<thresholds>
+				<threshold type="session value"
+						   count="2"
+						   value="3" 
+				           level="CRITICAL"
+				           message="Old GC execution is too frequent. Check memory figures. If too high, restart may be foreseen."/>
+			</thresholds>
+		</rule>
+
+		<!--  If used memory is increasing and upper than [used_memory] %, released memory is lower than [released_memory] % and GC time is higher than [gc_time] ms for [count or time] times, generate event. -->
+		<rule name="GC failing to release memory" ref="JZR-ADV-009">
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   used_memory="80" 
+						   released_memory="10"
+						   gc_time="500"
+				           level="CRITICAL"
+				           message="GC probably failing to release memory. Check memory figures. If too high, restart may be foreseen."/>
+			</thresholds>
+		</rule>
+
+		<!--  If process up time is greater than [value] sec, generate event. -->
+		<rule name="Process up time" ref="JZR-ADV-010">
+			<thresholds>
+				<threshold type="session value"
+						   value="259200"
+				           level="WARNING"
+				           message="Process has been running for more than 3 days. It is recommended to restart it"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process restart is detected, generate event. -->
+		<rule name="Process restart" ref="JZR-ADV-011">
+			<thresholds>
+				<threshold type="session signal"
+			               level="INFO"
+				           message="Process restart occurred."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process down time is too high, generate event. -->
+		<rule name="Process down time" ref="JZR-ADV-012">
+			<thresholds>
+				<threshold type="session custom"
+			               level="INFO"
+			               sub_level="10"
+			               down_time="72h"
+				           message="Process down time high."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If thread dump capture time is greater than [value] ms for [count] thread dumps or [time] ms, generate event. -->
+		<rule name="Recording snapshot capture time" ref="JZR-ADV-013">
+			<thresholds>
+				<threshold type="session value"
+						   count="5"
+						   value="1000" 
+				           level="WARNING"
+				           message="Recording snapshot capture time high. Check process state."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If used disk space is higher than [value] % for [count] or [time], generate event. -->
+		<rule name="Disk space used percent" param_display="App partition" param="work" ref="JZR-ADV-014">
+			<thresholds>
+				<threshold type="session value"
+						   time="30s"
+						   value="95"
+				           level="CRITICAL"
+				           message="Used disk space very high. Check and free some disk space : log files, temp directories.."/>
+				<threshold type="global value"
+						   time="60s"
+						   value="85"
+				           level="WARNING" 
+				           message="Used disk space high. Check the disk space : log files, temp directories.."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If free disk space is lower than [value] Gb for [count] or [time], generate event. -->
+		<rule name="Disk space free" param_display="App partition" param="work" ref="JZR-ADV-015">
+			<thresholds>
+				<threshold type="session value"
+						   time="30s"
+						   value="1"
+				           level="CRITICAL"
+				           message="Free disk space very low. Check and free some disk space : log files, temp directories.."/>
+				<threshold type="global value"
+						   time="60s"
+						   value="5"
+				           level="WARNING" 
+				           message="Free disk space low. Check the disk space : log files, temp directories.."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If recording writing speed is lower than [value] Kb/sec for [count] or [time], generate event. Applicable only in Jeyzer agent mode -->
+		<rule name="Disk write speed" ref="JZR-ADV-016">
+			<thresholds>
+				<threshold type="session value"
+						   count="5"
+						   value="500" 
+				           level="WARNING"
+				           message="Disk writing low. Check for write contentions and disk controller state."/>
+				<threshold type="global value"
+						   count="10"
+						   value="1024" 
+				           level="WARNING"
+				           message="Disk writing low. Check the disk controller state."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If recording writing time is higher than [value] ms for [count] or [time], generate event. Applicable only in Jeyzer agent mode -->
+		<rule name="Disk write time" ref="JZR-ADV-017">
+			<thresholds>
+				<threshold type="session value"
+						   count="1"
+						   value="2000" 
+				           level="WARNING"
+				           message="Recording writing took high amount of time. Check the disk controller state and recording content/analysis at that period of time."/>
+				<threshold type="global value"
+						   count="10"
+						   value="1000" 
+				           level="WARNING"
+				           message="Recording writing takes time. Check the disk controller state and recording content at that period of time."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If garbage collector name (old or young) matches the given pattern, generate event. -->
+		<rule name="Garbage collector name" extra_info="Serial GC usage" ref="JZR-ADV-018" stickers="performance">
+			<narrative>This rule detects if the serial garbage collector is used.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="Copy" 
+				           level="WARNING"
+						   sub_level="10"
+				           message="The serial garbage collector is used through the Copy GC : make sure it is appropriate.&#10;It halts any processing while running (stop the world pause) and can therefore impact the performance.&#10;The serial GC applies usually on single processor machines (aka client machines)&#10;It should be used on apps which manipulate small amounts of data.&#10;Prefer the G1 or PS garbage collectors."/>
+			</thresholds>
+		</rule>
+		
+	</rules>
+
+</monitor>

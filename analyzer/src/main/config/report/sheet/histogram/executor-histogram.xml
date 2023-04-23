@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<!--  display the action and stack counts categorized per executor, ordered by number of appearances -->
+		<sheet type="executor_histogram" name="Executor histogram"/>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<!-- Standard monitoring alerts -->
+		<sheet type="monitoring_events" name="Monitoring alerts" critical_tab_color="LIGHT_ORANGE">
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays monitoring events.&#10; Permits to identify process activity problems at a glance.</description>
+			<display date_format="yyyy/MM/dd HH:mm:ss" grouping="true" group_sorting="false" clean_duplicate_events="false">
+				<links sequence_sheets="all"/>
+				<ranking>
+					<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/monitoring-event-ranks.xml"/>
+				</ranking>
+			</display>
+			<rules>
+				<rule_sets files="repo://base/@@base-shared-deps@@"/>
+				<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/standard_rules.xml"/>
+				<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/advanced_rules.xml"/>
+				<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/process_card_rules.xml"/>
+				<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/jvm_flag_rules.xml"/>
+				<all_applicative_rules/>
+				<jeyzer_publisher_rules/>
+				<dynamic_rule_sets declared_repository_only="true"/>
+			</rules>
+		</sheet>

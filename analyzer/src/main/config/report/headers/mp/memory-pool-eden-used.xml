@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<memory_pool 
+				category="PS Eden Space|G1 Eden Space|Eden Space:usage:used" 
+				display="Eden used" 
+				color="RED" 
+				description="Eden space usage in Mb."/>
+		
+	</header>

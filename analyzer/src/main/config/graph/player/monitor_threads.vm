@@ -1,0 +1,68 @@
+## Apache Velocity template
+
+<html>
+
+  <style>
+  
+	body {
+    	background-color: #dbe0dc;
+    	font-family: Verdana, Arial;
+	}
+	
+	h2 {
+        font-family: Verdana, Arial;
+        text-align: center;
+	}  
+  
+	th {
+    	background-color: #4CAF50;
+    	color: white;
+    	border-bottom: 1px solid #ddd;
+	}
+
+	tr:nth-child(even) {
+    	background-color: #bfccc2
+	}
+	
+	td {
+    	border-bottom: 1px solid #ddd;
+	}
+	
+	p {
+		text-align: center;
+	}
+		
+	#no-thread-dump {
+    	background-color: orange;
+    	color: white;
+    	border-bottom: 1px solid #ddd;
+        font-size: 200%;
+        font-family: Verdana, Arial;
+        text-align: center;
+	}
+	
+  </style>
+
+  <head>
+    <title>Jeyzer Monitor - $target</title>
+    <meta http-equiv="refresh" content="$refresh_period">
+  </head>
+
+  <body>
+  	<h2>Actions in progress - $target</h2>
+  	
+  	#if( $graph_snapshot_file )
+  	<center><img src="$graph_snapshot_file" alt="Jeyzer Monitor threads state" style="width:1280px;height:1280px;"></center>
+  	#else
+  	<p id="no-thread-dump">No recording snapshots found.</p>
+  	#end
+  	
+  	#if( $application_id )
+  	<p>Application id : $application_id</p>
+  	<p>Application type : $application_type</p>
+  	#end
+  	
+  	<p>Generation : $generation_time</p>
+  	<p>Jeyzer Monitor</p>
+  </body>
+</html>

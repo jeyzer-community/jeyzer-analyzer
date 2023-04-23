@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jira_setup>
+
+	<server url="https://cloud.server.atlassian.net"/>
+
+	<!-- Supported types for the doc attachment action : jira_cloud_v3 or jira_cloud_v2. Other actions use jira_cloud_v3 -->
+	<!-- Debug : activates the JIRA client HTTP traces -->
+	<client type="jira_cloud_v3" debug="true">
+	
+		<!-- Basic authentication key supplied as header                                                  -->
+		<!--  Key creation : https://developer.atlassian.com/cloud/jira/platform/basic-auth-for-rest-apis -->
+		<connectivity auth_key="changeit"/>
+
+	</client>
+
+</jira_setup>

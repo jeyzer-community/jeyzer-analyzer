@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<!-- Set gc to :                                                                --> 
+		<!--    # old or young to display the figures of the related garbage collectors -->
+		<!--    # last to display the figures of the last executed garbage collector    -->
+		<!--    # the exact garbage collector name. Ex : PS Scavenge                    -->
+		<!-- Set pool to :                                                              --> 
+		<!--    # all to display the figures of all the memory pools                    -->
+		<!--    # old or young to display the figures of the related memory pool        -->
+		<!--    # the exact memory pool name. Ex : PS Old Gen                           -->
+	
+		<!-- Display in green if greater than 80% -->
+		<garbage_collection_memory_released_percent 
+				gc="last" 
+				pool="all"
+				display="Released memory %"
+				threshold="80"
+				color="RGB-149-208-80"/>
+		
+	</header>

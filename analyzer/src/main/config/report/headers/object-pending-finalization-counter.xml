@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<object_pending_finalization_counter 
+				threshold="1" 
+				color="ORANGE"/>
+		
+	</header>

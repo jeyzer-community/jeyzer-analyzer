@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<highlights>
+		
+			<highlight name="CRITICAL" color="RGB-255-0-0"/>
+			<highlight name="WARNING"  color="RGB-255-204-0"/>
+
+		</highlights>

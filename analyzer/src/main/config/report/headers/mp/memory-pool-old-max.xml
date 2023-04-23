@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<memory_pool 
+				category="PS Old Gen|G1 Old Gen|Tenured Gen:usage:max" 
+				display="Old Gen max" 
+				color="RED" 
+				description="Old generation strict maximum space limit in Mb.&#10;Value is equal to Xmx in case it is set."/>
+		
+	</header>

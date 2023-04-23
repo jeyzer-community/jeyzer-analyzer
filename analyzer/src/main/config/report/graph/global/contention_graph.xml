@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<!-- generate contention graph picture -->
+	<contention_graph>
+
+		<contention_graph_player graph_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/graph/player/contention_graph_player.xml"/>
+		
+		<!-- generate graph picture -->
+		<graph>
+			<!-- Default settings override -->
+			<!-- Limited set of parameters required and coming as complementary to the contention graph player one -->
+			<rendering>
+				<!-- resolution in number of standard rows and columns. -->
+				<excel_resolution height="27" width="9"/>
+			</rendering>
+			<conditions>
+				<generation maximum="10"/>
+			</conditions>
+		</graph>
+				
+	</contention_graph>

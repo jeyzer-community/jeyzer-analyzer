@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<repositories>
+
+	<!-- Repositories get loaded from remote (and can be cached) first, otherwise from local -->
+	<!-- The optional local_first attribute permits to ignore the remote. Useful in case of profile manual tuning phase -->
+	<!-- Repositories get referenced by their id in jeyzer repo urls. Id must be unique -->
+	<!-- Both remote and local can reference either a http url or system path (like a shared drive path) -->
+
+	<repository id="base" remote="https://raw.githubusercontent.com/jeyzer-repo/base/master/shared" local="${JEYZER_BASE_SHARED_PROFILES_DIR}" local_first="true"/>
+
+</repositories>

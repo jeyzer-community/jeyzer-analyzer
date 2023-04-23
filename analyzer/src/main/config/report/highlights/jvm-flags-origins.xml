@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<highlights>
+		
+			<highlight name="Management" color="RGB-146-208-80"/>   <!-- green  -->
+			<highlight name="Command line" color="RGB-91-155-213"/> <!-- blue   -->
+			<highlight name="Ergonomic" color="RGB-255-217-102"/>   <!-- yellow -->
+
+		</highlights>

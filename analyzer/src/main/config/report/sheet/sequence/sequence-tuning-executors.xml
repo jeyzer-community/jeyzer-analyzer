@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="sequence" name="Executor tuning" link_type="TEx">
+		
+			<description>Displays actions in a time line manner, focusing on stacks of low interest.&#10;Permits to build and refine applicative profiles.</description>		
+		
+			<row_headers freeze="true">
+				<action_start_time action_link="true"/>
+				<executor>
+					<highlight name="(ETBI)" color="RGB-233-140-63"/>  <!-- Light brown -->
+				</executor>
+				<thread_name/>
+			</row_headers>
+		
+			<display>
+
+				<stack_size threshold="12" color="RGB-233-140-63"/>  <!-- Light brown -->
+				
+				<!-- Identical consecutive stacks : add colored borders  -->
+				<frozen_code_state color="RED" stats="true"/>
+				
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+
+			</display>
+		</sheet>

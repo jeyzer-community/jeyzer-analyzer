@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<applicative_memory_activity threshold="70" color="ORANGE"
+					math_function_average_threshold="50" math_function_average_color="ORANGE"
+					math_function_max_threshold="70"     math_function_max_color="ORANGE"/>
+		
+	</header>

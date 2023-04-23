@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="sequence" name="States" link_type="Sta">
+		
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays actions in a time line manner, focusing on java thread states.</description>
+
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+			</row_headers>
+
+			<display>
+				<!-- Function display. Color applies for ATBI -->
+				<function color="GREY_25_PERCENT" />
+
+				<!-- Operation display. Color applies for OTBI -->
+				<operation color="GREY_25_PERCENT" />
+
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+				
+				<!-- Stack state displayed as cell color -->
+				<state>
+				    <highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/thread-states.xml"/>
+				</state>
+				
+			</display>
+		</sheet>

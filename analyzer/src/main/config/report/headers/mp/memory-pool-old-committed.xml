@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<memory_pool 
+				category="PS Old Gen|G1 Old Gen|Tenured Gen:usage:committed" 
+				display="Old Gen committed" 
+				color="RED" 
+				description="Old generation committed maximum space limit in Mb.&#10;Committed means at a certain time as the JVM adjusts this limit dynamically.&#10;Value range is between Xms and Xmx."/>
+		
+	</header>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<!-- Set gc to :                                                                --> 
+		<!--    # old or young to display the figures of the related garbage collectors -->
+		<!--    # last to display the figures of the last executed garbage collector    -->
+		<!--    # the exact garbage collector name. Ex : PS Scavenge                    -->
+		<!-- Set pool to :                                                              --> 
+		<!--    # all to display the figures of all the memory pools                    -->
+		<!--    # old or young to display the figures of the related memory pool        -->
+		<!--    # the exact memory pool name. Ex : PS Old Gen                           -->
+	
+		<garbage_collection_memory_used_after_gc_percent 
+				gc="old" 
+				pool="all" 
+				display="Mem % used after major GC" 
+				threshold="70" 
+				color="RED"
+				math_function_average_threshold="50" 
+				math_function_average_color="RED"
+				math_function_max_threshold="70"
+				math_function_max_color="RED"/>
+		
+	</header>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="monitoring_events" name="Process card alerts" critical_tab_color="LIGHT_ORANGE">
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays process card monitoring events.&#10; Permits to check system or process info and recommend actions like critical patch appliance.</description>
+			<display date_format="yyyy/MM/dd HH:mm:ss" grouping="true" group_sorting="false" clean_duplicate_events="false">
+				<ranking>
+					<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/monitoring-event-ranks.xml"/>
+				</ranking>
+			</display>
+			<rules>
+				<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/process_card_rules.xml"/>
+				<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/jvm_flag_rules.xml"/>
+			</rules>
+			<stickers>
+			</stickers>
+		</sheet>

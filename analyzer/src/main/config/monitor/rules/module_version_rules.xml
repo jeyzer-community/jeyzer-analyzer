@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Demo features Java module versions">
+
+		<!-- ************************************************************************ -->
+		<!--                   PROCESS MODULE VERSION RULES                           -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If the process module version is a snapshot, alpha, beta, build... version, generate event. -->
+		<rule name="Process module version snapshot" ref="JZR-PMV-001">
+			<narrative>This rule checks if the Java modules have snapshot versions. It it important to run with official modules.</narrative>
+			<thresholds>
+				<threshold type="system signal"
+				           level="WARNING"
+				           sub_level="10" 
+				           message="Application is running with snapshot modules.&#10; It is highly recommended to run only with released modules."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the process module version is not available, generate event. -->
+		<rule name="Process module version absence" ref="JZR-PMV-002">
+			<narrative>This rule checks the absence of versions on the Java modules. It it important to know the module version in case of issue.</narrative>
+			<thresholds>
+				<threshold type="system signal"
+				           level="INFO"
+				           sub_level="8" 
+				           message="Application is running with Java modules without version.&#10; It is recommended to run with versionned modules."/>
+			</thresholds>
+		</rule>		
+		
+	</rules>
+
+</monitor>

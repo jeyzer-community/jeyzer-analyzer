@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<memory_pool_ratio 
+				fraction_category="PS Old Gen|G1 Old Gen|Tenured Gen:usage:used" 
+				basis_category="PS Old Gen|G1 Old Gen|Tenured Gen:usage:max" 
+				display="Old Gen Usage %" 
+				threshold="70" 
+				color="RED" 
+				description="Old generation usage in percentage.&#10;Formula is : 100 x (Old generation used space / Old generation strict maximum space limit)."
+				math_function_average_threshold="50" 
+				math_function_average_color="RED"
+				math_function_max_threshold="70"     
+				math_function_max_color="RED"/>
+		
+	</header>

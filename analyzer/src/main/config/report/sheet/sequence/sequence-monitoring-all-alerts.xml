@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="monitoring_sequence" name="Monitoring sequence" link_type="Mon" critical_tab_color="LIGHT_ORANGE">
+		
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays Jeyzer time sequence display monitoring events, along with header figures.</description>
+
+			<rules>
+				<rule_sets files="repo://base/@@base-shared-deps@@"/>
+				<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/standard_rules.xml"/>
+				<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/advanced_rules.xml"/>
+				<all_applicative_rules/>
+				<dynamic_rule_sets declared_repository_only="true"/>
+			</rules>
+		
+			<!-- Optional -->
+			<headers formats="Advanced JMX,Advanced Agent">
+			
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<average/>
+					<max/>
+				</math_functions>			
+			
+				<!-- Headers -->
+				<capture_time          header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/capture-time.xml"/>
+				<thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
+				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+				<deadlock_counter      header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/deadlock-counter.xml"/>
+				<suspended_counter     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/suspended-counter.xml"/>
+
+				<section_delimiter title="CPU" color="RGB-201-208-168"/>
+				<system_cpu           header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/system-cpu.xml"/>
+				<process_cpu          header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/process-cpu.xml"/>
+				
+				<section_delimiter title="Memory" color="RGB-201-208-168"/>
+				<!-- Heap -->
+				<memory_pool_heap header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/memory-pool-heap.xml"/>
+				<memory_pool_heap_ratio header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/memory-pool-heap-ratio.xml"/>
+				<!-- Garbage collection -->
+				<garbage_collection_time_percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-all-time-percent.xml"/>
+				<garbage_collection_health_indication header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-last-all-health-indication.xml"/>
+				
+			</headers>
+			
+			<headers formats="JFR Recording">
+			
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<average/>
+					<max/>
+				</math_functions>			
+			
+				<!-- Headers -->
+				<thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
+				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+				<deadlock_counter      header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/deadlock-counter.xml"/>
+				<suspended_counter     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/suspended-counter.xml"/>
+
+				<section_delimiter title="CPU" color="RGB-201-208-168"/>
+				<system_cpu           header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/system-cpu.xml"/>
+				<process_cpu          header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/process-cpu.xml"/>
+				
+				<section_delimiter title="Memory" color="RGB-201-208-168"/>
+				<!-- Heap -->
+				<memory_pool_heap header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/memory-pool-heap.xml"/>
+				<memory_pool_heap_ratio header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/memory-pool-heap-ratio.xml"/>
+				<!-- Garbage collection -->
+				<garbage_collection_time_percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-all-time-percent.xml"/>
+				<garbage_collection_health_indication header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-last-all-health-indication.xml"/>
+				
+			</headers>
+			
+			<headers formats="Jstack 1.6+,Jstack 1.6+ Hung,JMX,Jstack 1.5">
+			
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<average/>
+					<max/>
+				</math_functions>
+			
+				<!-- Headers -->
+				<capture_time          header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/capture-time.xml"/>
+				<thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
+				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+				
+			</headers>
+			
+			<headers formats="IBM core dump,JRMC,TDA,default">
+			
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<average/>
+					<max/>
+				</math_functions>
+			
+				<!-- Headers -->
+				<thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
+				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+				
+			</headers>
+		
+			<row_headers>
+				<event_level>
+					<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/monitoring-event-row-levels.xml"/>
+				</event_level>
+				<event_name event_link="true"/>
+				<event_ref/>
+				<event_scope/>
+				<event_start_date/>
+				<!--event_duration color="RGB-231-213-137" threshold="600"/-->	<!-- Light brown -->
+				<!--event_size color="RGB-231-213-137" threshold="10"/-->  		<!-- Light brown -->
+			</row_headers>
+		
+			<display date_format="yyyy/MM/dd HH:mm:ss" clean_duplicate_events="false">
+				<event_name/>
+				<event_level>
+					<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/monitoring-event-cell-levels.xml"/>
+				</event_level>
+				<event_message/>
+				<event_link/>
+			</display>
+		</sheet>
+		
+<!-- Supported colors :
+	HSSFColor.AQUA, 
+	HSSFColor.AUTOMATIC, 
+	HSSFColor.BLACK, 
+	HSSFColor.BLUE, 
+	HSSFColor.BLUE_GREY, 
+	HSSFColor.BRIGHT_GREEN, 
+	HSSFColor.BROWN, 
+	HSSFColor.CORAL, 
+	HSSFColor.CORNFLOWER_BLUE, 
+	HSSFColor.DARK_BLUE, 
+	HSSFColor.DARK_GREEN, 
+	HSSFColor.DARK_RED, 
+	HSSFColor.DARK_TEAL, 
+	HSSFColor.DARK_YELLOW, 
+	HSSFColor.GOLD, 
+	HSSFColor.GREEN, 
+	HSSFColor.GREY_25_PERCENT, 
+	HSSFColor.GREY_40_PERCENT, 
+	HSSFColor.GREY_50_PERCENT, 
+	HSSFColor.GREY_80_PERCENT, 
+	HSSFColor.INDIGO, 
+	HSSFColor.LAVENDER, 
+	HSSFColor.LEMON_CHIFFON, 
+	HSSFColor.LIGHT_BLUE, 
+	HSSFColor.LIGHT_CORNFLOWER_BLUE, 
+	HSSFColor.LIGHT_GREEN, 
+	HSSFColor.LIGHT_ORANGE, 
+	HSSFColor.LIGHT_TURQUOISE, 
+	HSSFColor.LIGHT_YELLOW, 
+	HSSFColor.LIME, 
+	HSSFColor.MAROON, 
+	HSSFColor.OLIVE_GREEN, 
+	HSSFColor.ORANGE, 
+	HSSFColor.ORCHID, 
+	HSSFColor.PALE_BLUE, 
+	HSSFColor.PINK, 
+	HSSFColor.PLUM, 
+	HSSFColor.RED, 
+	HSSFColor.ROSE, 
+	HSSFColor.ROYAL_BLUE, 
+	HSSFColor.SEA_GREEN, 
+	HSSFColor.SKY_BLUE, 
+	HSSFColor.TAN, 
+	HSSFColor.TEAL, 
+	HSSFColor.TURQUOISE, 
+	HSSFColor.VIOLET, 
+	HSSFColor.WHITE, 
+	HSSFColor.YELLOW 
+-->

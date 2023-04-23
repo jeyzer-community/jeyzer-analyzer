@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<!-- Monitoring rules -->
+		<sheet type="monitoring_rules" name="Monitoring Rules">
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays monitoring rules applied on the current session for each sheet.&#10;Includes rule hit count.</description>
+			
+			<!-- list key is either rule_ref (each rule listed only once) or sheet (each rule can appear several times, once per sheet) -->
+			<display list_key="sheet"/>
+		</sheet>

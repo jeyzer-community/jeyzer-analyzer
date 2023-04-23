@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<highlights>
+		
+			<highlight name="Synchro" color="RGB-119-165-233"/> <!-- Blue light -->
+			<highlight name="Queue" color="RGB-119-165-233"/> <!-- Blue light -->
+			<highlight name="Task delegation" color="RGB-119-165-233"/> <!-- Blue light -->
+			
+			<!-- Locker identified -->
+			<highlight name="Code locked" color="RGB-119-165-233"/> <!-- Blue light -->
+					
+			<highlight name="Database" color="RGB-255-255-0"/> <!-- Yellow -->
+			<highlight name="Oracle" color="RGB-255-255-0"/> <!-- Yellow -->
+			<highlight name="MSSQL" color="RGB-255-255-0"/> <!-- Yellow -->
+			<highlight name="DB2" color="RGB-255-255-0"/> <!-- Yellow -->
+			<highlight name="MySQL" color="RGB-255-255-0"/> <!-- Yellow -->
+			<highlight name="PostgreSQL" color="RGB-255-255-0"/> <!-- Yellow -->
+					
+			<highlight name="File" color="RGB-184-113-54"/> <!-- Maroon -->
+			<highlight name="Class loader" color="RGB-184-113-54"/> <!-- Maroon -->
+			<highlight name="Log" color="RGB-184-113-54"/> <!-- Maroon -->
+					
+			<highlight name="Resource pool" color="RGB-255-0-0"/> <!-- Red -->
+					
+			<highlight name="Network" color="RGB-252-162-252"/> <!-- Light purple -->
+			<highlight name="Crypto" color="RGB-252-162-252"/> <!-- Light purple -->
+					
+			<highlight name="Code execution" color="RGB-55-225-124"/> <!-- Light green -->
+			<highlight name="Collection" color="RGB-72-181-11"/> <!-- Green -->
+			<highlight name="String" color="RGB-72-181-11"/> <!-- Green -->
+			<highlight name="Random generation" color="RGB-72-181-11"/> <!-- Green -->
+			<highlight name="Exception" color="RGB-72-181-11"/> <!-- Green -->
+					
+			<highlight name="Waiting" color="LIGHT_BLUE"/>
+			<highlight name="Listen" color="LIGHT_BLUE"/>
+			<highlight name="Timed waiting" color="PALE_BLUE"/>
+					
+			<highlight name="Blocked" color="ORANGE"/>
+
+		</highlights>

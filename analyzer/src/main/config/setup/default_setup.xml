@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<default_setup>
+
+	<!-- Repository setup locations -->
+	<!-- The directories attribute is the list of semicolon separated directories to scan -->
+	<repository_setups directories="${JEYZER_ANALYZER_CONFIG_DIR}/repositories;${JEYZER_EXTERNAL_REPOSITORY_SETUP_DIRECTORY}">
+
+		<!-- All remote repositories can be cached locally -->
+		<cache enabled="true" directory="${user.home}/.jeyzer/caches/profiles" time_to_live="24h"/>
+	
+	</repository_setups>
+	
+	<jmx_advanced>
+
+		<garbage_collectors>
+
+			<!-- Add below any new garbage collector not already listed
+		     in order to categorize it as old or young GC  -->
+
+			<!-- category is key name. do not change -->
+			<garbage_collector category="old" name="PS MarkSweep"/>
+			<garbage_collector category="old" name="G1 Old Generation"/>
+			<garbage_collector category="old" name="MarkSweepCompact"/>
+			<garbage_collector category="old" name="ConcurrentMarkSweep"/>
+			
+			<garbage_collector category="young" name="PS Scavenge"/>
+			<garbage_collector category="young" name="G1 Young Generation"/>
+			<garbage_collector category="young" name="Copy"/>
+			<garbage_collector category="young" name="ParNew"/>
+
+		</garbage_collectors>
+
+		<memory_pools>
+
+			<!-- Add below any new memory pool not already listed
+		     in order to categorize it as old or young pool  -->
+
+			<!-- category is key name. do not change -->
+			<memory_pool category="old" name="PS Old Gen"/>
+			<memory_pool category="old" name="G1 Old Gen"/>
+			<memory_pool category="old" name="Tenured Gen"/>
+			
+			<memory_pool category="young" name="PS Eden Space"/>
+			<memory_pool category="young" name="G1 Eden Space"/>
+			<memory_pool category="young" name="Eden Space"/>
+		
+		</memory_pools>
+
+	</jmx_advanced>
+
+	<!-- Available themes : blue, vinci. Can be overriden at report level  -->
+	<display theme="vinci">
+	
+		<logo>
+			<picture file="${JEYZER_ANALYZER_CONFIG_DIR}/setup/pictures/ermine-lady-small.jpg"/>
+			<icon    file="${JEYZER_ANALYZER_CONFIG_DIR}/setup/pictures/jeyzer-white.png"/>
+			<!-- icon    file="${JEYZER_ANALYZER_CONFIG_DIR}/setup/pictures/jeyzer-white.png"/-->
+		</logo>
+		
+		<reports>
+		
+			<xlsx_report security_file="${JEYZER_ANALYZER_CONFIG_DIR}/setup/security/report_security.xml">
+			
+				<!-- soft line : if false, chart serie line is segment based -->
+				<!-- dot style possible values : NONE, DASH, DIAMOND, DOT, CIRCLE, PLUS, SQUARE, STAR, TRIANGLE -->
+				<charts soft_line="true" dot_style="CIRCLE"/>
+				
+				<columns grouping="true"/>
+				
+				<!-- Task sequence sheet specific -->
+				<!-- unfreeze_pane_threshold -->
+				<!--     if more than threshold headers must be displayed, do not freeze the headers for convenience -->
+				<!--     when no task and no graphic is displayed, headers do not get frozen -->
+				<!--     freeze or unfreeze can be forced at the task sequence configuration level -->
+				<!-- date_link               -->
+				<!--     add date links between task sequence sheets -->
+				<!-- action_link             -->
+				<!--     add a link to the time header cell, to link the first starting action within its column  -->
+				<!-- action_highlight        -->
+				<!--     highlight the time header cell if it column contains at least one action -->
+				<headers unfreeze_pane_threshold="10" date_link="true" action_link="true" action_highlight="true"/>
+				
+				<row_headers unfreeze_pane_threshold="5"/>
+
+				<!-- Task sequence sheet specific -->
+				<!-- add action links between task sequence sheets -->
+				<!-- optimize cell stack display if number of active stacks is greater than threshold. -1 disables it -->
+				<cells action_link="true" optimize_stacks_threshold="1000"/>
+				
+			</xlsx_report>
+			
+			<graph>
+			
+				<!-- output directory is set as root_directory/sheet_name -->
+				<output root_directory="${JEYZER_OUTPUT_DIR}/graph">
+					<archive enabled="true"/>
+				</output>
+				
+				<!-- Default parameters. Please do not change or remove -->
+				<!-- All those parameters can be overridden at sheet level -->
+				<display>
+					<rendering>
+						<!-- Mode possible values : graph, tree, radial_merge or radial. Usually overridden at sheet level -->
+						<!-- Graph mode is adapted for histograms or global views like top stack -->
+						<!--   display : child nodes can point back to parent nodes -->
+						<!-- Tree mode  is adapted for profiling -->
+						<!--   display : child nodes are branch nodes -->
+						<!-- Tree mode merge is adapted for simplified profiling. Perfect with thread state display -->
+						<!--   display : child nodes are merged branch nodes -->						
+						<!-- Radial merge mode  is adapted for simple statistical view -->
+						<!--   display : all child nodes link to root node and are merged based on their node name -->
+						<!-- Radial mode  is adapted for simple statistical view -->
+						<!--   display : all child nodes link to root node -->
+						<mode type="graph"/>
+						
+						<!--  Displays listed thread states only in tree mode, comma separated -->
+						<!--  Set it to empty to not list any state -->
+						<thread_state enabled="true" states="BLOCKED"/>
+					
+						<!-- default style sheet -->
+						<style_sheet file="${JEYZER_ANALYZER_CONFIG_DIR}/graph/static/style_function.css"/>
+						
+						<!-- default resolution in pixels --> 
+						<!-- values adapted for distinct action display (low number of nodes) -->
+						<picture_resolution width="2560" height="2048" />
+						
+						<!-- default resolution in number of standard rows and columns -->
+						<!-- values adapted for distinct action display (low number of nodes) -->
+						<excel_resolution height="40" width="15"/>
+						
+						<!-- display node if related stack count is greater than threshold. Disabled by default (-1) -->
+						<node_display size_threshold="-1"/>
+						
+						<!-- display node value (stack count) if value is greater than threshold -->
+						<node_value_display size_threshold="8"/>
+						
+						<!-- rendering area percentage growth to prevent graph elements loss on borders -->
+						<!-- recommended values for function : 5, 5, 10, 0 -->
+						<!-- recommended values for contention types : 5, 5, 10, 5 -->
+						<graph_area_extend top="5" bottom="5" right="10" left="0"/>
+					</rendering>
+					<conditions>
+						<!-- maximum number of graph generated per sheet. Default value -->
+						<generation maximum="10"/>
+						
+						<!-- Action or stack will be considered in the graph generation 
+						     if its number of distinct operations and functions is greater than threshold. Default value -->
+						<nodes threshold="4"/>
+						
+						<!-- Action (or stack) will be considered in the graph generation 
+						     if its size (or number of similar stacks) is greater than threshold. Default value -->
+						<action_size threshold="10"/>
+					</conditions>
+				</display>
+			
+			</graph>
+		
+		</reports>
+		
+	</display>
+	
+	<monitor>
+	
+		<!-- Jeyzer Monitor commercial license key file. To be obtained from https://jeyzer.org/license-request -->
+		<license file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/jeyzer.lic"/>
+	
+		<!-- default standard stickers -->
+		<stickers>
+			
+			<!-- OS stickers -->
+			<sticker_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/stickers/operating_system_stickers.xml"/>
+
+			<!-- Standard command line parameter stickers -->
+			<sticker_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/stickers/java_process_parameter_stickers.xml"/>
+			
+			<!-- Analyzer ambient stickers. Examples : code_quality, performance..  -->
+			<sticker_set list="${JEYZER_MONITOR_ANALYZER_STICKERS}" group="analyzer"/>
+			
+			<!-- Load dynamic stickers based on the JZR recording content -->
+			<dynamic_sticker_sets declared_repository_only="true"/>
+			
+		</stickers>
+	
+	</monitor>
+	
+	<thread_stack>
+	
+		<!-- CPU runnable includes any runnable stacks that match the given contention type -->
+		<!-- Threads identified as CPU runnable are immediate candidates for CPU usage. Permits to detect any CPU access contention -->
+		<!-- Eligibility is either based on a white (includes mode) or black (excludes mode) contention type list. -->
+		<!-- Black contention type list is recommended value. -->
+		<cpu_runnable>
+			<contention_types mode="excludes">
+				<includes>
+					<contention_type name="File"/>
+					<contention_type name="Class loader"/>
+					<contention_type name="Crypto"/>
+					<contention_type name="Code execution"/>
+					<contention_type name="Collection"/>
+					<contention_type name="String"/>
+					<contention_type name="Random generation"/>
+					<contention_type name="Exception"/>
+				</includes>
+				<excludes>
+				 	<contention_type name="I/O"/>
+					<contention_type name="Synchro"/>
+					<contention_type name="Queue"/>
+					<contention_type name="Task delegation"/>
+					<contention_type name="Database"/>
+					<contention_type name="Oracle"/>
+					<contention_type name="MSSQL"/>
+					<contention_type name="MySQL"/>
+					<contention_type name="PostgreSQL"/>
+					<contention_type name="DB2"/>
+					<contention_type name="Log"/>
+					<contention_type name="Resource pool"/>
+					<contention_type name="Network"/>
+					<contention_type name="Waiting"/>
+					<contention_type name="Listen"/>
+					<contention_type name="Timed waiting"/>
+					<contention_type name="Blocked"/>
+				</excludes>
+			</contention_types>
+		</cpu_runnable>
+		
+		<!-- Stack ordering : recording (natural one, often thread id based), thread_id, thread_name -->
+		<!-- This will influence all the analysis and therefore the report display -->
+		<!-- Can be overridden at profile level -->
+		<sorting key="thread_id"/>
+	
+	</thread_stack>
+
+</default_setup>

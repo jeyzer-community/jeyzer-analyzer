@@ -1,0 +1,54 @@
+## Apache Velocity template
+
+<p>Hi,</p>
+
+#if( $application_id )
+<p>You've received a Jeyzer monitoring alert email for :</p>
+<li>Application id : $application_id</li>
+<li>Application type : $application_type</li>
+#else
+<p>You've received a Jeyzer monitoring alert email.</p>
+#end
+
+<p>Please review the detected events and react accordingly.</p>
+<p>Thanks.</p>
+<br/>
+
+#if($events_dumpable)
+  	<h2>Detected events</h2>
+	<table cellpadding="5" cellspacing="5">
+    	<tr>
+    		<th>Id</td>
+    		<th>Ref</td>
+    		<th>Level</th>
+    		<th>Sub level</th>
+    		<th>Start date</th>
+    		<th>End date</th>
+    		<th>Event</th>
+    		<th>Recommendation</th>
+    		<th>Scope</th>
+    	</tr>
+		#foreach( $event in $events_list )
+    	<tr>
+    		<td>$foreach.count</td>
+    		<td>$event.Ref</td>
+    		<td>$event.Level</td>
+    		<td>$event.SubLevel</td>
+    		<td>$event.StartDate</td>
+    		<td>$event.EndDate</td>
+    		#if( $event.NameExtraInfo )
+    		<td>$event.Name : $event.NameExtraInfo</td>
+    		#else
+    		<td>$event.Name</td>
+    		#end
+    		<td>$event.Message</td>
+    		<td>$event.Scope</td>
+    	</tr>
+		#end
+	</table>
+#else
+<p>Please check the attachments for more details.</p>
+#end
+
+<p>-----------------------------------------</p>
+<p>This is a Jeyzer Monitor publisher email</p>

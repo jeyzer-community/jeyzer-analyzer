@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<function_graph_player>
+
+		<!-- Graph configuration -->
+		<rendering>
+			<!-- default style sheet -->
+			<style_sheet file="${JEYZER_ANALYZER_CONFIG_DIR}/graph/dynamic/style_function.css"/>
+			<!-- Mode possible values : action_single, action_merged -->
+			<mode type="${JEYZER_DYNAMIC_GRAPH_MODE}"/>
+			<!-- Number of periods a node will stay as phantom before being removed. Set to 0 to disable phantoms -->
+			<node max_age="0"/>
+			<!-- Display node value (time in seconds) if value is greater than threshold -->
+			<node_value_display size_threshold="300"/>
+			<!-- Display CPU overload style if CPU usage greater than cpu_load_threshold -->
+			<executor cpu_load_threshold="10"/>
+			<!-- resolution in pixels for motion snapshot pictures -->
+			<picture_resolution width="1542" height="1536" />
+			<!-- rendering area percentage growth to prevent graph elements loss on borders -->
+			<graph_area_extend top="5" bottom="5" right="10" left="0"/>
+		</rendering>
+	
+		<!-- Actions graph stream viewer -->
+		<viewer enabled="${JEYZER_ANALYZER_GRAPH_VIEWER_ENABLED}"/>
+
+		<!-- Actions graph image generation -->
+		<picture file="${JEYZER_TARGET_NAME}_monitor_threads.jpg" html_file="${JEYZER_TARGET_NAME}_monitor_threads.html">
+			<!-- HTML template which displays periodically the generated picture -->
+			<template directory="${JEYZER_ANALYZER_CONFIG_DIR}/graph/player" name="monitor_threads.vm"/>
+		</picture>
+		
+	</function_graph_player>

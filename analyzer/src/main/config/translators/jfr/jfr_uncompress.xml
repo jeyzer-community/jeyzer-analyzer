@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<translator>
+
+	<jfr_uncompress keep_files="true" directory="${JEYZER_RECORD_DIRECTORY}/jfr_uncompressed">
+		
+		<!-- Time zone source. Possible values :                -->
+		<!--    jfr     : UTC time zone (JFR standard)          -->
+		<!--    process : taken out from the JFR user.timezone  -->
+		<!--    custom  : specified <custom> value              -->
+		<!-- If the process or custom time zone is not found or invalid, the JFR one (UTC) will be used -->
+		<time_zone source="process" custom="EST"/>
+		
+		<!-- Security limits, useful in a web portal context --> 
+		<!--   File size and uncompressed size are in Mb     -->
+		<!--   If not set, default values are 100Mb          -->
+		<limits file_size_limit="${JEYZER_TRANSLATOR_FILE_MAX_SIZE}"/>
+		
+		<!-- Dump the JFR events for debug purposes into txt files                                      -->
+		<!--   per_type : one file will be created per event type                                       -->
+		<!--              the list of event types will be printed in the eventTypes-jfr.txt file        -->
+		<!--   all : all events will be printed in the all-events-jfr.txt in their JFR appearance order -->
+		<dump_events per_type="false" all="false" directory="${JEYZER_RECORD_DIRECTORY}/jfr_dump"/>
+
+	</jfr_uncompress>
+
+</translator>

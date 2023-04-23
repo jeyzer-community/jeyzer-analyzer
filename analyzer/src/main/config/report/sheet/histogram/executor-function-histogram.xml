@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<!--  display the functions and operations categorized per executor, ordered by number of appearances -->
+		<sheet type="executor_function_histogram" name="Executor function histogram"/>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<translator>
+
+	<!-- Decryption modes: -->
+	<!--   dynamic : AES key gets generated and transmitted as RSA encrypted with the recording -->
+	<!--   static  : encrypted AES key is loaded locally and not transmitted  -->
+	<decryption mode="dynamic" keep_files="false" directory="${JEYZER_RECORD_DIRECTORY}/decrypted">
+
+		<!-- AES key file must be encrypted with the Jeyzer encrypter -->
+		<static encrypted_key_file="${JEYZER_ANALYZER_CONFIG_DIR}/translators/security/static/encryption.key"/>
+
+		<!-- RSA master private key used to decrypt the AES key in the dynamic mode -->
+		<dynamic master_private_key_file="${JEYZER_ANALYZER_CONFIG_DIR}/translators/security/dynamic/master-private.key"/>
+
+	</decryption>
+
+</translator>

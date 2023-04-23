@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<!-- HTTP pools -->
+		<!--    WSS_http_listener    = Glassfish4 HTTP -->
+		<!--    http-thread-pool-    = Glassfish HTTP  -->
+		<!--    httpSSLWorkerThread- = Glassfish HTTPS -->
+		<!--    httpWorkerThread-    = Glassfish2 HTTP -->
+		<!--    TP-Processor         = Glassfish AJP   -->
+		<!--    http-    		     = Tomcat, JBoss   -->
+		<!--    ExecuteThread:       = Weblogic        -->
+		<!--    WebContainer :       = Websphere       -->
+	
+		<pool_thread_action_counter 
+				name="HTTP thread pool - active" 
+				regex="(^http-.*)|(^httpSSL.*)|(^httpWorker.*)|(^TP-Processor.*)|(^ExecuteThread:.*)|(^WebContainer :.*)|(^WSS_http_listener.*)" 
+				threshold="50" 
+				color="RED" />
+		
+	</header>

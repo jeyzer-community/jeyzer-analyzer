@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="sequence" name="Tendencies" link_type="Tnd">
+		
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays actions in a time line manner, focusing on main indicators such as CPU, memory and thread count.&#10;Permits to get a good overview of the different process activities, including long running tasks.</description>
+		
+			<!-- Optional -->
+			<headers formats="Advanced JMX,Advanced Agent,JFR Recording" title_column_index="1">
+				
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<max/>
+				</math_functions>
+			
+				<!-- Headers -->
+				<thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
+				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+				<tendency_function/>
+				<tendency_operation/>
+				<tendency_function_operation/>
+				<tendency_executor/>
+				<tendency_contention_type/>
+			</headers>
+			<headers formats="Jstack 1.6+,Jstack 1.6+ Hung,JMX,Jstack 1.5,JRMC,TDA,IBM core dump,default" title_column_index="1">
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<max/>
+				</math_functions>
+			
+				<!-- Headers -->
+				<thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
+				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+				<tendency_function/>
+				<tendency_operation/>
+				<tendency_function_operation/>
+				<tendency_executor/>
+				<tendency_contention_type/>
+			</headers>
+		
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+				<action_size color="RGB-231-213-137" threshold="10"/> <!-- Light brown -->
+			</row_headers>
+		
+			<display>
+
+				<!-- Function display. Color applies for ATBI -->
+				<function color="GREY_25_PERCENT"/>
+
+				<!-- Long running tasks display -->
+				<long_running color="LIGHT_YELLOW" threshold="7" stats="true"/>
+
+				<!-- Java Lock display -->
+				<lock_state color="ORANGE" lock_owner="RGB-209-47-109" lock_owner_and_locked="RGB-174-76-169" deadlock="RED" suspended="RED" stats="false"/>
+
+				<!-- Identical consecutive stacks : add colored borders  -->
+				<frozen_code_state color="RED" stats="false"/>
+
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+
+			</display>
+		</sheet>

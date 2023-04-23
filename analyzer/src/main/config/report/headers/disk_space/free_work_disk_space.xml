@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<free_disk_space 
+				id="work" 
+				display="App partition / Free disk space"
+				comment="Free disk space on the partition where the application stands, in Gb."/>
+		
+	</header>

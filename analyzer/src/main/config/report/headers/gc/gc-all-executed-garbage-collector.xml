@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<!-- Use type all to display the garbage collectors executed since last JZR recording snapshot -->
+		<!-- Use type last to display the last garbage collector executed since last JZR recording snapshot -->
+	
+		<garbage_collection_executed_garbage_collector 
+				type="all" 
+				display="Executed garbage collector(s)"/>
+		
+	</header>

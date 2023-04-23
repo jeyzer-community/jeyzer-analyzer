@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="sequence" name="CPU" formats="Advanced JMX,Advanced Agent,JFR Recording" link_type="Cpu">
+
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays actions in a time line manner, focusing on process and thread CPU consumption.&#10;Permits to identify high CPU consuming actions.</description>
+
+			<!-- Optional -->
+			<headers title_column_index="1">
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<max/>
+				</math_functions>
+			
+				<!-- Headers -->
+				<system_cpu           header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/system-cpu.xml"/>
+				<process_cpu          header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/process-cpu.xml"/>
+				<computed_process_cpu header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/computed-process-cpu.xml"/>
+				<applicative_cpu_activity header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/applicative-cpu-activity.xml"/>
+				<cpu_runnable_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/cpu-runnable-thread-counter.xml"/>
+			</headers>
+			
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+				<action_consumed_cpu color="ORANGE" threshold="1" color_activity="RGB-225-255-225"/>
+			</row_headers>
+		
+			<display>
+				<!-- Function display. Color applies for ATBI -->
+				<function color="GREY_25_PERCENT" />
+
+				<advanced_operation>
+					<highlight name="(OTBI)" color="GREY_25_PERCENT"/>
+				</advanced_operation>
+				
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+				
+				<cpu_usage stats="true">
+					<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/cpu-ranges.xml"/>
+				</cpu_usage>
+				
+				<!-- CPU details (cpu, sys, usr, act) displayed as cell color if within value range -->
+				<!--
+				<cpu_details>
+					<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/cpu-ranges.xml"/>
+				</cpu_details>
+				-->
+			
+				<!-- Single display. Range value can be added -->
+				<!--
+				<cpu_usage>
+				<sys_usage/>
+				<usr_usage/>
+				<act_usage/>
+				-->
+				
+				<!-- Wrap cell text. Required to display CPU details info -->
+				<!--wrap_text/-->
+				
+			</display>
+			
+			<charts>
+				<chart title="CPU system &amp; process">
+					<serie header="system_cpu"/>
+					<serie header="process_cpu"/>
+					<serie header="computed_process_cpu"/>
+					<serie header="applicative_cpu_activity"/>
+				</chart>
+			</charts>
+			
+		</sheet>

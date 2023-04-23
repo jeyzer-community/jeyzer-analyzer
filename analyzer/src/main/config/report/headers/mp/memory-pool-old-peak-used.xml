@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<memory_pool 
+				category="PS Old Gen|G1 Old Gen|Tenured Gen:peak:used" 
+				display="Old Gen Peak" 
+				color="RED" 
+				description="Old generation peak usage in Mb since the last value fetch.">
+				
+			<!-- Factor defined in percentage gain or loss -->
+			<delta 
+					increase_factor="10" 
+					increase_color="ORANGE" 
+					decrease_factor="10" 
+					decrease_color="GREEN"/>
+				
+		</memory_pool>
+		
+	</header>

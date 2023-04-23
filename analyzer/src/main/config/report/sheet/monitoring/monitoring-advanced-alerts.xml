@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<!-- Advanced monitoring alerts -->
+		<sheet type="monitoring_events" name="Advanced alerts" critical_tab_color="LIGHT_ORANGE">
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays Advanced monitoring events.&#10;Permits to identify CPU, memory and GC problems.</description>
+			<display date_format="yyyy/MM/dd HH:mm:ss" grouping="true" group_sorting="false" clean_duplicate_events="false">
+				<links sequence_sheets="all"/>
+				<ranking>
+					<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/monitoring-event-ranks.xml"/>
+				</ranking>
+			</display>
+			<rules>
+				<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/advanced_rules.xml"/>
+				<all_applicative_rules/>
+				<jeyzer_publisher_rules/>
+				<dynamic_rule_sets declared_repository_only="true"/>
+			</rules>
+		</sheet>

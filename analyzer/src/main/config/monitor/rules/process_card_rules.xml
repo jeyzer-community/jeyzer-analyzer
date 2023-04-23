@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Standard process card">
+
+		<!-- ************************************************************************ -->
+		<!--                        PROCESS CARD RULES                                -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If process card property value contains the given pattern, generate event. -->
+		<!--  For info, the Java 8 extended level support has been extended to dec 2030 -->
+		<rule name="Process card property pattern" param_display="Java runtime version" param="java.runtime.version" ref="JZR-PCD-001">
+			<narrative>This rule detects if the Java version is has reached its extended support end of life.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="^1\.[0-7].*|^9|^10|^12|^13|^14|^15|^16|^18|^19" 
+				           level="WARNING" 
+				           message="Running on old Java version which has reached end of life.&#10; You may consider to upgrade it soon."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process card property value is greater or equal to [value], generate event. -->
+		<rule name="Process card property number" param_display="CPU count" param="jzr.ext.process.available.processors" operator="lower_or_equal" ref="JZR-PCD-002">
+			<narrative>This rule detects if the number of CPUs is sufficient.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="8" 
+				           level="WARNING" 
+				           message="Production system running with low number of CPUs.&#10; You may consider to increase it."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the number of CPU runnable threads is greater or equal to the number of available CPUs (as per the jzr.ext.process.available.processors process card property), generate event. -->
+		<rule name="CPU Runnable vs CPU capacity" ref="JZR-PCD-003">
+			<thresholds>
+				<threshold type="session signal" 
+				           level="WARNING" 
+				           message="High applicative CPU access, exceeding the system CPU capacity.&#10; You may consider to increase it."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process card property value contains the given pattern, generate event. -->
+		<rule name="Process card property pattern" param_display="Java runtime version" param="java.runtime.version" ref="JZR-PCD-011">
+			<narrative>This rule detects if the Java version is feature version.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="^9|^10|^12|^13|^14|^15|^16|^18|^19|^20" 
+				           level="INFO" 
+				           message="Running on a Java features release, not intended for long term production usage.&#10; You should consider to upgrade to a long-term support version."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process card property value contains the given pattern, generate event. -->
+		<rule name="Process card property pattern" param_display="Jeyzer recorder log in debug" param="jzr.recorder.log.level" ref="JZR-PCD-012">
+			<narrative>This rule detects if the Jeyzer Recorder log level is set to DEBUG.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="DEBUG" 
+				           level="WARNING"
+				           sub_level="6" 
+				           message="Jeyer Recorder is logging in DEBUG level and is therefore impacting the application performance.&#10; You should revert to INFO in the Jeyzer Recorder logging configuration."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process card property value contains the given pattern, generate event. -->
+		<rule name="Process card property pattern" param_display="Jeyzer recorder log console active" param="jzr.recorder.log.console.active" ref="JZR-PCD-013">
+			<narrative>This rule detects if the Jeyzer Recorder logging in console is active.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="true" 
+				           level="WARNING"
+				           sub_level="6" 
+				           message="Jeyer Recorder is logging in console : this may affect the application logging.&#10; You should disable it in the Jeyzer Recorder logging configuration."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process card property value contains the given pattern, generate event. -->
+		<rule name="Process card property pattern" param_display="Jeyzer recorder log file inactive" param="jzr.recorder.log.file.active" ref="JZR-PCD-014">
+			<narrative>This rule detects if the Jeyzer Recorder logging in file is inactive.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="false" 
+				           level="INFO"
+				           sub_level="7" 
+				           message="Jeyer Recorder is not logging in file.&#10; You should activate it in the Jeyzer Recorder logging configuration"/>
+			</thresholds>
+		</rule>
+		
+		<!-- ************************************************************************ -->
+		<!--                   APPLICATIVE PROCESS COMMAND LINE RULES                 -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If process command line parameter with name [pattern] is not found, generate event. -->
+		<rule name="Process command line parameter absence" param_display="Missing Xmx" param="Xmx.*" ref="JZR-PCD-004">
+			<narrative>This rule checks if the Xmx parameter is set on the process command line. It is highly recommended having control over the maximum memory limit otherwise the JVM may consume abusively the available system memory.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="WARNING" 
+				           message="Maximum Java heap size is not set.&#10; Please add the -Xmx&lt;size&gt; to the process startup command line."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process command line parameter matches the given pattern, generate event. -->
+		<rule name="Process command line parameter pattern" param_display="JMX remote access enabled" param="com.sun.management.jmxremote" ref="JZR-PCD-005">
+			<narrative>This rule detects if the JMX remote access is enabled.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="com.sun.management.jmxremote" 
+				           level="INFO" 
+				           message="JMX remote access is enabled."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process command line parameter matches the given pattern, generate event. -->
+		<!--   Parameter : -Xrunjdwp:transport=dt_socket,address=5000,server=y -->
+		<rule name="Process command line parameter pattern" param_display="Java jdwp remote debug access enabled" param="Xrunjdwp.*" ref="JZR-PCD-006" stickers="security, environment">
+			<narrative>This rule detects if the remote debugging is enabled.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="runjdwp"
+				           level="WARNING"
+				           sub_level="6"
+				           message="Java jdwp remote debug access enabled.&#10; This should not happen in production."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process command line parameter matches the given pattern, generate event. -->
+		<rule name="Process command line parameter pattern" param_display="JFR enabled" param="XX:\+FlightRecorder|XX:StartFlightRecording" ref="JZR-PCD-007">
+			<narrative>This rule detects if the Java Flight Recorder is enabled.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="XX:\+FlightRecorder|XX:StartFlightRecording" 
+				           level="INFO" 
+				           message="Java Flight Recorder is enabled."/>
+			</thresholds>
+		</rule>
+
+		<!--  If process command line parameter matches the given pattern, generate event. -->
+		<rule name="Process command line parameter pattern" param_display="JFR enabled in profiling mode" param="profile\.jfc" ref="JZR-PCD-008" stickers="performance, environment">
+			<narrative>This rule detects if the Java Flight Recorder is started in profiling mode using the profile.jfc settings file.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="profile\.jfc" 
+				           level="WARNING"
+						   sub_level="6"
+				           message="Java Flight Recorder is profiling the application and is therefore impacting its performance. &#10; Make sure it has been activated on purpose."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process command line property value contains the given pattern, generate event. -->
+		<rule name="Process command line property pattern" param_display="JMX remote authentication disabled" param="com.sun.management.jmxremote.authenticate" ref="JZR-PCD-009"  stickers="jmx_remote_access, security">
+			<narrative>This rule checks if the JMX remote authentication is disabled on the command line.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="false" 
+				           level="WARNING" 
+				           sub_level="10"
+				           message="JMX remote authentication is disabled. This security issue should be adressed in a production environment as anybody could take control of the JVM remotely."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process command line property value contains the given pattern, generate event. -->
+		<rule name="Process command line property pattern" param_display="JMX SSL disabled" param="com.sun.management.jmxremote.ssl" ref="JZR-PCD-010"  stickers="jmx_remote_access, security">
+			<narrative>This rule checks if the JMX remote SSL is disabled on the command line.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="false" 
+				           level="WARNING" 
+				           sub_level="8"
+				           message="JMX remote SSL is disabled. This JMX connection should be secured in a production environment."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process card property value contains the given pattern, generate event. -->
+		<rule name="Process command line parameter pattern" param_display="Serial GC usage" param="XX:\+UseSerialGC" ref="JZR-PCD-015" stickers="performance" ticket="SOF-52474162">
+			<narrative>This rule detects if the serial garbage collector is enabled on the command line.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="XX:\+UseSerialGC" 
+				           level="WARNING"
+				           sub_level="10"
+				           message="The serial garbage collector is used : make sure it is appropriate.&#10;It halts any processing while running (stop the world pause) and can therefore impacts the performance.&#10;The serial GC applies usually on single processor machines (aka client machines)&#10;It should be used on apps which manipulate small amounts of data.&#10;Prefer the G1 or PS garbage collectors."/>
+			</thresholds>
+		</rule>
+		
+		<!-- Next is JZR-PCD-016 -->
+		
+	</rules>
+
+</monitor>

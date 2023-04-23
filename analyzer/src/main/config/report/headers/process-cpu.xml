@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<process_cpu threshold="70" color="RED"
+					math_function_average_threshold="50" math_function_average_color="RED"
+					math_function_max_threshold="70"     math_function_max_color="RED"/>
+		
+	</header>

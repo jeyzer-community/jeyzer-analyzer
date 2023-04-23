@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="monitoring_stickers" name="Stickers">
+
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays the monitoring stickers.&#10;Includes sticker positive and negative matching.</description>
+
+			<stickers>
+				<sticker_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/stickers/operating_system_stickers.xml"/>
+				<sticker_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/stickers/java_process_parameter_stickers.xml"/>
+				<sticker_sets files="repo://base/@@base-shared-deps@@"/>
+				<dynamic_sticker_sets declared_repository_only="true"/>
+			</stickers>
+			
+		</sheet>

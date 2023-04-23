@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<highlights>
+		
+			<highlight name="BLOCKED" color="ORANGE"/>
+			<highlight name="RUNNABLE" color="BRIGHT_GREEN"/>
+			<highlight name="NEW" color="YELLOW"/>
+			<highlight name="TIMED_WAITING" color="PALE_BLUE"/>
+			<highlight name="WAITING" color="LIGHT_BLUE"/>
+			<highlight name="TERMINATED" color="GREY_40_PERCENT"/>
+			<!-- Hung stack states -->
+			<highlight name="IN_NATIVE" color="BRIGHT_GREEN"/>
+			<highlight name="IN_NATIVE_TRANS" color="BRIGHT_GREEN"/>
+			<highlight name="IN_VM_STATE" color="BRIGHT_GREEN"/>
+			<highlight name="IN_VM_TRANS_STATE" color="BRIGHT_GREEN"/>
+			<highlight name="IN_JAVA" color="GREEN"/>
+			<highlight name="SYS_BLOCKED" color="LIGHT_BLUE"/>
+			<highlight name="BLOCKED_TRANS" color="LIGHT_BLUE"/>
+
+		</highlights>

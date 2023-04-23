@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<frozen_code_state_thread_counter 
+				threshold="5" 
+				color="RGB-255-145-71"/> <!-- light orange -->
+		
+	</header>

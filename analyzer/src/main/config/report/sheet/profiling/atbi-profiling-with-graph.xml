@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<!--  display the ATBI sections of interest within the merged actions and their related stacks as a tree. 
+		      Provides profiling info : frequency, average CPU and memory if available -->
+		<sheet type="atbi_profiling" name="ATBI Profiling" include_atbi="true">
+			<display>
+			
+				<atbi stack_count_interest="3" section_size_threshold="4"/>
+			
+				<!-- display operation tag (optional). color is mandatory -->
+				<operations color="RGB-249-223-195"/>
+				
+				<!-- display function tag (optional). color is mandatory -->
+				<functions  color="RGB-208-228-244"/>
+				
+				<!-- display java modules. Java 9+ -->
+				<java_modules strip="false"/>
+
+			</display>
+			
+			<!-- generate function graph picture -->
+			<function_graph>
+
+				<graph>
+					<!-- Default settings override -->
+					<!-- see default_setup.xml for complete parameter documentation -->
+					<rendering>
+						<!-- Mode possible values : graph, tree, tree_merge, radial_merge or radial -->
+						<mode type="tree"/>
+						<!--  Displays listed thread states only in tree mode, comma separated -->
+						<!--  Set it to empty to not list any state. BLOCKED,WAITING,TIMED_WAITING -->
+						<thread_state enabled="true" states=""/>
+						<!--  Displays ATBI nodes if threshold conditions are met. Mode must be tree -->
+						<atbi stack_count_threshold="3" section_size_threshold="4"/>
+					</rendering>
+					<conditions>
+						<!--
+						<generation maximum="10"/>
+						<nodes threshold="4"/>
+						<action_size threshold="10"/>
+						-->
+					</conditions>
+				</graph>
+				
+			</function_graph>
+			
+		</sheet>

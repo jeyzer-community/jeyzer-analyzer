@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<!-- process card sheet will be displayed only if the process card file is available -->
+		<sheet type="process_card" name="Process card">
+			<!-- category will be displayed if at least one property is found in the process card file -->
+			<category name="Jeyzer MX" color="RGB-191-202-136">
+				<field name="Node name" property="jzr.node.name"/>
+				<field name="Name" property="jzr.process.name"/>
+				<field name="Version" property="jzr.process.version"/>
+				<field name="Build Number" property="jzr.process.build.number"/>
+				<field name="Profile" property="jzr.profile.name"/>
+				<!-- Customize this section based on your application parameters -->
+				<!-- field name="static field 1" property="jzr.cxt.param-static-field-1"/-->
+				<!-- field name="static field 2" property="jzr.cxt.param-static-field-2"/-->
+			</category>
+			<category name="Operating system" color="RGB-191-202-136">
+				<field name="Name" property="os.name"/>
+				<field name="Version" property="os.version"/>
+				<field name="Architecture" property="os.arch"/>
+				<field name="# CPUs" property="jzr.ext.process.available.processors"/>
+				<field name="# CPUs" property="jfr.system.cpu.cores"/>
+				<field name="CPU type" property="jfr.system.cpu.description"/>
+				<field name="Max FDs" property="jzr.ext.system.unix.max.file.descriptor.count"/>
+				<field name="Patch level" property="sun.os.patch.level"/>
+			</category>
+			<category name="JVM" color="RGB-191-202-136">
+				<field name="Vendor" property="java.vm.vendor"/>
+				<field name="VM name" property="java.vm.name"/>
+				<!-- Version : one of.. -->
+				<field name="VM Version" property="java.vm.specification.version"/>
+				<field name="Version" property="java.runtime.version"/>
+				<field name="Minor version" property="java.vm.version"/>
+				<field name="Java home" property="java.home"/>
+				<field name="Runtime name" property="java.runtime.name"/>
+				<field name="VM info" property="java.vm.info"/>
+				<field name="GC old" property="jzr.analysis.gc.old.name"/>
+				<field name="GC young" property="jzr.analysis.gc.young.name"/>
+			</category>
+			<category name="Regional settings" color="RGB-191-202-136">
+				<field name="Time zone" property="user.timezone"/>
+				<field name="Country" property="user.country"/>
+				<field name="Language" property="user.language"/>
+				<field name="Country variant" property="user.variant"/>
+				<field name="File encoding" property="file.encoding"/>
+			</category>
+			<category name="Process" color="RGB-191-202-136">
+				<field name="Pid" property="jzr.ext.process.pid"/>
+				<field name="User" property="user.name"/>
+				<field name="User home" property="user.home"/>
+				<field name="Working directory" property="user.dir"/>
+				<field name="Temp directory" property="java.io.tmpdir"/>
+				<field name="Startup command" property="sun.java.command"/>
+				<field name="Input parameters" property="jzr.ext.process.input.parameters"/>
+			</category>
+			<category name="VM 2ndary paths" color="RGB-191-202-136">
+				<field name="Classpath" property="java.class.path"/>
+				<field name="Module path" property="jdk.module.path"/>
+				<field name="Boot classpath" property="sun.boot.class.path"/>
+				<field name="Java library path" property="java.library.path"/>
+				<field name="Java external directories" property="java.ext.dirs"/>
+				<field name="Java endorsed directories" property="java.endorsed.dirs"/>
+			</category>
+			<category name="JMX" color="RGB-191-202-136">
+				<field name="Port" property="com.sun.management.jmxremote.port"/>
+				<field name="Authentication enabled" property="com.sun.management.jmxremote.authenticate"/>
+				<field name="SSL enabled" property="com.sun.management.jmxremote.ssl"/>
+			</category>
+			<!--
+			<category name="Applicative library manifest attributes" color="RGB-191-202-136">
+				<field name="Module" property="jzr.jar.any-applicative-library.jar.Implementation-Title"/>
+				<field name="Version" property="jzr.jar.any-applicative-library.jar.Implementation-Version"/>
+				<field name="Build number" property="jzr.jar.any-applicative-library.jar.Implementation-Build"/>
+			</category>
+			-->
+		</sheet>

@@ -1,0 +1,1384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Sample" stickers="ambient_sample_family, windows, java11">
+
+		<!-- ************************************************************************ -->
+		<!--                              STANDARD RULES                              -->
+		<!-- ************************************************************************ -->
+	
+		<!--  If task stack is identical for [count] snapshots or [time], optionally for function principal=[regex], generate event -->
+		<rule name="Frozen stacks" stickers="ambient_frozen_family" ref="JZR-SAMPLE-001">
+			<thresholds>
+				<threshold 	type="action signal"
+							time="40s" 
+							level="WARNING" 
+							message="Task showing identical consecutive stacks for long time. Provide your software provider with the JZR report for review."/>
+				<threshold 	type="action signal" 
+							count="2" 
+							function="Frozen code section.*" 
+							level="INFO" 
+							message="Task showing identical consecutive stacks on specific action. Provide your software provider with the JZR report for review."/>
+				<threshold 	type="action signal" 
+							count="4" 
+							level="INFO" 
+							message="Task showing identical consecutive stacks. Provide your software provider with the JZR report for review."/>
+			</thresholds>
+		</rule>
+
+		<!--  If number of threads greater than [value], generate event -->
+		<rule name="Global thread limit" ref="JZR-SAMPLE-002">
+			<thresholds>
+				<threshold type="global value" 
+						   count="12"
+				           value="10" 
+				           level="WARNING" 
+				           message="High number of threads created. Please send the Jeyzer recording to your Support service and monitor closely the application."/>
+				<threshold type="session value" 
+						   count="1"
+				           value="10" 
+				           level="WARNING" 
+				           message="High number of threads created. Please send the Jeyzer recording to your Support service and monitor closely the application."/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If number of active threads greater than [value], generate event -->
+		<rule name="Active thread limit" ref="JZR-SAMPLE-003">
+			<thresholds>
+				<threshold type="global value" 
+						   count="1"
+				           value="6" 
+				           level="WARNING" 
+				           message="High number of active threads. Application may be under load. Monitor closely the application."/>
+   			</thresholds>
+		</rule>
+		<rule name="Active thread limit" ref="JZR-SAMPLE-004">
+			<thresholds>
+				<threshold type="session value" 
+						   count="1"
+				           value="6" 
+				           level="WARNING" 
+				           message="High number of active threads. Application may be under load. Monitor closely the application."/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If number of locked threads, whatever the the involved lock owners, is greater than [value], generate event -->
+		<rule name="Locks contention" ref="JZR-SAMPLE-005">
+			<thresholds>
+				<threshold type="session value" 
+						   count="1"
+				           value="10" 
+				           level="INFO" 
+				           message="High number of locked threads."/>
+				<threshold type="session value" 
+						   count="5"
+				           value="10"
+				           level="WARNING" 
+				           message="High number of locked threads. Application may be under load. Monitor closely the application."/>
+   			</thresholds>
+		</rule>
+
+		<!--  If execution regex pattern in the current task is seen more than [value], generate event. If user exists, will be added as message prefix -->
+		<rule name="Task execution pattern" extra_info="Dysfunctional code sequence" ref="JZR-SAMPLE-006">
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="1"
+				           pattern="(?s).*DysfunctionalCodeSequence.dysfunctionalCode2.*DysfunctionalCodeSequence.dysfunctionalCode1.*" 
+				           level="CRITICAL" 
+				           message="Corruption detected.\n Please contact the WWTennis Federation to ask for fix ANTI-CORRUPT-F28."/>
+			</thresholds>
+		</rule>
+
+		<!--  If execution regex pattern in the current task is seen more than [value] percentage, generate event. If user exists, will be added as message prefix -->
+		<rule name="Task execution pattern" extra_info="Dysfunctional code sequence" ref="JZR-SAMPLE-007">
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="10"
+				           pattern="(?s).*DysfunctionalCodeSequence.dysfunctionalCode2.*DysfunctionalCodeSequence.dysfunctionalCode1.*"
+				           percentage_in_action="60"  
+				           level="WARNING" 
+				           message="Corrupted code executed very often within the action. Contact support to ask for fix A-XYZ."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If execution regex pattern in the current session is seen more than [value], generate event. If user exists, will be added as message prefix -->
+		<rule name="Session execution pattern" extra_info="Dysfunctional code sequence detected" ref="JZR-SAMPLE-008">
+			<thresholds>
+				<threshold type="session pattern" 
+						   count="1"
+				           pattern="(?s).*DysfunctionalCodeSequence.dysfunctionalCode2.*DysfunctionalCodeSequence.dysfunctionalCode1.*" 
+				           level="CRITICAL" 
+				           message="Corruption detected.\\n Please contact the WWTennis Federation to ask for fix ANTI-CORRUPT-F28."/>
+				<threshold type="global pattern" 
+						   count="1"
+				           pattern="(?s).*DysfunctionalCodeSequence.dysfunctionalCode2.*DysfunctionalCodeSequence.dysfunctionalCode1.*" 
+				           level="CRITICAL" 
+				           message="Corruption detected.\\n Please contact the WWTennis Federation to ask for fix ANTI-CORRUPT-F28."/>
+			</thresholds>
+		</rule>
+
+		<!--  If successive missing thread dumps observed for [count] times or [time], generate event -->
+		<rule name="Missing thread dump" ref="JZR-SAMPLE-009">
+			<thresholds>
+				<threshold type="session diff"
+						   time="5s" 
+				           level="WARNING" 
+				           message="Application may run out of memory : check GC and memory figures."/>
+				<threshold type="global diff"
+						   count="1" 
+				           level="CRITICAL" 
+				           message="Application may run out of memory : check GC and memory figures."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If application not available longer than [value] in seconds , generate event. Count must be set to 1. Value must be greater than 60 -->
+		<rule name="Hiatus time" ref="JZR-SAMPLE-010">
+			<thresholds>
+				<threshold type="session value"
+						   count="1"
+						   value="3600" 
+				           level="INFO" 
+				           message="No thread dumps found for long period.&#10; The application has probably been stopped and restarted after some time (or the thread dump recording was simply not running)."/>
+			</thresholds>
+		</rule>
+
+ 		<!--  If deadlock is detected, generate event. This rule should be only set to CRITICAL. -->
+		<rule name="Deadlock" ref="JZR-SAMPLE-011">
+			<thresholds>
+				<threshold type="session signal"
+						   count="1" 
+				           level="CRITICAL" 
+				           message="A Java deadlock has been detected. Please send the Jeyzer recording to your Support service and restart the application."/>
+				<threshold type="global signal"
+						   count="1" 
+				           level="CRITICAL" 
+				           message="A Java deadlock has been detected. Please send the Jeyzer recording to your Support service and restart the application."/>
+			</thresholds>
+		</rule>
+
+		<!--  If task is locking [value] threads for [count] or [time], generate event. -->
+		<rule name="Locker task" ref="JZR-SAMPLE-012">
+			<thresholds>
+				<threshold type="action value"
+						   count="1"
+						   value="1" 
+						   percentage_in_action="50"
+				           level="WARNING"
+				           message="A Java lock has been detected for some time. Please send the Jeyzer recording to your Support service and restart the application."/>			
+				<threshold type="action value"
+						   count="1"
+						   value="1" 
+				           level="WARNING"
+				           message="A Java lock has been detected for some time. Please send the Jeyzer recording to your Support service and restart the application."/>
+				<threshold type="stack value"
+						   count="1"
+						   value="1"
+				           level="WARNING" 
+				           message="A Java lock has been detected for some time. Please send the Jeyzer recording to your Support service and restart the application."/>
+			</thresholds>
+		</rule>
+			
+		<!--  If task duration longer than [count] or [time], generate event. Value has no meaning -->
+		<rule name="Long running task" ref="JZR-SAMPLE-013">
+			<thresholds>
+				<threshold type="action value"
+						   time="60s"
+						   value="1"
+						   function=".*running tennis player.*" 
+				           level="WARNING"
+				           message="Long tennis match. Wow !"/>
+				<threshold type="action value"
+						   time="30s"
+						   value="1"
+				           level="WARNING"
+				           message="Very long running task. Check CPU/memory as well as other monitoring events."/>
+				<threshold type="action value"
+						   time="5m"
+						   value="1"
+				           level="CRITICAL"
+				           message="Task running for too long. Check CPU/memory as well as other monitoring events. Provide your software provider with the JZR report for review."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If stack shows long recursive call which exceeds [value] limit, generate event-->
+		<rule name="Stack overflow" ref="JZR-SAMPLE-014">
+			<thresholds>
+				<threshold type="action value"
+						   count="5"
+						   value="10" 
+				           level="WARNING"
+				           message="Thread stack too high. Check the relative thread dump to see if there is stack overflow evidence."/>
+				<threshold type="action value"
+						   count="5"
+						   percentage_in_action="50"
+						   value="10" 
+				           level="WARNING"
+				           message="Thread stack too high. Check the relative thread dump to see if there is stack overflow evidence."/>
+				<threshold type="stack value"
+						   count="5"
+						   value="10"
+				           level="WARNING" 
+				           message="Thread stack too high. Check the relative thread dump to see if there is stack overflow evidence."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of active threads matching the [pattern] is greater than [value], generate event. Applies for thread pools. Pattern is regex -->
+		<rule name="Active named thread limit" extra_info="Demo thread pool" ref="JZR-SAMPLE-015">
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="1"
+						   pattern="^Demo thread.*" 
+				           level="WARNING"
+				           message="Demo thread pool alert : demo is running."/>
+				<threshold type="global custom"
+						   count="1"
+						   value="1"
+						   pattern="^Demo thread.*"
+				           level="WARNING"
+				           message="Demo thread pool alert : demo is running."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of threads matching the [pattern] is greater than [value] for [count] times, generate event. Applies for active and inactive threads. Pattern is regex -->
+		<rule name="Named thread limit" extra_info="Java timers" ref="JZR-SAMPLE-016">
+			<thresholds>
+				<threshold type="session custom"
+						   count="5"
+						   value="100"
+						   pattern="^Timer-.*" 
+				           level="WARNING"
+				           message="High number of timer threads. Check the Pools sheet."/>
+				<threshold type="session custom"
+						   count="10"
+						   value="300"
+						   pattern="^Timer-.*"
+				           level="CRITICAL"
+				           message="Huge number of timer threads. Potential timer leakage. Check the Pools sheet. Risk of process crash."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of threads matching the [pattern] is greater than [value] for [count] times and is increasing by at least [delta_y] threads every [delta_x] times, generate event. Applies for active and inactive threads. Pattern is regex -->
+		<rule name="Named thread leak" extra_info="Java timers" ref="JZR-SAMPLE-017">
+			<thresholds>
+				<threshold type="session custom with context"
+						   count="50"
+						   value="100"
+						   delta_x="10"
+						   delta_y="5"
+						   pattern="^Timer-.*" 
+				           level="WARNING"
+				           message="High number of timer threads, increasing. Check the Pools sheet."/>
+				<threshold type="session custom with context"
+						   count="30"
+						   value="300"
+						   delta_x="10"
+						   delta_y="5"
+						   pattern="^Timer-.*"
+				           level="CRITICAL"
+				           message="Huge number of timer threads, increasing : potential timer leakage. &#10;Check the Pools sheet. &#10;Risk of process crash. &#10;Please plan applicative restart."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If total number of threads is greater than [value] for [count] times and is increasing by at least [delta_y] threads every [delta_x] times, generate event. -->
+		<rule name="Global thread leak" ref="JZR-SAMPLE-018">
+			<thresholds>
+				<threshold type="session custom with context"
+						   count="50"
+						   value="4000"
+						   delta_x="10"
+						   delta_y="5"
+				           level="CRITICAL"
+				           message="Huge number of threads, increasing : potential thread leakage. &#10;Check the Pools sheet. &#10;Risk of process crash. &#10;Please plan applicative restart."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of threads (active and inactive) matching the [pattern] is lower or equal than [value] for [count] thread dumps or [time], generate event. Pattern is regex -->
+		<!--  Important : Absent threads rules cannot be complementary as one or the other will wrongly match. Put all patterns under the same regex like below -->
+		<rule name="Absent threads" extra_info="My Very Important Thread" ref="JZR-SAMPLE-019">
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="0"
+						   pattern="my-important-thread" 
+				           level="CRITICAL"
+				           message="My Very Important Thread is not running. Check logs and plan an applicative restart."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of threads (active and inactive) matching the [pattern] is lower or equal than [value] for [count] thread dumps or [time], generate event. Pattern is regex -->
+		<!--  Important : Absent threads rules cannot be complementary as one or the other will wrongly match. Put all patterns under the same regex like below -->
+		<rule name="Absent threads" extra_info="My Important Threads" ref="JZR-SAMPLE-020">
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="3"
+						   pattern="^my-important-thread-.*" 
+				           level="WARNING"
+				           message="Not enough Important Threads running. Check the Important Thread pool configuration."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If function regex pattern in the current task is seen more than [value], generate event. Pattern is regex  -->
+		<rule name="Function pattern" extra_info="Ping pong players" ref="JZR-SAMPLE-021">
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="1"
+				           pattern="(ping)|(pong)" 
+				           level="INFO" 
+				           message="Ping-pong players are active !!"/>
+			</thresholds>
+		</rule>
+
+		<!--  If function regex pattern in the current task is seen more than [value] percentage, generate event. Pattern is regex  -->
+		<rule name="Function pattern" extra_info="Sleeping threads" ref="JZR-SAMPLE-022">
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="10"
+				           pattern="sleep deeply"
+				           percentage_in_action="70"
+				           level="INFO"
+				           message="Thread sleeps most of the time !!"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation regex pattern in the current task is seen more than [value], generate event. Pattern is regex -->
+		<rule name="Operation pattern" extra_info="Sleeping threads" ref="JZR-SAMPLE-023">
+			<thresholds>
+				<threshold type="stack pattern" 
+						   count="5"
+				           pattern="Thread on hold" 
+				           level="INFO" 
+				           message="Active threads sleeping !!"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation regex pattern in the current task is seen more than [value] percentage for [count] thread dumps or [time], generate event. -->
+		<rule name="Operation pattern" extra_info="Java exception generation" ref="JZR-SAMPLE-024">
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="10"
+				           pattern="Java exception generation"
+				           percentage_in_action="60"  
+				           level="WARNING" 
+				           message="Exception generated very often within the action. Check the applicative logs for errors. Review the code as exception generation is performance invasive."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If contention type regex pattern in the current task is seen more than [value] percentage for [count] thread dumps or [time], generate event. -->
+		<rule name="Contention type pattern" extra_info="Logging" ref="JZR-SAMPLE-025">
+			<thresholds>
+				<threshold type="stack pattern" 
+						   count="5"
+				           pattern="Log"
+				           percentage_in_action="60" 
+				           level="INFO" 
+				           message="Active threads logging !!"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If function regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Function parallel contention" extra_info="My function" ref="JZR-SAMPLE-026">
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="10"
+				           pattern=".*my_function.*" 
+				           level="INFO" 
+				           message="Contention on personal function."/>
+				<threshold type="session custom"
+						   count="3"
+						   value="10"
+				           pattern=".*my_function.*"  
+				           level="WARNING"
+				           message="Huge contention on personal function.&#10;There is a risk of performance decrease.&#10;Check the logs and monitoring figures."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Operation parallel contention" extra_info="My operation" ref="JZR-SAMPLE-027">
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="10"
+				           pattern=".*my_operation.*" 
+				           level="INFO" 
+				           message="Contention on personal operation."/>
+				<threshold type="session custom"
+						   count="3"
+						   value="10"
+				           pattern=".*my_operation.*"  
+				           level="WARNING"
+				           message="Huge contention on personal operation.&#10;There is a risk of performance decrease.&#10;Check the logs and monitoring figures."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If function regex [pattern] and operation regex [operation_pattern] are seen in more than [value] parallel threads, generate event. -->
+		<rule name="Function and operation parallel contention" extra_info="JDBC connection pool misery" ref="JZR-SAMPLE-028">
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="Sun JDBC connection pool access"
+						   operation_pattern="Blocked on RW lock to get a resource from the pool"
+				           level="WARNING"
+				           message="Contention on Sun JDBC connection pool.&#10;System is about to run out of database resources.&#10;Increase the JDBC database connection pool size and investigate any JDBC connection leakage."/>
+				<threshold type="session custom"
+						   count="3"
+						   value="5"
+				           pattern="Sun JDBC connection pool access"
+						   operation_pattern="Blocked on RW lock to get a resource from the pool"						   
+				           level="CRITICAL"
+				           message="Severe contention on Sun JDBC connection pool.&#10;System is running out of database resources.&#10;Plan possibly a restart, increase the JDBC database connection pool size and investigate any JDBC connection leakage."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If contention type regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Contention type parallel contention" extra_info="Database contention" ref="JZR-SAMPLE-029">
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="10"
+				           pattern="Database|Oracle|MSSQL|DB2" 
+				           level="INFO" 
+				           message="Contention on database."/>
+				<threshold type="session custom"
+						   count="3"
+						   value="10"
+				           pattern="Database|Oracle|MSSQL|DB2"  
+				           level="WARNING"
+				           message="Huge contention on database.&#10;There is a risk of performance decrease.&#10;Check the logs and monitoring figures."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the list of comma separated functions [functions] is respectively seen in more than [function_appearance_thresholds] parallel threads, generate event. -->
+		<rule name="Multi function contention" extra_info="AMQ connection failover" ref="JZR-SAMPLE-030">
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   functions="Add connection, Stop connection in JMX, IO Exception handling (Producer connection stale)"
+						   function_appearance_thresholds="2,5,10"
+				           level="WARNING" 
+				           trust_factor="80"
+				           message="Connection fail-over is occurring. Monitor the queues and topics to determine the activity type and take action accordingly."/>
+				<threshold type="session custom"
+						   count="3"
+						   functions="Add connection, Stop connection in JMX, IO Exception handling (Producer connection stale)"
+						   function_appearance_thresholds="5,10,20"
+				           level="CRITICAL"
+				           trust_factor="95"
+				           message="Massive connection fail-over is occurring.&#10;AMQ is in stress situation and has to handle now client reconnections which will make it worse.&#10;Check the AMQ logs and monitor the queues and topics to determine the activity type and take action accordingly.&#10;AMQ may crash with an Out of memory error of type Cannot create thread.&#10;Please plan an AMQ restart"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If function is detected across current session, generate event. -->
+		<rule name="Function presence" param_display="Function XY usage" param="my XY function in profile" ref="JZR-SAMPLE-031">
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           message="XY is deprecated class.&#10; Prefer YZ for better performance."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation is detected across current session, generate event. -->
+		<rule name="Operation presence" param_display="Operation XY usage" param="my XY operation in profile" ref="JZR-SAMPLE-032">
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           message="XY is deprecated class.&#10; Prefer YZ for better performance."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If suspended threads are detected, generate event. This rule should be only set to CRITICAL. -->
+		<rule name="Suspended threads" ref="JZR-SAMPLE-033">
+			<thresholds>
+				<threshold type="session signal"
+						   count="1" 
+				           level="CRITICAL" 
+				           message="Suspended threads have been detected. Someone has paused some threads through a Java debugger connected to the application. It may impact the applicative processing."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If sticker(s) is/are matched, generate event. -->
+		<rule name="Sticker match" extra_info="Sticker XYZ" ref="JZR-SAMPLE-034" stickers="sticker_name">
+			<thresholds>
+				<threshold type="system signal"
+				           level="INFO"
+				           sub_level="6" 
+				           message="XYZ condition detected."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of recording snapshots or thread dumps is lower or equal to [value], generate event. -->
+		<rule name="Recording size" extra_info="Small recording" operator="lower_or_equal" ref="JZR-SAMPLE-035">
+			<thresholds>
+				<threshold type="system value"
+						   count="1" 
+				           level="INFO"
+				           value="1"
+				           message="Recording is too small : analyzing a single thread dump is often no sufficent.&#10;Please collect periodic thread dumps : it will permit to get the cinematic of the issues.&#10;The Java Flight Recorder (using the Jeyzer profile for JFR) or the Jeyzer Recorder are the perfect candidates."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the contention type is detected across current session, generate event. -->
+		<rule name="Contention type presence" param_display="External process execution wait" param="External process execution" ref="JZR-SAMPLE-036" stickers="performance">
+			<narrative>This rule detects any external process execution wait.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           sub_level="7"
+				           message="Some forked process execution is detected.&#10; It may affect the performance of your Java application if this external process is too slow.&#10;  Please make sure it does not impact the application workflow."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If there are no detected actions, with the exception of principal functions defined with the given pattern, generate event. -->
+		<rule name="Quiet activity" extra_info="Standard inactivity detection" ref="JZR-SAMPLE-037">
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="JFR publish events|JFR platform stop recording|JFR start recording|JFR stop recording" 
+				           level="INFO"
+				           message="No internal activity of interest is detected within the provided recording.&#10; You may either look at other processes in case of incident troubleshooting in a distributed system or increase the logging level of your application if the incident is sudden."/>
+			</thresholds>
+		</rule>
+
+		<!-- ************************************************************************ -->
+		<!--                              ADVANCED RULES                              -->
+		<!-- ************************************************************************ -->
+
+		<!--  If System CPU usage is greater than [value] % for [count or time] times, generate event. -->
+		<rule name="System CPU overload" ref="JZR-SAMPLE-101">
+			<thresholds>
+				<threshold type="session value"
+						   count="1"
+						   value="90" 
+				           level="CRITICAL"
+				           message="System CPU very high. Check system usage and possibly stop the root cause application."/>
+				<threshold type="session value"
+						   count="1"
+						   value="60"
+				           level="WARNING" 
+				           message="System CPU high. Check system usage."/>
+				<threshold type="global value"
+						   count="1"
+						   value="90" 
+				           level="CRITICAL"
+				           message="System CPU very high. Check system usage and possibly stop the root cause application."/>
+				<threshold type="global value"
+						   count="1"
+						   value="60"
+				           level="WARNING" 
+				           message="System CPU high. Check system usage."/>
+			</thresholds>
+		</rule>
+	
+		<!--  If process consuming more than [value] CPU %, generate event. -->
+		<rule name="CPU consuming process" ref="JZR-SAMPLE-102">
+			<thresholds>
+				<threshold type="session value" 
+						   count="1"
+				           value="30" 
+				           level="WARNING" 
+				           message="Process consuming high CPU. If too frequent, please contact support."/>
+   			</thresholds>
+		</rule>
+		<rule name="CPU consuming process" ref="JZR-SAMPLE-103">
+			<thresholds>
+				<threshold type="global value" 
+						   count="1"
+				           value="30" 
+				           level="WARNING" 
+				           message="Process consuming high CPU. If too frequent, please contact support."/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If task consuming more than [second_threshold] CPU % for [threshold] times, generate event. -->
+		<rule name="CPU consuming task" ref="JZR-SAMPLE-104">
+			<thresholds>
+				<threshold type="action value" 
+						   count="2"
+				           value="20" 
+				           level="WARNING" 
+				           message="CPU consuming action. If too frequent, please contact support."/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If task consuming more than [second_threshold] CPU % for [threshold] times, generate event. -->
+		<rule name="CPU consuming task" ref="JZR-SAMPLE-105">
+			<thresholds>
+				<threshold type="action value" 
+						   count="1"
+						   percentage_in_action="50"
+				           value="20" 
+				           level="WARNING" 
+				           message="CPU consuming action. If too frequent, please contact support."/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If task consuming more than [second_threshold] CPU % for [threshold] times, generate event. -->
+		<rule name="CPU consuming task" ref="JZR-SAMPLE-106">
+			<thresholds>
+				<threshold type="stack value" 
+						   count="1"
+				           value="1" 
+				           level="WARNING" 
+				           message="CPU consuming stack. If too frequent, please contact support."/>
+   			</thresholds>
+		</rule>
+
+		<!--  If task consuming more than [value] heap applicative memory % for [count] times, generate event. -->
+		<rule name="Memory consuming task" ref="JZR-SAMPLE-107">
+			<thresholds>
+				<threshold type="action value"
+						   count="1"
+						   value="10" 
+				           level="WARNING"
+				           message="Memory consuming action. If too frequent, please contact support."/>
+				<threshold type="action value"
+						   count="1"
+						   percentage_in_action="50"
+						   value="10" 
+				           level="WARNING"
+				           message="Memory consuming action. If too frequent, please contact support."/>
+				<threshold type="stack value"
+						   count="1"
+						   value="10"
+				           level="WARNING" 
+				           message="Memory consuming action. If too frequent, please contact support."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process consuming more than [value] heap memory % for [count or time], generate event. -->
+		<rule name="Memory consuming process" ref="JZR-SAMPLE-108">
+			<thresholds>
+				<threshold type="session value"
+						   count="1"
+						   value="10" 
+				           level="WARNING"
+				           message="Process consuming high amount of memory. If too frequent, please contact support."/>
+				<threshold type="global value"
+						   count="1"
+						   value="10"
+				           level="WARNING" 
+				           message="Process consuming high amount of memory. If too frequent, please contact support."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If system consuming more than [value] system memory % for [count] or [time], generate event. -->
+		<rule name="Memory consuming system" ref="JZR-SAMPLE-109">
+			<thresholds>
+				<threshold type="session value"
+						   time="3m20s"
+						   value="70" 
+				           level="CRITICAL"
+				           message="System consuming high amount of memory (>70%) on long period. Please check all running process states on this server."/>
+				<threshold type="global value"
+						   time="10m"
+						   value="50"
+				           level="WARNING" 
+				           message="System consuming high amount of memory (>50%) on very long period. If too frequent, please check all running process states on this server."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If Garbage Collection takes more than [value] ms for [count or time] times, generate event. -->
+		<rule name="Excessive GC time" ref="JZR-SAMPLE-110">
+			<thresholds>
+				<threshold type="session value"
+						   count="1"
+						   value="100" 
+				           level="CRITICAL"
+				           message="GC time high. Check memory figures. If too high, restart may be foreseen."/>
+				<threshold type="global value"
+						   count="1"
+						   value="100"
+				           level="CRITICAL" 
+				           message="GC time high. Check memory figures. If too high, restart may be foreseen."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If Old GC execution count is greater than [value] for [count or time] times, generate event. -->
+		<rule name="Excessive old GC execution" ref="JZR-SAMPLE-111">
+			<thresholds>
+				<threshold type="session value"
+						   count="1"
+						   value="3" 
+				           level="CRITICAL"
+				           message="Old GC execution is too frequent. Check memory figures. If too high, restart may be foreseen."/>
+				<threshold type="global value"
+						   count="1"
+						   value="3"
+				           level="CRITICAL" 
+				           message="Old GC execution is too frequent. Check memory figures. If too high, restart may be foreseen."/>
+			</thresholds>
+		</rule>
+
+		<!--  If used memory is increasing and upper than [used_memory] %, released memory is lower than [released_memory] % and GC time is higher than [gc_time] ms for [count or time] times, generate event. -->
+		<rule name="GC failing to release memory" ref="JZR-SAMPLE-112">
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   used_memory="5" 
+						   released_memory="10"
+						   gc_time="100"
+				           level="CRITICAL"
+				           message="GC probably failing to release memory. Check memory figures. If too high, restart may be foreseen."/>
+				<threshold type="global custom"
+						   count="1"
+						   used_memory="5" 
+						   released_memory="10"
+						   gc_time="100"
+				           level="CRITICAL"
+				           message="GC probably failing to release memory. Check memory figures. If too high, restart may be foreseen."/>
+			</thresholds>
+		</rule>
+
+		<!--  If process up time is greater than [value] sec, generate event. -->
+		<rule name="Process up time" ref="JZR-SAMPLE-113">
+			<thresholds>
+				<threshold type="session value"
+						   value="60"
+				           level="WARNING"
+				           message="Process has been running for too long. It is recommended to restart it"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process restart is detected, generate event. -->
+		<rule name="Process restart" ref="JZR-SAMPLE-114">
+			<thresholds>
+				<threshold type="session signal"
+			               level="WARNING"
+				           message="Process restart occurred."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process down time is too high, generate event. -->
+		<rule name="Process down time" ref="JZR-SAMPLE-115">
+			<thresholds>
+				<threshold type="session custom"
+			               level="WARNING"
+			               sub_level="10"
+			               down_time="10s"
+				           message="Process down time too high. Please investigate the reasons."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If thread dump capture time is greater than [value] ms for [count or time in ms] times, generate event. -->
+		<rule name="Recording snapshot capture time" ref="JZR-SAMPLE-116">
+			<thresholds>
+				<threshold type="session value"
+						   count="1"
+						   value="230" 
+				           level="CRITICAL"
+				           message="Recording snapshot capture time high. Check process state."/>
+				<threshold type="global value"
+						   count="1"
+						   value="230" 
+				           level="CRITICAL"
+				           message="Recording snapshot capture time high. Check process state."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If free disk space is lower than [value] % for [count] or [time], generate event. -->
+		<rule name="Disk space free percent" param_display="App partition" param="work" ref="JZR-SAMPLE-117">
+			<thresholds>
+				<threshold type="global value"
+						   time="30s"
+						   value="5"
+				           level="CRITICAL"
+				           message="Free disk space very low. Check and free some disk space : log files, temp directories.."/>
+				<threshold type="global value"
+						   time="60s"
+						   value="10"
+				           level="WARNING" 
+				           message="Free disk space very low. Check the disk space : log files, temp directories.."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If used disk space is higher than [value] % for [count] or [time], generate event. -->
+		<rule name="Disk space used percent" param_display="App partition" param="work" ref="JZR-SAMPLE-118">
+			<thresholds>
+				<threshold type="session value"
+						   time="30s"
+						   value="95"
+				           level="CRITICAL"
+				           message="Used disk space very high. Check and free some disk space : log files, temp directories.."/>
+				<threshold type="global value"
+						   time="60s"
+						   value="90"
+				           level="WARNING" 
+				           message="Used disk space very high. Check the disk space : log files, temp directories.."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If free disk space is lower than [value] Gb for [count] or [time], generate event. -->
+		<rule name="Disk space free" param_display="App partition" param="work" ref="JZR-SAMPLE-119">
+			<thresholds>
+				<threshold type="session value"
+						   time="30s"
+						   value="1"
+				           level="CRITICAL"
+				           message="Free disk space very low. Check and free some disk space : log files, temp directories.."/>
+				<threshold type="global value"
+						   time="60s"
+						   value="3"
+				           level="WARNING" 
+				           message="Free disk space very low. Check the disk space : log files, temp directories.."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If used disk space is higher than [value] Gb for [count] or [time], generate event. -->
+		<rule name="Disk space used" param_display="App partition" param="work" ref="JZR-SAMPLE-120">
+			<thresholds>
+				<threshold type="session value"
+						   time="30s"
+						   value="500"
+				           level="CRITICAL"
+				           message="Used disk space very high. Check and free some disk space : log files, temp directories.."/>
+				<threshold type="global value"
+						   time="60s"
+						   value="495"
+				           level="WARNING" 
+				           message="Used disk space very high. Check the disk space : log files, temp directories.."/>
+			</thresholds>
+		</rule>
+
+		<!--  If total disk space is lower than [value] Gb, generate event. -->
+		<rule name="Disk space total" param_display="App partition" param="work" ref="JZR-SAMPLE-121">
+			<thresholds>
+				<threshold type="system value"
+						   count="1"
+						   value="500"
+				           level="INFO"
+				           message="Total disk space lower than recommend one to run the application. Please refer to your application Admin Guide."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If recording writing speed is lower than [value] Kb/sec for [count] or [time], generate event. Applicable only in Jeyzer agent mode -->
+		<rule name="Disk write speed" ref="JZR-SAMPLE-122">
+			<thresholds>
+				<threshold type="session value"
+						   count="5"
+						   value="500" 
+				           level="WARNING"
+				           message="Disk writing low. Check for write contentions and disk controller state."/>
+				<threshold type="global value"
+						   count="10"
+						   value="1024" 
+				           level="WARNING"
+				           message="Disk writing low. Check the disk controller state."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If recording writing time is higher than [value] ms for [count] or [time], generate event. Applicable only in Jeyzer agent mode -->
+		<rule name="Disk write time" ref="JZR-SAMPLE-123">
+			<thresholds>
+				<threshold type="session value"
+						   count="2"
+						   value="1000" 
+				           level="WARNING"
+				           message="Recording writing takes time. Check the disk controller state."/>
+				<threshold type="global value"
+						   count="10"
+						   value="1000" 
+				           level="WARNING"
+				           message="Recording writing takes time. Check the disk controller state."/>
+			</thresholds>
+		</rule>
+				
+		<!--  If garbage collector name (old or young) matches the given pattern, generate event. -->
+		<rule name="Garbage collector name" extra_info="Serial GC usage" ref="JZR-SAMPLE-124">
+			<narrative>This rule detects if the serial garbage collector is used.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="Copy" 
+				           level="WARNING"
+						   sub_level="10"
+				           message="The serial garbage collector is used through the Copy GC : make sure it is appropriate."/>
+			</thresholds>
+		</rule>
+
+
+		<!-- ************************************************************************ -->
+		<!--                        APPLICATIVE RULES                                 -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If Jeyzer MX context parameter takes more than [second_threshold] ms for [threshold] times, generate event. -->
+		<!--  Operator is either greater_or_equal (default) or lower_or_equal -->
+		<rule name="Jeyzer MX context parameter number" param_display="Number of serves" param="flight-max-altitude" ref="JZR-SAMPLE-201">
+			<narrative>This rule permits to detect high number of tennis serves.</narrative>
+			<thresholds>
+				<threshold type="global value" 
+						   count="1"
+				           value="17" 
+				           level="WARNING" 
+				           message="Number of serves too high."/>
+				<threshold type="session value" 
+						   count="1"
+				           value="17" 
+				           level="WARNING" 
+				           message="Number of serves too high."/>
+   			</thresholds>		
+		</rule>
+		
+		<!--  If Jeyzer MX context parameter value is matching the [pattern] for more than [count] or [time], generate event. -->
+		<rule name="Jeyzer MX context parameter pattern" param_display="Good score" param="flight-wind-forces" ref="JZR-SAMPLE-202">
+			<narrative>This rule permits to detect good tennis scores.</narrative>
+			<thresholds>
+				<threshold type="global pattern" 
+						   count="1"
+				           pattern="(5 / 0)|(0 / 5)" 
+				           level="WARNING" 
+				           message="Good score !!"/>
+				<threshold type="session pattern" 
+						   count="1"
+				           pattern="(5 / 0)|(0 / 5)" 
+				           level="WARNING" 
+				           message="Good score !!"/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If Jeyzer MX context parameter value for the current task is greater than value, generate event. If user exists, will be added as message prefix -->
+		<!--  Operator is either greater_or_equal (default) or lower_or_equal -->
+		<rule name="Task Jeyzer MX context parameter number" param_display="Number of player serves" param="flight-max-altitude" operator="greater_or_equal" ref="JZR-SAMPLE-203">
+			<narrative>This rule permits to detect high number of player serves.</narrative>
+			<thresholds>
+				<threshold 	type="action value" 
+							count="1"
+							value="9" 
+							level="WARNING" 
+							message="Player number of serves too high."/>
+				<threshold 	type="action value" 
+							count="1"
+							percentage_in_action="50"
+							value="9" 
+							level="WARNING" 
+							message="Player number of serves too high."/>
+				<threshold 	type="action value" 
+							count="1" 
+							value="8" 
+							level="INFO" 
+							message="Player number of serves too high."/>
+			</thresholds>
+		</rule>
+
+		<!--  If Jeyzer MX context parameter value for the current task is matching the [pattern] for more than [count] or [time], generate event. If user exists, will be added as message prefix -->
+		<rule name="Task Jeyzer MX context parameter pattern" param_display="Good player score" param="tennis-points" ref="JZR-SAMPLE-204">
+			<narrative>This rule permits to detect high number of player points.</narrative>
+			<thresholds>
+				<threshold 	type="stack pattern" 
+							count="2"
+							pattern=".*5.*"
+							level="WARNING"
+							message="Very good consecutive player score !!"/>
+				<threshold 	type="stack pattern" 
+							count="1" 
+							pattern=".*5.*" 
+							level="INFO"
+							message="Good player score."/>
+				<threshold 	type="action pattern" 
+							count="4"
+							pattern=".*5.*"
+							level="WARNING"
+							message="Very good player score in action !!"/>
+				<threshold 	type="action pattern" 
+							count="1"
+							pattern=".*5.*" 
+							level="INFO"
+							message="Good player score in action."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If Jeyzer MX context parameter value within the current task is matching in [value] percentage the [pattern] for more than [count] or [time], generate event. If user exists, will be added as message prefix -->
+		<rule name="Task Jeyzer MX context parameter pattern" param_display="Good player score" param="tennis-points" ref="JZR-SAMPLE-205">
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="10"
+				           pattern=".*5.*"
+				           percentage_in_action="70"  
+				           level="INFO" 
+				           message="Very good player !!"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If execution regex pattern in the current task is seen more than [count] or [time], generate event. If user exists, will be added as message prefix -->
+		<rule name="Task execution pattern" extra_info="Dysfunctional code sequence" ref="JZR-SAMPLE-206">
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="1"
+				           pattern="(?s).*DysfunctionalCodeSequence.dysfunctionalCode2.*DysfunctionalCodeSequence.dysfunctionalCode1.*" 
+				           level="CRITICAL" 
+				           message="Corruption detected in tennis play.&#10; Please contact the WWTennis Federation to ask for fix ANTI-CORRUPT-F28."/>
+			</thresholds>
+		</rule>
+
+		<!--  If execution regex pattern in the current session is seen more than value, generate event. If user exists, will be added as message prefix -->
+		<rule name="Session execution pattern" extra_info="Dysfunctional code sequence detected" ref="JZR-SAMPLE-207">
+			<thresholds>
+				<threshold type="session pattern" 
+						   count="1"
+				           pattern="(?s).*DysfunctionalCodeSequence.dysfunctionalCode2.*DysfunctionalCodeSequence.dysfunctionalCode1.*" 
+				           level="CRITICAL" 
+				           message="Corruption detected inside tennis place.&#10; Please contact the WWTennis Federation to ask for fix ANTI-CORRUPT-F98."/>
+			</thresholds>
+		</rule>
+
+		<!--  If MX bean value matches the given pattern, generate event. -->
+		<rule name="MX bean parameter pattern" param_display="Bug Pattern detected" param="org.jeyzer.demo:DemoFeatures:PlayedFeatures" ref="JZR-SAMPLE-208">
+			<thresholds>
+				<threshold type="session pattern" 
+						   count="1"
+				           pattern="Bug Pattern" 
+				           level="WARNING" 
+				           message="Bug pattern detected !!"/>
+   			</thresholds>
+		</rule>
+		
+		<!--  If AMQ temp storage almost full for some time, generate event. -->
+		<rule name="MX bean parameter number" param_display="ActiveMQ temp storage" param="org.apache.activemq:Broker:.*:TempPercentUsage" ref="SAMPLE-209">
+			<narrative>This rule checks if the ActiveMQ temporary storage is almost full.</narrative>
+			<thresholds>
+				<threshold type="session value" 
+						   count="3"
+				           value="70" 
+				           level="CRITICAL"
+				           sub_level="7" 
+				           message="ActiveMQ temporary storage almost full."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of contention type is greater or equal to [value] across current session, generate event. -->
+		<rule name="Contention type global percentage" param_display="Oracle contention" param="Oracle" ref="JZR-SAMPLE-210">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="70" 
+				           level="WARNING" 
+				           message="High Oracle access.&#10; You may consider to generate an AWR report&#10; or review the applicative access logic."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of operation is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation global percentage" param_display="Oracle access percentage" param="Oracle read" ref="JZR-SAMPLE-211">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="70" 
+				           level="WARNING" 
+				           message="High Oracle access.&#10; You may consider to generate an AWR report&#10; or review the applicative access logic."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of function is greater or equal to [value] across current session, generate event. -->
+		<rule name="Function global percentage" param_display="Function AB percentage" param="function AB" ref="JZR-SAMPLE-212">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="70" 
+				           level="WARNING" 
+				           message="High function AB access.&#10; You may consider to review the applicative access logic."/>
+			</thresholds>
+		</rule>
+
+		<!--  If percentage of contention type within action principal is greater or equal to [value] across current session, generate event. -->
+		<rule name="Contention type in principal percentage" principal="action name" param_display="Oracle access percentage in action name" param="Oracle" ref="JZR-SAMPLE-213">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="70" 
+				           level="WARNING" 
+				           message="High Oracle access in action name.&#10; You may consider to generate an AWR report&#10; or review the action access logic."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of operation within action principal is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation in principal percentage" principal="action name" param_display="Oracle access percentage in action name" param="Oracle read" ref="JZR-SAMPLE-214">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="70" 
+				           level="WARNING" 
+				           message="High Oracle access in action name.&#10; You may consider to generate an AWR report&#10; or review the action access logic."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of function within action principal is greater or equal to [value] across current session, generate event. -->
+		<rule name="Function in principal percentage" principal="action name" param_display="Function AB percentage in action name" param="function AB" ref="JZR-SAMPLE-215">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="70"
+				           level="WARNING" 
+				           message="High function AB execution in action name.&#10; You may consider to review the action logic."/>
+			</thresholds>
+		</rule>
+
+		
+		<!-- ************************************************************************ -->
+		<!--                        PROCESS CARD RULES                                -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If process card property value contains the given pattern, generate event. -->
+		<rule name="Process card property pattern" param_display="Java runtime version" param="java.runtime.version" ref="JZR-SAMPLE-301">
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="1.[0-9].*" 
+				           level="WARNING" 
+				           message="Running on old Java version which has reached end of life.&#10; You may consider to upgrade it soon."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process card property value is lower or equal to [value], generate event. -->
+		<rule name="Process card property number" param_display="CPU count" param="jzr.ext.process.available.processors" operator="lower_or_equal" ref="JZR-SAMPLE-302">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="8" 
+				           level="WARNING" 
+				           message="Production system running with low number of CPUs.&#10; You may consider to increase it."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process card property with name [pattern] is not found, generate event. -->
+		<rule name="Process card property absence" param_display="Missing applicative.prop property" param="applicative.prop" ref="JZR-SAMPLE-303">
+			<thresholds>
+				<threshold type="system signal" 
+				           level="WARNING" 
+				           message="Applicative property is not defined.&#10; Please make sure it is set by the application or at startup."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the number of CPU runnable threads is greater or equal to the number of available CPUs (as per the jzr.ext.process.available.processors process card property), generate event. -->
+		<rule name="CPU Runnable vs CPU capacity" ref="JZR-SAMPLE-304">
+			<thresholds>
+				<threshold type="session signal" 
+				           level="WARNING" 
+				           message="High applicative CPU access, exceeding the system CPU capacity.&#10; You may consider to increase it."/>
+			</thresholds>
+		</rule>
+		
+		<!-- ************************************************************************ -->
+		<!--                   APPLICATIVE PROCESS COMMAND LINE RULES                 -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If process command line property value is lower or equal to [value], generate event. -->
+		<rule name="Process command line property number" param_display="JMX port test" param="com.sun.management.jmxremote.port" operator="lower_or_equal" ref="JZR-SAMPLE-401">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="3000" 
+				           level="INFO" 
+				           message="JMX port value is lower than 3000."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process command line property value contains the given [pattern], generate event. -->
+		<rule name="Process command line property pattern" param_display="JMX remote authentication activated" param="com.sun.management.jmxremote.authenticate" ref="JZR-SAMPLE-402">
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="true" 
+				           level="INFO" 
+				           message="JMX remote authentication is activated."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process command line parameter contains the given [pattern], generate event. -->
+		<rule name="Process command line parameter pattern" param_display="JMX remote access enabled" param="com.sun.management.jmxremote" ref="JZR-SAMPLE-403">
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="com.sun.management.jmxremote" 
+				           level="INFO" 
+				           message="JMX remote access is enabled."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process command line parameter with name [pattern] is not found, generate event. -->
+		<rule name="Process command line parameter absence" param_display="Missing Xmx" param="Xmx.*" ref="JZR-SAMPLE-404">
+			<narrative>This rule checks if the Xmx parameter is set on the process command line. It is highly recommended having control over the maximum memory limit otherwise the JVM may consume abusively the available system memory.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="WARNING" 
+				           message="Maximum Java heap size is not set.&#10; Please add the -Xmx&lt;size&gt; to the process startup command line."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process command line max heap (Xmx) is lower than [value] in Mb, generate event. -->
+		<rule name="Process command line max heap" ref="JZR-SAMPLE-405">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="500" 
+				           level="WARN" 
+				           message="Max heap is too low.&#10; Please increase it on the command line"/>
+			</thresholds>
+		</rule>
+		
+		<!-- ************************************************************************ -->
+		<!--                   PROCESS JAR AND MODULE VERSION RULES                   -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If process jar version is matching the given sticker (usually a process jar version sticker), generate event. -->
+		<rule name="Process jar version" extra_info="Logback obscolescence" stickers="logback-1.0.x" ref="JZR-SAMPLE-501">
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           sub_level="9"
+				           message="Demo running with 1.0.x version of logback.&#10;This logback version is obsolete and may contain critical bugs.&#10;Please upgrade to a more recent version (1.2+)"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the process jar version is a snapshot, alpha, beta, build... version, generate event. -->
+		<rule name="Process jar version snapshot" ref="JZR-SAMPLE-502">
+			<thresholds>
+				<threshold type="system signal"
+				           level="WARNING"
+				           sub_level="10" 
+				           message="Application is running with snapshot libraries.&#10; It is highly recommended to run only with release libraries."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the process jar version is not available, generate event. -->
+		<rule name="Process jar version absence" ref="JZR-SAMPLE-503">
+			<thresholds>
+				<threshold type="system signal"
+				           level="INFO"
+				           sub_level="8" 
+				           message="Application is running with libraries without version.&#10; It is recommended to run with versionned libraries."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the process jar is present multiple times, generate event. -->
+		<rule name="Process jar multiple versions" ref="JZR-SAMPLE-504">
+			<thresholds>
+				<threshold type="system signal"
+				           level="WARNING"
+				           message="Application is running with different versions of the same library which is not intended.&#10;. Please contact your support."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the process jar file name version differs from the jar version stored in the Manifest attributes, generate event. -->
+		<rule name="Process jar manifest version mismatch" ref="JZR-SAMPLE-505">
+			<thresholds>
+				<threshold type="system signal"
+				           level="INFO"
+				           message="Application is running with libraries containing inconsistent version information."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the given process jar name is detected, generate event. -->
+		<rule name="Process jar name" extra_info="Jeyzer Recorder agent detection" ref="JZR-SAMPLE-506">
+			<thresholds>
+				<threshold type="system pattern"
+				           level="INFO"
+				           pattern="jeyzer-recorder"
+				           message="Demo is running with the Jeyzer Recorder agent."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the given process jar name is not detected, generate event. -->
+		<rule name="Process jar name absence" extra_info="Important module library missing" ref="JZR-SAMPLE-507">
+			<thresholds>
+				<threshold type="system pattern"
+				           level="INFO"
+				           pattern="xyz-module"
+				           message="Demo is running without the XYZ module library which is required for the ABC functionality."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the process module version is a snapshot, alpha, beta, build... version, generate event. -->
+		<rule name="Process module version snapshot" stickers="process_module_version_snapshot" ref="JZR-SAMPLE-508">
+			<narrative>This rule checks if the Java modules have snapshot versions. It it important to run with official modules.</narrative>
+			<thresholds>
+				<threshold type="system signal"
+				           level="WARNING"
+				           sub_level="10" 
+				           message="Demo is running with snapshot modules.&#10; It is highly recommended to run only with released modules."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the process module version is not available, generate event. -->
+		<rule name="Process module version absence" stickers="process_module_version_absence" ref="JZR-SAMPLE-509">
+			<narrative>This rule checks the absence of versions on the Java modules. It it important to know the module version in case of issue.</narrative>
+			<thresholds>
+				<threshold type="system signal"
+				           level="INFO"
+				           sub_level="8" 
+				           message="Demo is running with Java modules without version.&#10; It is recommended to run with versionned modules."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the Java module version is a snapshot, alpha, beta, build... version, generate event. -->
+		<rule name="Process module version" extra_info="Logback non stable version" stickers="logback-1.3.alpha, process_module_version" ref="JZR-SAMPLE-510">
+			<narrative>This rule checks the instability of the Java logback module.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           sub_level="9"
+				           message="Demo running with 1.3 alpha version of logback module.&#10;This logback version is unstable and may contain critical bugs.&#10;Please down grade to a previous version (1.2+)"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the given Java module name is detected, generate event. -->
+		<rule name="Process module name" extra_info="Jeyzer Publisher detection" stickers="process_module_name" ref="JZR-SAMPLE-511">
+			<narrative>This rule detects the presence of the Jeyzer Publish Java module.</narrative>
+			<thresholds>
+				<threshold type="system pattern"
+				           level="INFO"
+				           pattern="org.jeyzer.publish"
+				           message="Demo is running with the Jeyzer Publisher."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the given Java module name is not detected, generate event. -->
+		<rule name="Process module name absence" extra_info="Important Java module missing" stickers="process_module_name_absence" ref="JZR-SAMPLE-512">
+			<narrative>This rule detects the absence of the Xyz Java module.</narrative>
+			<thresholds>
+				<threshold type="system pattern"
+				           level="INFO"
+				           pattern="x.y.z.module"
+				           message="Demo is running without the XYZ Java module which is required for the ABC functionality."/>
+			</thresholds>
+		</rule>
+		
+		<!-- ************************************************************************ -->
+		<!--                        JVM FLAG RULES                                    -->
+		<!-- ************************************************************************ -->
+
+		<!--  If process card property value contains the given pattern, generate event. -->
+		<rule name="Process card property pattern" param_display="Compress Ooops usage" param="jzr.jdk.flag.UseCompressedOops" ref="JZR-SAMPLE-601">
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="true" 
+				           level="INFO" 
+				           message="The JVM flag UseCompressedOops is enabled."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process card property value is lower or equal to [value], generate event. -->
+		<rule name="Process card property number" param_display="CPU count" param="jzr.ext.process.available.processors" operator="lower_or_equal" ref="JZR-SAMPLE-602">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="8" 
+				           level="WARNING" 
+				           message="Production system running with low number of CPUs.&#10; You may consider to increase it."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If process card property with name [pattern] is not found, generate event. -->
+		<rule name="Process card property absence" param_display="Missing FlagThatDoesNotExist JVM flag absence" param="jzr.jdk.flag.FlagThatDoesNotExist" ref="JZR-SAMPLE-603">
+			<thresholds>
+				<threshold type="system signal" 
+				           level="WARNING" 
+				           message="The JVM flag jzr.jdk.flag.FlagThatDoesNotExist is missing."/>
+			</thresholds>
+		</rule>
+			
+	</rules>
+
+</monitor>

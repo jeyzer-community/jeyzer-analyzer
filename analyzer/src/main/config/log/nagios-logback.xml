@@ -1,0 +1,35 @@
+<configuration scan="true" scanPeriod="30 seconds">
+
+  <!--  File log / conditional on environment variable availability -->
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+	<file>${JEYZER_OUTPUT_DIR}/log/monitor_nagios-${JEYZER_TARGET_PROFILE}.log</file>
+	<encoder>
+	   <pattern>[%thread] %d{MM/dd/yyyy HH:mm:ss} %level %msg%n</pattern>
+	</encoder>
+  </appender>
+
+  <!--  Console log - Just one trace for Nagios -->
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+       <pattern>%msg</pattern>
+    </encoder>
+  </appender>
+  
+  <!--  Loggers -->
+  <root level="WARN">
+  	<!-- Nagios required. Only log in file -->
+    <appender-ref ref="FILE" />
+  </root>
+
+  <!-- Nagios required. Only TDNagiosActiveMonitor can log on the console -->
+  <!-- Log categories : DEBUG, INFO, WARN, ERROR, ALL, OFF -->  
+  <logger name="org.jeyzer.monitor.JeyzerNagiosActiveMonitor" level="INFO">
+  	<appender-ref ref="STDOUT"/>
+  </logger>
+  
+  <!-- Others. Log in file -->  
+  <!-- Log categories : DEBUG, INFO, WARN, ERROR, ALL, OFF -->  
+  <logger name="org.jeyzer.analyzer" level="INFO" />
+  <logger name="org.jeyzer.monitor" level="INFO" />
+  
+</configuration>

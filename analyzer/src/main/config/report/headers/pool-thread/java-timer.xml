@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<pool_thread_counter 
+				name="Java timers" 
+				regex="^Timer-.*" 
+				threshold="50" 
+				color="RED">
+				
+			<!-- Factor defined in percentage gain or loss -->
+			<delta 
+					increase_factor="30" 
+					increase_color="RGB-255-180-129" 
+					decrease_factor="30" 
+					decrease_color="RGB-167-255-167"/>
+				
+		</pool_thread_counter>
+		
+	</header>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<property_card_mapper_set>
+
+		<!-- Mapping of the properties read from the property card file -->
+		<property_card_mapper name="mapper-name" source_property="jzr.process.name">
+			<properties>
+				<!-- Properties instantiation -->
+				<!--   Ex: Instantiate the property module based on the jzr.process.name property card value matching the given pattern (.*) -->
+				<property name="module" pattern="(.*)" scope="property-value"/>
+			</properties>
+		</property_card_mapper>
+		
+		<!-- Mapping of the properties read from the property card file -->
+		<property_card_mapper name="mapper-version" source_property="jzr.process.version">
+			<properties>
+				<property name="version" pattern="(.*)" scope="property-value"/>
+			</properties>
+		</property_card_mapper>
+			
+		<!-- Mapping of the properties read from the property card file -->
+		<property_card_mapper name="mapper-build-number" source_property="jzr.process.build.number">
+			<properties>
+				<property name="build_number" pattern="(.*)" scope="property-value"/>
+			</properties>
+		</property_card_mapper>
+
+		<!-- Mapping of the properties read from the property card file - advanced case -->
+		<!--  Properties are obtained here from the process card property name and value -->
+		<property_card_mapper name="sample" source_property="build.version-(.*)">
+			<!-- Properties instantiation -->
+			<!--   Ex: Instantiate the property module based on any property card matching the given pattern build.version-(.*) name. -->
+			<!--       Module property value is set here with the version number taken out of the card property name through a regular expression group (build.version-(.*)) -->
+			<properties>
+				<property name="module" pattern="build.version-(.*)" scope="property-name"/>
+				<property name="version" pattern="(.*)" scope="property-value"/>
+			</properties>
+		</property_card_mapper>
+
+</property_card_mapper_set>

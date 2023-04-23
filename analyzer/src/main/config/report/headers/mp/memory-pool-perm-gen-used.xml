@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<!-- For JDK7 -->
+		<memory_pool 
+				category="PS Perm Gen:usage:used" 
+				display="Perm Gen used" 
+				color="RED" 
+				description="Permanent generation usage in Mb.&#10; Permanent generation contains the loaded classes as well as the inner string pool (version dependant)."/>
+		
+	</header>

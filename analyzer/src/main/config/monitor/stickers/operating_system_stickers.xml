@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<stickers group="Operating Systems">
+
+	<sticker name="windows" type="property card" property="os.name" pattern="Windows"/>
+	
+	<sticker name="windows8.1" type="property card" property="os.name" pattern="Windows 8.1"/>
+	
+	<sticker name="solaris" type="property card" property="os.name" pattern="sunos"/>
+	
+	<sticker name="unix" type="property card" property="os.name" pattern="nix|aix|nux"/>
+
+</stickers>

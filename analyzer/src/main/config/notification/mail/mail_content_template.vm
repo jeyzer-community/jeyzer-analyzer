@@ -1,0 +1,15 @@
+## Apache Velocity template
+
+Hi,
+
+Please find attached for your review the Jeyzer report generated for the $application_type application.
+
+Context :
+---------------
+ - Application id : $application_id
+ - Description : $report_description
+ - Reporter : $report_issuer
+ - Jeyzer profile : $application_type
+
+--------------------------------------------------------------------------
+This is a Jeyzer Analyzer notification email

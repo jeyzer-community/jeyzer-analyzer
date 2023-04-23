@@ -1,0 +1,309 @@
+graph { 
+	fill-color: #FFC; 
+}
+
+edge { 
+	visibility-mode:hidden;
+}
+
+edge.Visible {
+	fill-color: #00004d; 
+	size: 2px; 	
+	visibility-mode:normal;
+}
+
+sprite { 
+	fill-mode: none;
+	stroke-mode: none;
+}
+
+sprite.Count { 
+	text-size: 10; 
+}
+
+sprite.NoActivity {
+	text-size: 16;
+}
+
+sprite.NoThreadDump {
+	text-size: 16;
+	text-color: red;
+}
+
+sprite.Restart {
+	text-size: 22;
+	text-color: #336600;
+	text-style: bold;
+}
+
+sprite.Message {
+	text-size: 30;
+	text-color: black;
+	text-style: bold;
+	text-background-mode:plain;
+	text-background-color:white;
+}
+
+node {
+	shape: circle;
+	size: 5px;
+	text-size: 16;
+	visibility-mode:hidden;
+}
+
+node.Hidden {
+	visibility-mode:hidden;
+}
+
+node.Executor {
+	text-alignment: at-right; 
+	text-padding: 3px, 2px; 
+	text-background-mode: rounded-box; 
+	text-background-color: #EB2; 
+	text-color: #222;
+	text-offset: 5px, 0px;
+	
+	size: 40px;
+	shape: box;
+	fill-color: #C6F;
+	stroke-mode: plain;
+	stroke-color: yellow;
+	
+	visibility-mode:normal;
+}
+
+node.ExecutorCPUOverload {
+	text-alignment: at-right; 
+	text-padding: 3px, 2px; 
+	text-background-mode: rounded-box; 
+	text-background-color: #EB2; 
+	text-color: #222;
+	text-offset: 5px, 0px;
+	
+	size: 80px;
+	shape: box;
+	fill-color: #ff0000;
+	stroke-mode: plain;
+	stroke-color: black;
+	
+	visibility-mode:normal;
+}
+
+node.ExecutorPhantom {
+	text-size: 12;
+	text-alignment: at-right; 
+	text-padding: 3px, 2px; 
+	text-background-mode: rounded-box; 
+	text-background-color: #d1d1e0; 
+	text-color: #222;
+	text-offset: 5px, 0px;	
+	
+	size: 40px;
+	shape: box;
+	fill-color: #d1d1e0;
+	stroke-mode: plain;
+	stroke-color: #d1d1e0;
+	
+	visibility-mode:normal;
+}
+
+node.Function {
+	text-alignment: at-right; 
+	text-padding: 3px, 2px; 
+	text-background-mode: rounded-box; 
+	text-background-color: #EB2; 
+	text-color: #222;
+	text-offset: 5px, 0px;
+	
+	size-mode: dyn-size;
+	shape: circle;
+	fill-color: #3399ff;
+	stroke-mode: plain;
+	stroke-color: yellow;
+	
+	visibility-mode:normal;
+}
+
+node.FunctionPhantom {
+	text-size: 12;
+	text-alignment: at-right; 
+	text-padding: 3px, 2px; 
+	text-background-mode: rounded-box; 
+	text-background-color: #d1d1e0; 
+	text-color: #222;
+	text-offset: 5px, 0px;
+	
+	size-mode: dyn-size;
+	shape: circle;
+	fill-color: #d1d1e0;
+	stroke-mode: plain;
+	stroke-color: #d1d1e0;
+	
+	visibility-mode:normal;
+}
+
+node.Operation {
+	text-alignment: at-right; 
+	text-padding: 3px, 2px; 
+	text-background-mode: rounded-box; 
+	text-background-color: #EB2; 
+	text-color: #222;
+	text-offset: 5px, 0px;
+	
+	size-mode: dyn-size;
+	shape: circle;
+	fill-color: #093;
+	stroke-mode: plain;
+	stroke-color: yellow;
+	
+	visibility-mode:normal;
+}
+
+node.OperationPhantom {
+	text-size: 12;	
+	text-alignment: at-right; 
+	text-padding: 3px, 2px; 
+	text-background-mode: rounded-box; 
+	text-background-color: #d1d1e0; 
+	text-color: #222;
+	text-offset: 5px, 0px;
+	
+	size-mode: dyn-size;
+	shape: circle;
+	fill-color: #d1d1e0;
+	stroke-mode: plain;
+	stroke-color: #d1d1e0;
+	
+	visibility-mode:normal;
+}
+
+node.Running {
+	text-alignment: at-right;
+	text-style : italic;
+	
+	size: 30px;	
+	stroke-width: 6px; 
+	stroke-color: #585;
+	fill-color: #585;
+	shape: rounded-box;
+	
+	visibility-mode:normal;
+}
+
+node.RunningPhantom {
+	text-alignment: at-right;
+	text-size: 12;
+	text-style : italic;
+		
+	stroke-width: 6px; 
+	stroke-color: #d1d1e0;
+	shape: rounded-box;
+	fill-color: #d1d1e0;
+	
+	visibility-mode:normal;
+}
+
+node.Waiting {
+	text-alignment: at-right;
+	text-style : italic;
+	
+	size: 30px;	
+	stroke-width: 6px; 
+	stroke-color: #585;
+	fill-color: #0073e6;
+	shape: rounded-box;
+	
+	visibility-mode:normal;
+}
+
+node.WaitingPhantom {
+	text-alignment: at-right;
+	text-size: 12;
+	text-style : italic;
+		
+	stroke-width: 6px; 
+	stroke-color: #d1d1e0;
+	shape: rounded-box;
+	fill-color: #d1d1e0;
+	
+	visibility-mode:normal;
+}
+
+node.TimedWaiting {
+	text-alignment: at-right;
+	text-style : italic;
+	
+	size: 30px;	
+	stroke-width: 6px; 
+	stroke-color: #585;
+	fill-color: #66ccff;
+	shape: rounded-box;
+	
+	visibility-mode:normal;
+}
+
+node.TimedWaitingPhantom {
+	text-alignment: at-right;
+	text-size: 12;
+	text-style : italic;
+		
+	stroke-width: 6px; 
+	stroke-color: #d1d1e0;
+	shape: rounded-box;
+	fill-color: #d1d1e0;
+	
+	visibility-mode:normal;
+}
+
+node.Deadlock {
+	text-alignment: at-right;
+	text-style : italic;
+	
+	size: 45px;	
+	stroke-width: 6px; 
+	stroke-color: red;
+	fill-color: red;
+	shape: cross;
+	
+	visibility-mode:normal;
+}
+
+node.DeadlockPhantom {
+	text-alignment: at-right;
+	text-size: 12;
+	text-style : italic;
+		
+	stroke-width: 6px; 
+	stroke-color: #d1d1e0;
+	shape: cross;
+	fill-color: #d1d1e0;
+	
+	visibility-mode:normal;
+}
+
+node.Locked {
+	text-alignment: at-right;
+	text-style : italic;
+	
+	size: 30px;	
+	stroke-width: 6px; 
+	stroke-color: orange;
+	fill-color: orange;	
+	shape: rounded-box;
+	
+	visibility-mode:normal;
+}
+
+node.LockedPhantom {
+	text-alignment: at-right;
+	text-size: 12;
+	text-style : italic;
+	
+	stroke-width: 6px; 
+	stroke-color: #d1d1e0;
+	shape: rounded-box;
+	fill-color: #d1d1e0;
+	
+	visibility-mode:normal;
+}
+

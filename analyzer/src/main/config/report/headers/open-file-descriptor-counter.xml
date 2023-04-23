@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<open_file_descriptor_counter>
+					
+			<!-- Factor defined in percentage gain or loss -->
+			<delta 
+				increase_factor="10" 
+				increase_color="RGB-255-180-129" 
+				decrease_factor="10" 
+				decrease_color="RGB-167-255-167"/>
+				
+		</open_file_descriptor_counter>
+		
+	</header>

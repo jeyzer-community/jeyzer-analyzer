@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<memory_pool 
+				category="PS Old Gen|G1 Old Gen|Tenured Gen:usage:used" 
+				display="Old Gen used" 
+				color="RED" 
+				description="Old generation used space in Mb."/>
+		
+	</header>

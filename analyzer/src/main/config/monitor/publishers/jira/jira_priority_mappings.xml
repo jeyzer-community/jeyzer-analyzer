@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- JIRA priority mapping -->
+<priority_mappings>
+	<mapping event_level="C5,C10" jira_priority="Highest"/>
+	<mapping event_level="C4,C9"  jira_priority="High"/>
+	<!--  everything else will be defaulted to current JIRA prio. Could be Medium -->
+</priority_mappings>

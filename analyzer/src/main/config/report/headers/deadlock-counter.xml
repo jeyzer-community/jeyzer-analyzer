@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<deadlock_counter
+				threshold="1" 
+				color="RED" 
+		        math_function_max_threshold="1" 
+		        math_function_max_color="RED"/>
+		
+	</header>

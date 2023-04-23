@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="sequence" name="Recording state" link_type="Rec" formats="Advanced Agent">
+		
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays recording state measurements like recording collection time and write speed.&#10;Permits to see how the recording behaved.</description>
+		
+			<!-- Optional -->
+			<headers title_column_index="1">
+				
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<max/>
+					<average/>
+				</math_functions>
+			
+				<!-- Headers -->
+				<capture_time          header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/capture-time.xml"/>
+				<thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
+				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+
+				<section_delimiter title="Write" color="RGB-201-208-168"/>
+				<recording_write_size  header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/disk_write/recording-write-size.xml"/>
+				<recording_write_time  header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/disk_write/recording-write-time.xml"/>
+				<recording_write_speed header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/disk_write/recording-write-speed.xml"/>
+			</headers>
+		
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+				<action_size color="RGB-231-213-137" threshold="10"/> <!-- Light brown -->
+			</row_headers>
+		
+			<display>
+
+				<!-- Function display. Color applies for ATBI -->
+				<function color="GREY_25_PERCENT"/>
+
+				<!-- Long running tasks display -->
+				<long_running color="LIGHT_YELLOW" threshold="7" stats="true"/>
+
+				<!-- Java Lock display -->
+				<lock_state color="ORANGE" lock_owner="RGB-209-47-109" lock_owner_and_locked="RGB-174-76-169" deadlock="RED" suspended="RED" stats="false"/>
+
+				<!-- Identical consecutive stacks : add colored borders  -->
+				<frozen_code_state color="RED" stats="false"/>
+
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+
+			</display>
+			
+			
+			<charts>
+				<chart title="Recording write speed">
+					<serie header="recording_write_speed"/>
+				</chart>
+				<chart title="Recording times">
+					<serie header="recording_write_time"/>
+					<serie header="capture_time"/>
+					<serie header="thread_counter"/>
+				</chart>
+			</charts>
+		</sheet>

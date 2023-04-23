@@ -1,0 +1,78 @@
+## Apache Velocity template
+
+<html>
+
+  <style>
+  
+	body {
+    	background-color: #dbe0dc;
+    	font-family: Verdana, Arial;
+	}  
+  
+	th {
+    	background-color: #4CAF50;
+    	color: white;
+    	border-bottom: 1px solid #ddd;
+	}
+
+	tr:nth-child(even) {
+    	background-color: #bfccc2
+	}
+	
+	td {
+    	border-bottom: 1px solid #ddd;
+	}
+	
+  </style>
+
+  <head>
+    <title>Jeyzer Monitor - $target</title>
+  </head>
+
+  <body>
+  	<h1>Jeyzer Monitor</h1>
+  	
+  	#if( $application_id )
+  	<p>Application id : $application_id</p>
+  	<p>Application type : $application_type</p>
+  	#end
+  	
+  	<p>Generation : $generation_time</p>
+  	
+  	#if( !$eventList.isEmpty())
+  	<h2>Detected events</h2>
+	<table cellpadding="5" cellspacing="5">
+    	<tr>
+    		<th>Id</td>
+    		<th>Ref</td>
+    		<th>Level</th>
+    		<th>Sub level</th>
+    		<th>Start date</th>
+    		<th>End date</th>
+    		<th>Event</th>
+    		<th>Recommendation</th>
+    		<th>Scope</th>
+    	</tr>
+		#foreach( $event in $events_list )
+    	<tr>
+    		<td>$foreach.count</td>
+    		<td>$event.Ref</td>
+    		<td>$event.Level</td>
+    		<td>$event.SubLevel</td>
+    		<td>$event.StartDate</td>
+    		<td>$event.EndDate</td>
+    		#if( $event.NameExtraInfo )
+    		<td>$event.Name : $event.NameExtraInfo</td>
+    		#else
+    		<td>$event.Name</td>
+    		#end
+    		<td>$event.Message</td>
+    		<td>$event.Scope</td>
+    	</tr>
+		#end
+	</table>
+	#else
+	<h2>No detected events</h2>  
+	#end
+  </body>
+</html>

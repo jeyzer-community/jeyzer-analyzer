@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<!--  display the functions and operations categorized per executor, ordered by number of appearances -->
+		<sheet type="executor_function_histogram" name="Executor function histogram">
+			
+			<!-- generate contention graph picture -->
+			<contention_graph>
+			
+				<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/contention-types.xml"/>
+				
+				<!-- generate graph picture -->
+				<graph>
+					<!-- Default settings override -->
+					<!-- see default_setup.xml for complete parameter documentation -->
+					<rendering>
+						<style_sheet file="${JEYZER_ANALYZER_CONFIG_DIR}/graph/static/style_contention_types.css"/>
+						<!-- Mode possible values : radial -->
+						<mode type="radial"/>
+						<!-- resolution in pixels -->
+						<picture_resolution width="3840" height="3072" />
+						<!-- resolution in number of standard rows and columns -->
+						<excel_resolution height="54" width="20"/>
+						<!-- display node if percentage is greater than threshold. Disabled by default (-1) -->
+						<node_display size_threshold="3"/>
+						<!-- display node value (stack count) if value is greater than threshold -->
+						<node_value_display size_threshold="15"/>
+						<!-- rendering area percentage growth to prevent graph elements loss on borders -->
+						<graph_area_extend top="5" bottom="5" right="10" left="5"/>
+					</rendering>
+					<!--
+					<conditions>
+						<generation maximum="10"/>
+						<nodes threshold="4"/>
+					</conditions>
+					-->
+				</graph>
+				
+			</contention_graph>
+			
+		</sheet>

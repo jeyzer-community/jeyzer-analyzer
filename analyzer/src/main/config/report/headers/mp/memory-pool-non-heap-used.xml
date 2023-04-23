@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<memory_pool 
+				category="non heap:used" 
+				display="VM non heap used" 
+				color="RED" 
+				description="Non heap used in Mb."/>
+		
+	</header>

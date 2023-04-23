@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<used_disk_space_percent 
+				id="work" 
+				display="App partition / Used disk space %"
+				comment="Used disk space percentage on the partition where the application stands."
+				threshold="90"
+				color="RED"
+				math_function_average_threshold="90" 
+				math_function_average_color="RED"
+				math_function_max_threshold="90"   
+				math_function_max_color="RED"/>
+		
+	</header>

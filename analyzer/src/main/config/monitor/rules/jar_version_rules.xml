@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Standard process jar versions">
+
+		<!-- ************************************************************************ -->
+		<!--                   PROCESS JAR VERSION RULES                              -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If the process jar version is a snapshot, alpha, beta, build... version, generate event. -->
+		<rule name="Process jar version snapshot" ref="JZR-PJV-001">
+			<narrative>This rule checks if the process jars have snapshot versions. It it important to run with official libraries.</narrative>
+			<thresholds>
+				<threshold type="system signal"
+				           level="WARNING"
+				           sub_level="7" 
+				           message="Application is running with snapshot libraries.&#10; It is highly recommended to run only with release libraries."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the process jar version is not available, generate event. -->
+		<rule name="Process jar version absence" ref="JZR-PJV-002">
+			<narrative>This rule checks the absence of versions on the process jars. It it important to know the library version in case of issue.</narrative>
+			<thresholds>
+				<threshold type="system signal"
+				           level="INFO"
+				           sub_level="6" 
+				           message="Application is running with libraries without version.&#10; It is recommended to run with versionned libraries."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the process jar is present multiple times, generate event. -->
+		<rule name="Process jar multiple versions" ref="JZR-PJV-003">
+			<narrative>This rule checks if any process jar is present under different versions.\n If the jar files can be accessed from the monitored application (depending on the class loading design), it can be dangerous as the wrong jar file may be loaded.\n Under an application server, this could be a false positive as the loaded jar files can be isolated at web app level.</narrative>
+			<thresholds>
+				<threshold type="system signal"
+				           level="WARNING"
+				           message="Application is running with different versions of the same library which is not intended.&#10;. Please contact your support."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the process jar file name version differs from the jar version stored in the Manifest attributes, generate event. -->
+		<rule name="Process jar manifest version mismatch" ref="JZR-PJV-004">
+			<narrative>This rule checks that the Manifest version attributes match the jar file name version.\n If the versions differ, it means that the jar build is wrong or someone has altered the jar file.\n In both cases, you could run with a different version of the library than you would think.</narrative>
+			<thresholds>
+				<threshold type="system signal"
+				           level="INFO"
+				           message="Application is running with libraries that do carry inconsistent version information."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>

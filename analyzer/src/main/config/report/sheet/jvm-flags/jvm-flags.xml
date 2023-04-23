@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<!--  display the JVM flags -->
+		<sheet type="jvm_flags" name="JVM Flags">
+
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays all the JVM flags including the changed ones.&#10;Permits to review the JVM technical details.&#10;Exhaustive JVM flag documentation available at : https://chriswhocodes.com/hotspot_options_jdk11.html</description>
+		
+			<display>
+				<origin auto_filter_default_flags="true">
+					<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/jvm-flags-origins.xml"/>
+				</origin>
+			</display>
+		
+		</sheet>

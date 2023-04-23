@@ -1,0 +1,7 @@
+<stickers group="Java process parameters">
+
+	<sticker name="jmx_remote_access" type="property card" property="com.sun.management.jmxremote" pattern=".*"/>
+
+	<sticker name="jfr-recording" type="property card" property="jzr.jdk.flag.FlightRecorder" pattern="true"/>
+
+</stickers>

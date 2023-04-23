@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<!-- Set gc to display the gc count since the last thread dump with : -->
+		<!--    # all to display it for all the garbage collectors                     -->				 
+		<!--    # old or young to display it for the corresponding garbage collector   -->
+		<!--    # last to display it for the last executed garbage collector           -->
+		<!--    # the exact garbage collector name. Ex : PS Scavenge                   -->
+		
+		<garbage_collection_count 
+				gc="young" 
+				display="Minor GC count" 
+				threshold="20" 
+				color="ORANGE"/>
+	
+	</header>

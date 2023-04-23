@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<!-- Set gc to display the sum of the gc times since the last thread dump (or equivalent percentage) with : -->
+		<!--    # all to display it for all the garbage collectors                     -->				 
+		<!--    # old or young to display it for the corresponding garbage collector   -->
+		<!--    # last to display it for the last executed garbage collector           -->
+		<!--    # the exact garbage collector name. Ex : PS Scavenge                   -->
+	
+		<garbage_collection_time 
+				gc="old"
+				display="Major GC execution time"
+				threshold="500"
+				color="RED"
+				math_function_max_threshold="500"
+				math_function_max_color="RED"/>
+		
+	</header>

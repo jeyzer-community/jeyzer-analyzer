@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="sequence" name="Locks" link_type="Lck">
+		
+			<description>Displays actions in a time line manner, focusing on java lock operations, locked/locking threads as well as frozen stacks.&#10;Permits to identify deadlocks and slow downs due to excessive locking.</description>
+
+			<headers formats="Jstack 1.6+" title_column_index="1">
+			
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<max/>
+				</math_functions>
+				
+				<!-- Headers -->
+				<deadlock_counter      header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/deadlock-counter.xml"/>
+				<locked_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/locked-thread-counter.xml"/>
+				<frozen_code_state_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/frozen-code-state-thread-counter.xml"/>
+				<biased_lock_counter   header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/biased-lock-counter.xml"/>
+				<suspended_counter     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/suspended-counter.xml"/>
+				
+			</headers>
+		
+			<headers formats="Advanced JMX,Advanced Agent,Jstack 1.6+ Hung,JMX,Jstack 1.5,TDA,JRMC,JFR Recording" title_column_index="1">
+				
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<max/>
+				</math_functions>
+							
+				<!-- Headers -->
+				<deadlock_counter      header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/deadlock-counter.xml"/>
+				<locked_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/locked-thread-counter.xml"/>
+				<frozen_code_state_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/frozen-code-state-thread-counter.xml"/>
+				<suspended_counter     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/suspended-counter.xml"/>
+				
+			</headers>
+			
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+				<lock_state>
+					<highlight name="Action in deadlock situation" regex="D" color="RED"/>
+					<highlight name="Action in locking situation" regex="L" color="ORANGE"/>
+					<highlight name="Action suspended on debug breakpoint" regex="S" color="RED"/>
+				</lock_state>
+				<frozen_code_state threshold="5" color="RGB-255-145-71"/> <!-- light orange -->
+			</row_headers>
+		
+			<display>
+
+				<!-- Function display. Color applies for ATBI -->
+				<function color="GREY_25_PERCENT" />
+			
+				<!-- Operation display. Color applies for lock related operations -->
+				<advanced_operation>
+					<highlight name="Write lock obtained to add a resource to the pool" color="RGB-209-47-109"/>
+					<highlight name="Write lock obtained to remove a resource from the pool" color="RGB-209-47-109"/>
+				</advanced_operation>
+
+				<!-- Java Lock display -->
+				<lock_state color="ORANGE" lock_owner="RGB-209-47-109" lock_owner_and_locked="RGB-174-76-169" deadlock="RED" suspended="RED" stats="true"/>
+
+				<!-- Identical consecutive stacks : add colored borders  -->
+				<frozen_code_state color="RED" stats="true"/>
+
+				<!-- Biased locks : add text underline -->
+				<biased_lock/>
+
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+				
+			</display>
+		</sheet>

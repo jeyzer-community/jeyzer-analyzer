@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="analysis_patterns" name="Analysis Patterns">
+			<display>
+				<excludes/>
+				<functions/>
+				<discovery_functions/>
+				<operations/>
+				<discovery_operations/>
+				<lockers/>
+				<executors/>
+			</display>
+		</sheet>

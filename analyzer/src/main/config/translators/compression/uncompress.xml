@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<translator>
+
+	<uncompress keep_files="true" directory="${JEYZER_RECORD_DIRECTORY}/uncompressed">
+		
+		<!-- Security limits, useful in a web portal context --> 
+		<!--   File size and uncompressed size are in Mb -->
+		<!--   If not set, default values are 100Mb, 1500Mb and 5000  -->
+		<limits 
+			file_size_limit="${JEYZER_TRANSLATOR_FILE_MAX_SIZE}" 
+			uncompressed_size_limit="${JEYZER_TRANSLATOR_UNCOMPRESS_MAX_SIZE}" 
+			uncompressed_files_limit="${JEYZER_TRANSLATOR_UNCOMPRESS_MAX_FILES}"
+			/>
+			
+	</uncompress>
+
+</translator>

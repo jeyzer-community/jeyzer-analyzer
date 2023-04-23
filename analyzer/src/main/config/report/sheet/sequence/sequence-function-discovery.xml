@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="sequence" name="Function Discovery" link_type="Dis">
+		
+			<description>Displays actions in a time line manner, focusing on dynamic function discovery.&#10;Permits to catch additional process aspects.</description>		
+		
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+			</row_headers>
+		
+			<display>
+
+				<advanced_function stats="false" display_operation="false" display_contention_type="false">
+					<!-- Highlight is performed based on the BUILT_JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_REGEX_X internal property 
+						 which is set with a regular expression containing the different discovery keywords.
+						 Its regex value is automatically built based on JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_X value -->
+					<highlight regex="${BUILT_JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_REGEX_1}" color="${JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_COLOR_1}"/>
+					<highlight regex="${BUILT_JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_REGEX_2}" color="${JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_COLOR_2}"/>
+					<highlight regex="${BUILT_JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_REGEX_3}" color="${JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_COLOR_3}"/>
+					<highlight regex="${BUILT_JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_REGEX_4}" color="${JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_COLOR_4}"/>
+					<highlight regex="${BUILT_JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_REGEX_5}" color="${JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_COLOR_5}"/>
+					
+					<highlight name="(ATBI)" color="GREY_25_PERCENT"/>
+				</advanced_function>
+				
+				<atbi_of_interest threshold="10" color="ORANGE"/>
+				
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+
+			</display>
+		</sheet>

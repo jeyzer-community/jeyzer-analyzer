@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<capture_time color="RED" 
+		          math_function_max_threshold="10000"    
+		          math_function_max_color="RED"
+		          math_function_average_threshold="5000" 
+		          math_function_average_color="RED">
+		              
+			<!-- Factor defined in percentage gain or loss -->
+			<delta 
+					  increase_factor="10" 
+					  increase_color="RGB-255-180-129" 
+					  decrease_factor="10" 
+					  decrease_color="RGB-167-255-167"/>
+					  
+		</capture_time>
+		
+	</header>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="sequence" name="Task sequence" link_type="TSq">
+		
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays actions in a time line manner, focusing on main indicators such as CPU, memory and thread count.&#10;Permits to get a good overview of the different process activities, including long running tasks.</description>
+		
+			<!-- Optional -->
+			<headers formats="Advanced JMX,Advanced Agent" title_column_index="1">
+				
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<max/>
+				</math_functions>
+			
+				<!-- Headers -->
+				<capture_time          header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/capture-time.xml"/>
+				<thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
+				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+				<deadlock_counter      header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/deadlock-counter.xml"/>
+				<suspended_counter     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/suspended-counter.xml"/>
+
+				<section_delimiter title="CPU" color="RGB-201-208-168"/>
+				<system_cpu           header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/system-cpu.xml"/>
+				<process_cpu          header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/process-cpu.xml"/>
+				<computed_process_cpu header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/computed-process-cpu.xml"/>
+				<applicative_cpu_activity header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/applicative-cpu-activity.xml"/>
+				
+				<section_delimiter title="Memory" color="RGB-201-208-168"/>
+				<computed_process_memory     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/computed-process-memory.xml"/>
+				<applicative_memory_activity header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/applicative-memory-activity.xml"/>
+				<!-- Heap -->
+				<memory_pool_heap header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/memory-pool-heap.xml"/>
+				<memory_pool_heap_ratio header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/memory-pool-heap-ratio.xml"/>
+				<!-- Garbage collection -->
+				<garbage_collection_time_percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-all-time-percent.xml"/>
+				<garbage_collection_health_indication header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-last-all-health-indication.xml"/>
+
+			</headers>
+			<!-- Optional -->
+			<headers formats="JFR Recording" title_column_index="1">
+				
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<max/>
+				</math_functions>
+			
+				<!-- Headers -->
+				<thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
+				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+				<deadlock_counter      header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/deadlock-counter.xml"/>
+				<suspended_counter     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/suspended-counter.xml"/>
+
+				<section_delimiter title="CPU" color="RGB-201-208-168"/>
+				<system_cpu           header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/system-cpu.xml"/>
+				<process_cpu          header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/process-cpu.xml"/>
+				<computed_process_cpu header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/computed-process-cpu.xml"/>
+				<applicative_cpu_activity header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/applicative-cpu-activity.xml"/>
+				
+				<section_delimiter title="Memory" color="RGB-201-208-168"/>
+				<computed_process_memory     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/computed-process-memory.xml"/>
+				<applicative_memory_activity header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/applicative-memory-activity.xml"/>
+				<!-- Heap -->
+				<memory_pool_heap header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/memory-pool-heap.xml"/>
+				<memory_pool_heap_ratio header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/memory-pool-heap-ratio.xml"/>
+				<!-- Garbage collection -->
+				<garbage_collection_time_percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-all-time-percent.xml"/>
+				<garbage_collection_health_indication header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-last-all-health-indication.xml"/>
+
+			</headers>
+			<headers formats="Jstack 1.6+,Jstack 1.6+ Hung,JMX,Jstack 1.5,JRMC,TDA" title_column_index="1">
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<max/>
+				</math_functions>
+			
+				<!-- Headers -->
+				<capture_time          header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/capture-time.xml"/>
+				<thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
+				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+				<deadlock_counter      header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/deadlock-counter.xml"/>
+				<suspended_counter     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/suspended-counter.xml"/>
+			</headers>
+			<headers formats="IBM core dump,default" title_column_index="1">
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<max/>
+				</math_functions>
+			
+				<!-- Headers -->
+				<thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
+				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+			</headers>
+		
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+				<action_size color="RGB-231-213-137" threshold="10"/> <!-- Light brown -->
+			</row_headers>
+		
+			<display>
+
+				<!-- Function display. Color applies for ATBI -->
+				<function color="GREY_25_PERCENT"/>
+
+				<!-- Long running tasks display -->
+				<long_running color="LIGHT_YELLOW" threshold="7" stats="true"/>
+
+				<!-- Java Lock display -->
+				<lock_state color="ORANGE" lock_owner="RGB-209-47-109" lock_owner_and_locked="RGB-174-76-169" deadlock="RED" suspended="RED" stats="false"/>
+
+				<!-- Identical consecutive stacks : add colored borders  -->
+				<frozen_code_state color="RED" stats="false"/>
+
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+
+			</display>
+		</sheet>

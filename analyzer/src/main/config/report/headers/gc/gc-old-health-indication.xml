@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<!-- Set gc to last to display the figures for the last executed garbage collector -->
+		<!-- Set pool to all to display the figures for all the memory pools -->				
+		
+		<garbage_collection_health_indication 
+				gc="old" 
+				pool="old" 
+				display="Health Indication - Old GC Old gen" 
+				threshold="80" 
+				color="RED"/>
+		
+	</header>

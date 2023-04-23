@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<!--  display the merged actions and their related graph pictures. 
+		      Provides profiling info : frequency, average CPU and memory if available -->
+		<sheet type="action_dashboard" name="Action Dashboard" include_atbi="true" critical_tab_color="LIGHT_ORANGE">
+			
+			<display date_format="yyyy/MM/dd HH:mm:ss" grouping="true" group_sorting="false" clean_duplicate_events="false">
+				<ranking>
+					<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/monitoring-event-ranks.xml"/>
+				</ranking>
+			</display>
+			
+			<rules>
+				<rule_sets files="repo://base/@@base-shared-deps@@"/>
+				<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/standard_rules.xml"/>
+				<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/advanced_rules.xml"/>
+				<task_applicative_rules/>
+				<dynamic_rule_sets declared_repository_only="true"/>
+			</rules>
+			
+			<!-- generate function graph picture -->
+			<function_graph>
+			
+				<graph>
+					<!-- Default settings override -->
+					<!-- see default_setup.xml for complete parameter documentation -->
+					<!-- let's override the resolution as graph will contain more nodes than for distinct action  -->
+					<rendering>
+						<!-- Mode possible values : graph, tree, tree_merge, radial_merge or radial -->
+						<mode type="tree_merge"/>
+						<!--  Displays listed thread states only in tree mode, comma separated -->
+						<!--  Set it to empty to not list any state -->
+						<thread_state enabled="true" states="BLOCKED,WAITING,TIMED_WAITING"/>
+						<!-- resolution in pixels -->
+						<picture_resolution width="3840" height="3072" />
+						<!-- resolution in number of standard rows and columns. Width adapted for the dashboard -->
+						<excel_resolution height="47" width="87"/>
+						<!-- display node if related stack count is greater than threshold. Disabled by default (-1) -->
+						<node_display size_threshold="3"/>
+					</rendering>
+					<!--
+					<conditions>
+						<generation maximum="10"/>
+						<nodes threshold="4"/>
+						<action_size threshold="10"/>
+					</conditions>
+					-->
+				</graph>
+			
+			</function_graph>
+			
+			<!-- generate contention graph picture -->
+			<contention_graph>
+			
+				<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/contention-types.xml"/>
+				
+				<!-- generate graph picture -->
+				<graph>
+					<!-- Default settings override -->
+					<!-- see default_setup.xml for complete parameter documentation -->
+					<rendering>
+						<style_sheet file="${JEYZER_ANALYZER_CONFIG_DIR}/graph/static/style_contention_types.css"/>
+						<!-- Mode possible values : radial -->
+						<mode type="radial"/>
+						<!-- resolution in pixels -->
+						<picture_resolution width="1920" height="1536" />
+						<!-- resolution in number of standard rows and columns. Width adapted for the dashboard -->
+						<excel_resolution height="27" width="3"/>
+						<!-- display node if percentage is greater than threshold. Disabled by default (-1) -->
+						<node_display size_threshold="3"/>
+						<!-- display node value (stack count) if value is greater than threshold -->
+						<node_value_display size_threshold="15"/>
+						<!-- rendering area percentage growth to prevent graph elements loss on borders -->
+						<graph_area_extend top="5" bottom="5" right="10" left="5"/>
+					</rendering>
+					<!--
+					<conditions>
+						<generation maximum="10"/>
+						<nodes threshold="4"/>
+					</conditions>
+					-->
+				</graph>
+				
+			</contention_graph>
+			
+		</sheet>

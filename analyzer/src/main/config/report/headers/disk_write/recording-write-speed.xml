@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<recording_write_speed threshold="10" color="RGB-51-204-51"
+				  math_function_max_threshold="10"    
+		          math_function_max_color="RGB-51-204-51"
+		          math_function_average_threshold="5" 
+		          math_function_average_color="RGB-51-204-51"> <!-- Light green -->
+		              
+			<!-- Factor defined in percentage gain or loss -->
+			<delta 
+					  increase_factor="50" 
+					  increase_color="RGB-167-255-167" 
+					  decrease_factor="50" 
+					  decrease_color="RGB-255-180-129"/>
+					  
+		</recording_write_speed>
+		
+	</header>

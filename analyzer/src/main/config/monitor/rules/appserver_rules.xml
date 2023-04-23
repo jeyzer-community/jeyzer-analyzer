@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Standard application server">
+
+		<!-- ************************************************************************ -->
+		<!--                       APPLICATION SERVER RULES                           -->
+		<!-- ************************************************************************ -->
+
+		<!--  If number of active threads matching the [pattern] is greater than [value] for [count] snapshots or [time], generate event. Applies for thread pools. Pattern is regex -->
+		<rule name="Active named thread limit" extra_info="HTTP thread pool" ref="JZR-SRV-001">
+			<narrative>This rule detects application server HTTP thread pool miseries.</narrative>
+			<thresholds>
+				<threshold type="global custom"
+						   count="5"
+						   value="20"
+						   pattern="^TP-Processor.*" 
+				           level="WARNING"
+				           message="Glassfish modjk connection pool about to be exhausted. Application may be under load.&#10;Monitor closely the application. You may consider increasing the pool size."/>
+				<threshold type="global custom"
+						   count="5"
+						   value="20"
+						   pattern="^httpWorkerThread-.*" 
+				           level="WARNING"
+				           message="Glassfish HTTP connection pool about to be exhausted. Application may be under load.&#10;Monitor closely the application. You may consider increasing the pool size."/>
+				<threshold type="global custom"
+						   count="5"
+						   value="20"
+						   pattern="^httpSSLWorkerThread-.*" 
+				           level="WARNING"
+				           message="Glassfish HTTPS connection pool about to be exhausted. Application may be under load.&#10;Monitor closely the application. You may consider increasing the pool size."/>
+				<threshold type="global custom"
+						   count="5"
+						   value="20"
+						   pattern="^ExecuteThread: '.*" 
+				           level="WARNING"
+				           message="Weblogic HTTP connection pool about to be exhausted. Application may be under load.&#10;Monitor closely the application. You may consider increasing the pool size."/>
+				<threshold type="global custom"
+						   count="5"
+						   value="20"
+						   pattern="^http-.*" 
+				           level="WARNING"
+				           message="Tomcat or JBoss connection pool about to be exhausted. Application may be under load.&#10;Monitor closely the application. You may consider increasing the pool size."/>
+				<threshold type="global custom"
+						   count="5"
+						   value="20"
+						   pattern="^ajp-.*" 
+				           level="WARNING"
+				           message="Tomcat or JBoss AJP connection pool about to be exhausted. Application may be under load.&#10;Monitor closely the application. You may consider increasing the pool size."/>
+				<threshold type="global custom"
+						   count="5"
+						   value="20"
+						   pattern="^WebContainer :.*" 
+				           level="WARNING"
+				           message="Websphere connection pool about to be exhausted. Application may be under load.&#10;Monitor closely the application. You may consider increasing the pool size."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of threads (active and inactive) matching the [pattern] is lower or equal than [value] for [count] thread dumps or [time], generate event. Pattern is regex -->
+		<!--  Important : Absent threads rules cannot be complementary as one or the other will wrongly match. Put all patterns under the same regex like below -->
+		<!--
+		<rule name="Absent threads" extra_info="HTTP thread pool" ref="JZR-SRV-002">
+			<narrative>This rule detects the emptiness of an applicative server HTTP thread pool.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="5"
+						   value="0"
+						   pattern="^TP-Processor.|^httpWorkerThread-.*|^httpSSLWorkerThread-.|^ExecuteThread: '.*|^http-.*|^WebContainer :.*" 
+				           level="CRITICAL"
+				           message="HTTP thread pool is empty or missing. Please check the logs and plan a restart."/>
+			</thresholds>
+		</rule>
+		-->
+		
+		<!--  If percentage of operation is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation global percentage" param_display="IP lookup" param="IP lookup" stickers="performance" ref="JZR-SRV-003">
+			<narrative>This rule detects if the application spends too much time on IP lookup which means a DNS resolution issue.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="20"
+				           level="WARNING" 
+				           message="Frequent IP lookup detected : DNS resolution is probably very slow.&#10;Please make sure that remote hosts are declared in the local host file.&#10;Check also the DNS resolution performance."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If function regex [pattern] and operation regex [operation_pattern] are seen in more than [value] parallel threads, generate event. -->
+		<rule name="Function and operation parallel contention" extra_info="JDBC connection pool misery" ref="JZR-SRV-004">
+			<narrative>This rule detects if the SUN JDBC connection pool is running out of database connections.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="Sun JDBC connection pool access"
+						   operation_pattern="Blocked on RW lock to get a resource from the pool"
+				           level="WARNING"
+				           message="Contention on Sun JDBC connection pool.&#10;System is about to run out of database resources.&#10;Increase the JDBC database connection pool size and investigate any JDBC connection leakage."/>
+				<threshold type="session custom"
+						   count="3"
+						   value="5"
+				           pattern="Sun JDBC connection pool access"
+						   operation_pattern="Blocked on RW lock to get a resource from the pool"						   
+				           level="CRITICAL"
+				           message="Severe contention on Sun JDBC connection pool.&#10;System is running out of database resources.&#10;Plan possibly a restart, increase the JDBC database connection pool size and investigate any JDBC connection leakage."/>
+			</thresholds>
+		</rule>
+
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Operation parallel contention" extra_info="Hibernate database connection pool access contention" ref="JZR-SRV-005">
+			<narrative>This rule detects if the Hibernate connection pool is running out of database connections.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="Hibernate get connection|Get JDBC connection from C3P0 pool|Waiting for JDBC connection from C3P0 pool"  
+				           level="WARNING"
+				           message="Contention on Hibernate connection pool.&#10;System is about to run out of database resources.&#10;Increase the Hibernate connection pool size (hibernate.c3p0.max_size) and investigate any JDBC connection leakage."/>
+				<threshold type="session custom"
+						   count="3"
+						   value="5"
+				           pattern="Hibernate get connection|Get JDBC connection from C3P0 pool|Waiting for JDBC connection from C3P0 pool"  
+				           level="CRITICAL"
+				           message="Severe contention on Hibernate connection pool.&#10;System is running out of database resources.&#10;Plan possibly a restart, increase the Hibernate connection pool size (hibernate.c3p0.max_size) and investigate any JDBC connection leakage."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Operation parallel contention" extra_info="Hibernate prepared statement creation contention" ref="JZR-SRV-006">
+			<narrative>This rule detects if the contention occurs on the Hibernate generation of prepared statements.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="Waiting for JDBC prepared statement from C3P0 pool"  
+				           level="WARNING"
+				           message="Contention on Hibernate prepared statement creation.&#10;System is creating too many distinct prepared statements.&#10;Enable the Hibernate prepared statement pool or increase its size (set the hibernate.c3p0.max_statements)."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Operation parallel contention" extra_info="Hibernate logging active" stickers="performance" ref="JZR-SRV-007">
+			<narrative>This rule detects if the Hibernate logging is active.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="Hibernate logging"  
+				           level="INFO"
+				           message="Hibernate logging is enabled.&#10;This may impact the system performance.&#10;Check the Hibernate documentation to disable it."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>

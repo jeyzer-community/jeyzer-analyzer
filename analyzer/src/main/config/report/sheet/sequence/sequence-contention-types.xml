@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="sequence" name="Contentions" link_type="Ctt">
+		
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays Jeyzer time sequence display features, focusing on contention types.&#10;Contention type is low level activity.</description>
+		
+			<!-- Optional -->
+			<headers  title_column_index="1">
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<max/>
+					<cumulative/>
+				</math_functions>
+			
+				<!-- Headers -->
+				<cpu_runnable_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/cpu-runnable-thread-counter.xml"/>
+				<action_counter              header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+				<tendency_contention_type/>
+				
+			</headers>
+		
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+				<action_size/>
+				<cpu_runnable threshold="1" color="BRIGHT_GREEN"/>
+			</row_headers>
+		
+			<display>
+				<advanced_contention_type all_contention_types="true">
+					<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/contention-types.xml"/> 
+				</advanced_contention_type>
+
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+				
+			</display>
+		</sheet>

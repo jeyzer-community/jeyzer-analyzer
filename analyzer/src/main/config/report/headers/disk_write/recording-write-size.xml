@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<recording_write_size  
+		          threshold="1000" color="ORANGE"
+		          math_function_max_threshold="1000"    
+		          math_function_max_color="ORANGE">					  
+		</recording_write_size>
+		
+	</header>

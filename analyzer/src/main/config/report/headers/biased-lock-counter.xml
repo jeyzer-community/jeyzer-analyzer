@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<biased_lock_counter 
+				threshold="1" 
+				color="YELLOW"/>
+		
+	</header>

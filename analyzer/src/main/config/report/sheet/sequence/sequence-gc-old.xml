@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="sequence" name="Memory GC Old" formats="Advanced JMX,Advanced Agent,JFR Recording" link_type="GCo">
+		
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays garbage collecting figures for the Old Generation memory zone.&#10;Permits to spot out of memory cases. Includes GC graphs.</description>
+		
+			<headers>
+
+				<garbage_collection_executed_garbage_collector header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-all-executed-garbage-collector.xml"/>
+				<garbage_collection_health_indication header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-health-indication.xml"/>
+				
+				<section_delimiter title="Execution count" color="RGB-201-208-168"/>
+				<garbage_collection_count header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-count.xml"/>
+				
+				<section_delimiter title="Execution time" color="RGB-201-208-168"/>
+				<garbage_collection_time header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-time.xml"/>
+				<garbage_collection_time_percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-time-percent.xml"/>
+
+				<section_delimiter title="Memory used &#10; Post major GC" color="RGB-201-208-168"/>
+				<garbage_collection_memory_used_after_gc header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-old-memory-used-after-gc.xml"/>
+				<garbage_collection_memory_used_after_gc_percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-old-memory-used-after-gc-percent.xml"/>
+
+				<section_delimiter title="Memory released &#10; Post major GC" color="RGB-201-208-168"/>
+				<garbage_collection_memory_released header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-old-memory-released.xml"/>
+				<garbage_collection_memory_released_percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-old-memory-released-percent.xml"/>
+
+				<section_delimiter title="Memory used &#10; Before major GC" color="RGB-201-208-168"/>
+				<garbage_collection_memory_used_before_gc header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-old-memory-used-before-gc.xml"/>
+				<garbage_collection_memory_used_before_gc_percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-old-memory-used-before-gc-percent.xml"/>
+
+				<section_delimiter title="Memory pool &#10; Max size" color="RGB-201-208-168"/>
+				<garbage_collection_memory_max header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-memory-max.xml"/>
+								
+			</headers>
+		
+			<row_headers>
+				<thread_id/>
+				<thread_name/>
+			</row_headers>
+		
+			<display>
+			</display>
+			
+			<charts>
+				<chart title="GC old health" y_axis_max="100">
+					<serie header="garbage_collection_health_indication-old-old"/>
+				</chart>
+				<chart title="GC old memory used vs released">
+					<serie header="garbage_collection_memory_used_after_gc-old-old"/>
+					<serie header="garbage_collection_memory_used_before_gc-old-old"/>
+					<serie header="garbage_collection_memory_released-old-old"/>
+					<serie header="garbage_collection_memory_max-old-old"/>
+				</chart>
+				<chart title="GC old time">
+					<serie header="garbage_collection_time-old"/>
+				</chart>
+				<chart title="GC old time and memory %" y_axis_max="100">
+					<serie header="garbage_collection_time_percent-old"/>
+					<serie header="garbage_collection_memory_used_after_gc_percent-old-old"/>
+					<serie header="garbage_collection_memory_released_percent-old-old"/>
+				</chart>
+			</charts>
+			
+		</sheet>

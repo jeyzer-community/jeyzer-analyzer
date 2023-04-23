@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="sequence" name="Memory GC Global" formats="Advanced JMX,Advanced Agent,JFR Recording" link_type="GCg">
+		
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays global garbage collecting figures such as execution time, executed GC, released memory..&#10;Permits to identify GC dysfunctions and potential memory leaks. Includes GC graphs.</description>
+		
+			<headers>
+
+				<garbage_collection_executed_garbage_collector header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-all-executed-garbage-collector.xml"/>
+				<garbage_collection_health_indication header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-last-all-health-indication.xml"/>
+			
+				<section_delimiter title="Execution count" color="RGB-201-208-168"/>
+				<garbage_collection_count header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-count.xml"/>
+				<garbage_collection_count header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-young-count.xml"/>
+				
+				<section_delimiter title="Execution time &#10; Global" color="RGB-201-208-168"/>
+				<garbage_collection_time header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-all-time.xml"/>
+				<garbage_collection_time_percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-all-time-percent.xml"/>
+
+				<section_delimiter title="Memory used &#10; After last GC" color="RGB-201-208-168"/>
+				<garbage_collection_memory_used_after_gc header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-last-all-memory-used-after-gc.xml"/>
+				<garbage_collection_memory_used_after_gc_percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-last-all-memory-used-after-gc-percent.xml"/>
+
+				<section_delimiter title="Memory released &#10; After last GC" color="RGB-201-208-168"/>
+				<garbage_collection_memory_released header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-last-all-memory-released-after-gc.xml"/>
+				<garbage_collection_memory_released_percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-last-all-memory-released-after-gc-percent.xml"/>
+
+				<section_delimiter title="Memory used &#10; Before last GC" color="RGB-201-208-168"/>
+				<garbage_collection_memory_used_before_gc header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-last-all-memory-used-before-gc.xml"/>
+				<garbage_collection_memory_used_before_gc_percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-last-all-memory-used-before-gc-percent.xml"/>
+
+				<section_delimiter title="Memory pools &#10; Max size" color="RGB-201-208-168"/>
+				<garbage_collection_memory_max header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-all-memory-max.xml"/>
+				<garbage_collection_memory_max header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-memory-max.xml"/>
+				<garbage_collection_memory_max header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-young-memory-max.xml"/>
+								
+			</headers>
+
+			<row_headers>
+				<thread_id/>
+				<thread_name/>
+			</row_headers>
+
+			<display>
+			</display>
+			
+			<charts>
+				<chart title="GC health" y_axis_max="100">
+					<serie header="garbage_collection_health_indication-last-all"/>
+				</chart>
+				<chart title="GC memory used vs released">
+					<serie header="garbage_collection_memory_used_after_gc-last-all"/>
+					<serie header="garbage_collection_memory_used_before_gc-last-all"/>
+					<serie header="garbage_collection_memory_released-last-all"/>
+					<serie header="garbage_collection_memory_max-last-all"/>
+				</chart>
+				<chart title="GC time">
+					<serie header="garbage_collection_time-all"/>
+				</chart>
+				<chart title="GC time and memory %" y_axis_max="100">
+					<serie header="garbage_collection_time_percent-all"/>
+					<serie header="garbage_collection_memory_used_after_gc_percent-last-all"/>
+					<serie header="garbage_collection_memory_released_percent-last-all"/>
+				</chart>
+			</charts>
+			
+		</sheet>
