@@ -70,6 +70,8 @@ import org.jeyzer.monitor.impl.rule.session.advanced.MXBeanParamNumberRule;
 import org.jeyzer.monitor.impl.rule.session.advanced.MXBeanParamPatternRule;
 import org.jeyzer.monitor.impl.rule.session.advanced.MemoryPercentProcessRule;
 import org.jeyzer.monitor.impl.rule.session.advanced.MemoryPercentSystemRule;
+import org.jeyzer.monitor.impl.rule.session.advanced.OpenFileDescriptorNumberRule;
+import org.jeyzer.monitor.impl.rule.session.advanced.OpenFileDescriptorPercentRule;
 import org.jeyzer.monitor.impl.rule.session.advanced.RecordingSnapshotCaptureTimeRule;
 import org.jeyzer.monitor.impl.rule.session.advanced.RestartProcessRule;
 import org.jeyzer.monitor.impl.rule.session.advanced.UpTimeProcessRule;
@@ -449,6 +451,10 @@ public class MonitorRuleBuilder {
 					rule = new DiskWriteSpeedRule(def);
 				else if (DiskWriteTimeRule.RULE_NAME.equals(name))
 					rule = new DiskWriteTimeRule(def);
+				else if (OpenFileDescriptorNumberRule.RULE_NAME.equals(name))
+					rule = new OpenFileDescriptorNumberRule(def);
+				else if (OpenFileDescriptorPercentRule.RULE_NAME.equals(name))
+					rule = new OpenFileDescriptorPercentRule(def);
 				
 				if (rule != null)
 					sessionRules.add(rule);

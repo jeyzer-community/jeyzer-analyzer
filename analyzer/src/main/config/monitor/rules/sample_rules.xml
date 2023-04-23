@@ -899,6 +899,38 @@
 			</thresholds>
 		</rule>
 
+		<!--  If percentage of open file descriptors is higher than [value] ms for [count] or [time], generate event. Applicable only on Unix -->
+		<rule name="Open file descriptor percentage" ref="JZR-SAMPLE-125" stickers="unix">
+			<thresholds>
+				<threshold type="session value"
+						   count="1"
+						   value="70" 
+				           level="WARNING"
+				           message="The process is handling a high number of open file descriptors and may reach the system maximum limit.&#10;Please increase the max open file descriptors limit on the system, otherwise the Too Many Open Files exception may occur (or in any other started with the same user).&#10;You may also ask the development team to check if the application is not accessing intensively system resources in an abnormal way."/>
+				<threshold type="global value"
+						   count="3"
+						   value="70" 
+				           level="WARNING"
+				           message="The process is handling a high number of open file descriptors and may reach the system maximum limit.&#10;Please increase the max open file descriptors limit on the system, otherwise the Too Many Open Files exception may occur (or in any other started with the same user).&#10;You may also ask the development team to check if the application is not accessing intensively system resources in an abnormal way."/>
+			</thresholds>
+		</rule>
+
+		<!--  If number of open file descriptors is higher than [value] ms for [count] or [time], generate event. Applicable only on Unix -->
+		<rule name="Open file descriptor number" ref="JZR-SAMPLE-126" stickers="unix">
+			<thresholds>
+				<threshold type="session value"
+						   count="1"
+						   value="3000" 
+				           level="WARNING"
+				           message="The process is handling a high number of open file descriptors.&#10;Make sure the max open file descriptors limit is sized enough on the system, otherwise the Too Many Open Files exception may occur (or in any other started with the same user)."/>
+				<threshold type="global value"
+						   count="1"
+						   value="3000" 
+				           level="WARNING"
+				           message="The process is handling a high number of open file descriptors.&#10;Make sure the max open file descriptors limit is sized enough on the system, otherwise the Too Many Open Files exception may occur (or in any other started with the same user)."/>
+			</thresholds>
+		</rule>
+
 
 		<!-- ************************************************************************ -->
 		<!--                        APPLICATIVE RULES                                 -->

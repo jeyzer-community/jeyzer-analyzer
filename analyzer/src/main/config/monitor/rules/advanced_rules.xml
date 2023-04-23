@@ -258,6 +258,29 @@
 				           message="The serial garbage collector is used through the Copy GC : make sure it is appropriate.&#10;It halts any processing while running (stop the world pause) and can therefore impact the performance.&#10;The serial GC applies usually on single processor machines (aka client machines)&#10;It should be used on apps which manipulate small amounts of data.&#10;Prefer the G1 or PS garbage collectors."/>
 			</thresholds>
 		</rule>
+
+		<!--  If percentage of open file descriptors is higher than [value] ms for [count] or [time], generate event. Applicable only on Unix -->
+		<rule name="Open file descriptor percentage" ref="JZR-ADV-019" stickers="unix">
+			<thresholds>
+				<threshold type="global value"
+						   count="3"
+						   value="70" 
+				           level="WARNING"
+				           message="The process is handling a high number of open file descriptors and may reach the system maximum limit.&#10;Please increase the max open file descriptors limit on the system, otherwise the Too Many Open Files exception may occur (or in any other started with the same user).&#10;You may also ask the development team to check if the application is not accessing intensively system resources in an abnormal way."/>
+			</thresholds>
+		</rule>
+
+		<!--  If number of open file descriptors is higher than [value] ms for [count] or [time], generate event. Applicable only on Unix -->
+		<rule name="Open file descriptor number" ref="JZR-ADV-020" stickers="unix">
+			<thresholds>
+				<threshold type="global value"
+						   count="1"
+						   value="10000" 
+				           level="INFO"
+				           sub_level="9"
+				           message="The process is handling a a very large number of open file descriptors.&#10;You may check with the development team if the application is not accessing intensively system resources in an abnormal way."/>
+			</thresholds>
+		</rule>
 		
 	</rules>
 

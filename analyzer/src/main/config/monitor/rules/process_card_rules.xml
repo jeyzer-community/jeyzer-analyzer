@@ -197,7 +197,20 @@
 			</thresholds>
 		</rule>
 		
-		<!-- Next is JZR-PCD-016 -->
+		<!--  If process card property value is lower or equal to [value], generate event. -->
+		<rule name="Process card property number" param_display="Low file descriptor max limit" param="jzr.ext.system.unix.max.file.descriptor.count" operator="lower_or_equal" stickers="unix" ref="JZR-PCD-016">
+			<narrative>This rule detects if the max file descriptor limit is sufficient.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="1024" 
+				           level="INFO"
+				           sub_level="9" 
+				           message="Unix production system running with a maximmum of 1024 file descriptors (probably the default).&#10; You should ask the Unix administrator to increase it if your application does intensive resource access.&#10; As reminder, the max file descriptor limit is user based : if all the processes he started consume more than this max limit, the Too Many Open Files error will start to occur in one of them.&#10; Check the max limit with ulimit -n"/>
+			</thresholds>
+		</rule>
+		
+		<!-- Next is JZR-PCD-017 -->
 		
 	</rules>
 
