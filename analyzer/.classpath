@@ -31,18 +31,17 @@
 	<classpathentry exported="true" kind="var" path="M2_REPO/com/squareup/okhttp3/okhttp/3.14.9/okhttp-3.14.9.jar"/>
 	<classpathentry exported="true" kind="var" path="M2_REPO/com/squareup/okio/okio/1.17.2/okio-1.17.2.jar"/>
 	<classpathentry exported="true" kind="var" path="M2_REPO/com/atlassian/jira/rest/jira-client/3.0.3/jira-client-3.0.3.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v9.0.41">
+	<classpathentry exported="true" kind="var" path="M2_REPO/com/sun/activation/javax.activation/1.2.0/javax.activation-1.2.0.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/apache/poi/ooxml-schemas/1.4/ooxml-schemas-1.4.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v9.0.73">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.utility"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-11.0.6">
 		<attributes>
-			<attribute name="module" value="true"/>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="var" path="M2_REPO/com/sun/activation/javax.activation/1.2.0/javax.activation-1.2.0.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/poi/ooxml-schemas/1.4/ooxml-schemas-1.4.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
