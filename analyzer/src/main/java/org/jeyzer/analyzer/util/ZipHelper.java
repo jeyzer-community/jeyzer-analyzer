@@ -174,7 +174,7 @@ public class ZipHelper {
 				if (tarDetected)
 					uncompressedFiles = unTar(tarFile, params);
 				else {
-					uncompressedFiles = new LinkedList<File>();
+					uncompressedFiles = new LinkedList<>();
 					uncompressedFiles.add(tarFile);
 				}
 			} catch (JzrTranslatorException e) {
@@ -185,7 +185,7 @@ public class ZipHelper {
 			}
 			finally {
 				// always remove the intermediary tar file
-				if (tarDetected && tarFile != null && tarFile.exists())
+				if (tarDetected && tarFile.exists())
 					if (!tarFile.delete())
 						logger.warn("Failed to delete the intermediary tar file " + tarFile.getName());
 			}
@@ -343,7 +343,7 @@ public class ZipHelper {
 	}
 
 	private static List<File> unTar(final File inputFile, ZipParams params) throws FileNotFoundException, IOException, ArchiveException, JzrTranslatorException {
-		List<File> untaredFiles = new LinkedList<File>();
+		List<File> untaredFiles = new LinkedList<>();
 		String outputFilePath = null;
 
 		try (
@@ -377,8 +377,7 @@ public class ZipHelper {
 					}
 					logger.info("Untar file - create file : " + outputFile.getAbsolutePath());
 					// if tar contains directories
-					if (!outputFile.getParentFile().exists())
-						if (!outputFile.getParentFile().mkdirs())
+					if (!outputFile.getParentFile().exists() && !outputFile.getParentFile().mkdirs())
 							throw new JzrTranslatorException("Failed to create the directory " + outputFile.getAbsolutePath());
 					try (
 							OutputStream outputFileStream = new FileOutputStream(outputFile);

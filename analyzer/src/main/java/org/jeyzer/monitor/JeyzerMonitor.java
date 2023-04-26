@@ -210,7 +210,7 @@ public class JeyzerMonitor implements Runnable{
 			// load the monitoring rules
 			ConfigMonitorRules cfgMonitorRules = (ConfigMonitorRules)this.monitorCfg.getValue(ConfigMonitorRules.JZRM_RULES);
 			
-			ruleBuilder = new MonitorRuleBuilder(cfgMonitorRules, this.setupMgr);
+			ruleBuilder = new MonitorRuleBuilder(cfgMonitorRules);
 			analyzerRules = ruleBuilder.getAnalyzerRules();
 			
 			applicativeRulesManager = cfgMonitorRules.getApplicativeRuleManager();

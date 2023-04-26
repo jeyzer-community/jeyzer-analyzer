@@ -164,7 +164,7 @@ public class DumpBeanInfoParser {
 		
 		Long processOpenFDCount = Longs.tryParse(line.substring(posStart));
 		if (processOpenFDCount == null){
-			logger.warn("Failed to convert process open file descriptor count : ", line.substring(posStart));
+			logger.warn("Failed to convert process open file descriptor count : {}", line.substring(posStart));
 			processOpenFDCount = -1L;
 		}
 		

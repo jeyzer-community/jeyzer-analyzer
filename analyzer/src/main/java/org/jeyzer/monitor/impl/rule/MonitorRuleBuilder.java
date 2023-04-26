@@ -23,7 +23,6 @@ import java.util.Map;
 import org.jeyzer.analyzer.error.JzrInitializationException;
 import org.jeyzer.analyzer.error.JzrMonitoringRulesInitializationException;
 import org.jeyzer.analyzer.session.JzrSession;
-import org.jeyzer.analyzer.setup.JzrSetupManager;
 import org.jeyzer.monitor.config.engine.ConfigMonitorRule;
 import org.jeyzer.monitor.config.engine.ConfigMonitorRules;
 import org.jeyzer.monitor.engine.rule.MonitorAnalyzerRule;
@@ -142,7 +141,7 @@ public class MonitorRuleBuilder {
 	private List<MonitorAnalyzerRule> analyzerRules = new LinkedList<>();
 	
 	// Monitoring constructor 
-	public MonitorRuleBuilder(ConfigMonitorRules ruleDefs, JzrSetupManager setupMgr) throws JzrInitializationException {
+	public MonitorRuleBuilder(ConfigMonitorRules ruleDefs) throws JzrInitializationException {
 		this.ruleDefs = ruleDefs;
 		
 		// Unlike the dynamic rules, we do not tolerate errors on rule loading
@@ -154,7 +153,7 @@ public class MonitorRuleBuilder {
 			throw new JzrInitializationException("No monitoring rules defined.");
 		}
 		
-		buildAnalyzerRules(setupMgr);
+		buildAnalyzerRules();
 	}
 	
 	// Analysis constructor
@@ -507,7 +506,7 @@ public class MonitorRuleBuilder {
 			throw new JzrMonitoringRulesInitializationException(errors);
 	}
 
-	private void buildAnalyzerRules(JzrSetupManager setupMgr) throws JzrInitializationException {
+	private void buildAnalyzerRules() throws JzrInitializationException {
 		analyzerRules.add(new ToolErrorRule());
 		analyzerRules.add(new RecordingSnapshotNotFoundRule());
 	}

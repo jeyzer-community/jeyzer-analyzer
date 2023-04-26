@@ -53,7 +53,7 @@ public class OpenFileDescriptorCounterRule extends AbstractNumericDisplayHeaderR
 		for (int j=0; j< dumps.size(); j++){
 			cell = cells.get(j);
 
-			value = (long)dumps.get(j).getProcessOpenFileDescriptorCount();
+			value = dumps.get(j).getProcessOpenFileDescriptorCount();
 			countValue = value; 
 			
 			setValue(cell, value);

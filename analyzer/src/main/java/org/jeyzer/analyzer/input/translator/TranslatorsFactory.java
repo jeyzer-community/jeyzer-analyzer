@@ -28,7 +28,6 @@ import org.jeyzer.analyzer.input.translator.jfr.JFRTranslator;
 import org.jeyzer.analyzer.input.translator.obfuscation.DeobfuscationTranslator;
 import org.jeyzer.analyzer.input.translator.obfuscation.DeobfuscationTranslatorFactory;
 import org.jeyzer.analyzer.input.translator.security.SecurityTranslator;
-import org.jeyzer.analyzer.setup.JzrSetupManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +39,7 @@ public class TranslatorsFactory {
 	private TranslatorsFactory() {
 	}
 		
-	public static List<Translator> createTranslators(ConfigTranslator cfg, TranslateData inputData, JzrSetupManager setupMgr) throws JzrTranslatorException, JzrInitializationException{
+	public static List<Translator> createTranslators(ConfigTranslator cfg, TranslateData inputData) throws JzrTranslatorException, JzrInitializationException{
 		List<Translator> translators = new ArrayList<>();
 			
 		try {

@@ -569,7 +569,7 @@ public class JzrSession implements JzrMonitorSession {
 		// apply the translators
 		TranslateData outputData = inputData;		
 		for (ConfigTranslator translatorCfg : analyzerCfg.getTranslators()){
-			List<Translator> transls = TranslatorsFactory.createTranslators(translatorCfg, inputData, this.setupMgr);
+			List<Translator> transls = TranslatorsFactory.createTranslators(translatorCfg, inputData);
 			this.translators.addAll(transls);
 			for (Translator translator : transls){
 				this.eventDispatcher.fireStatusEvent(translator.getStatusEventState());
