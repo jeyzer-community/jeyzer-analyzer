@@ -51,6 +51,7 @@ public class ZipHelper {
 	public static final String ZIP_EXTENSION = ".zip";
 	public static final String GZIP_EXTENSION = ".gz";
 	public static final String JFR_EXTENSION = ".jfr";
+	public static final String TAR_EXTENSION = ".tar";
 
 	private static final int BUFFER = 2048;
 	
@@ -70,6 +71,26 @@ public class ZipHelper {
 	
 	public static boolean isJFRFile(String filename) {
 		return filename != null && filename.toLowerCase().endsWith(JFR_EXTENSION);
+	}
+	
+	public static boolean isTarFile(File file) {
+		if (file == null)
+			return false;
+		if (file.getName().toLowerCase().endsWith(TAR_EXTENSION))
+			return true;
+		
+		try (
+				final InputStream is = new FileInputStream(file);
+				TarArchiveInputStream debInputStream = (TarArchiveInputStream) new ArchiveStreamFactory().createArchiveInputStream("tar", is);
+			) 
+		{
+			// try to read it as a tar file
+			debInputStream.getNextEntry();
+		}
+		catch (Exception ex) {
+			return false;
+		}
+		return true;
 	}
 	
 	public static List<String> listContent(String filename, ZipParams params) {
@@ -143,11 +164,19 @@ public class ZipHelper {
 				throw new JzrTranslatorException("Failed to unzip the file " + fileName, ex);
 			}
 		} else if (isGzipFile(filePath)) {
+			boolean tarDetected = false;
 			File gzipFile = new File(filePath);
 			File tarFile = new File(params.getOuputDirectory(), gzipFile.getName().substring(0, gzipFile.getName().length() - 3));
 			try {
 				unGzip(gzipFile, tarFile, params);
-				uncompressedFiles = unTar(tarFile, params);
+				
+				tarDetected = isTarFile(tarFile);
+				if (tarDetected)
+					uncompressedFiles = unTar(tarFile, params);
+				else {
+					uncompressedFiles = new LinkedList<File>();
+					uncompressedFiles.add(tarFile);
+				}
 			} catch (JzrTranslatorException e) {
 				throw e;
 			} catch (Exception ex) {
@@ -156,7 +185,7 @@ public class ZipHelper {
 			}
 			finally {
 				// always remove the intermediary tar file
-				if (tarFile != null && tarFile.exists())
+				if (tarDetected && tarFile != null && tarFile.exists())
 					if (!tarFile.delete())
 						logger.warn("Failed to delete the intermediary tar file " + tarFile.getName());
 			}
