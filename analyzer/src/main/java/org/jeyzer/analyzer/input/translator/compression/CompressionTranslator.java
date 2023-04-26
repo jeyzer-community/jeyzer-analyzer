@@ -77,10 +77,10 @@ public class CompressionTranslator implements Translator {
 		// find the unzipped directory, its tds and its process card (optional)
 		File[] uncompressedTds = detectTDs(this.uncompressedFiles, filter);
 		File tdDir = new File(uncompressedTds[0].getParent());
-		File processCardFile = getFile(tdDir, ProcessCard.PROCESS_CARD_FILE_NAME); // can be null
-		File processJarPathsFile = getFile(tdDir, ProcessJars.PROCESS_JAR_PATHS_FILE_NAME); // can be null
-		File processModulesFile = getFile(tdDir, ProcessModules.PROCESS_MODULES_FILE_NAME); // can be null
-		File jvmFlagsFile = getFile(tdDir, JVMFlags.JVM_FLAGS_FILE_NAME); // can be null
+		File processCardFile = getFile(uncompressedTds, ProcessCard.PROCESS_CARD_FILE_NAME); // can be null
+		File processJarPathsFile = getFile(uncompressedTds, ProcessJars.PROCESS_JAR_PATHS_FILE_NAME); // can be null
+		File processModulesFile = getFile(uncompressedTds, ProcessModules.PROCESS_MODULES_FILE_NAME); // can be null
+		File jvmFlagsFile = getFile(uncompressedTds, JVMFlags.JVM_FLAGS_FILE_NAME); // can be null
 
 		logger.info("Recording directory detected : " + tdDir);
 		
@@ -148,9 +148,19 @@ public class CompressionTranslator implements Translator {
 		}
 	}
 	
-	private File getFile(File dir, String fileName) {
-		File file = new File(dir + File.separator + fileName);
-		if (file.exists() && file.isFile())
+	private File getFile(File[] uncompressedTds, String fileName) {
+		boolean provided = false;
+		
+		// Make sure it is provided in the recording
+		for (File file : uncompressedTds) {
+			if (file.getName().equals(fileName)) {
+				provided = true;
+				break;
+			}
+		}
+
+		File file = new File(uncompressedTds[0].getParent() + File.separator + fileName);
+		if (provided && file.exists() && file.isFile())
 			return file;
 		else
 			return null;
