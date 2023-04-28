@@ -211,6 +211,7 @@
 					<contention_type name="Oracle"/>
 					<contention_type name="MSSQL"/>
 					<contention_type name="MySQL"/>
+					<contention_type name="Redis"/>
 					<contention_type name="PostgreSQL"/>
 					<contention_type name="DB2"/>
 					<contention_type name="Log"/>

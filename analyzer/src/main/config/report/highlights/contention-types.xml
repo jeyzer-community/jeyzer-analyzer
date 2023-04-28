@@ -15,6 +15,7 @@
 			<highlight name="DB2" color="RGB-255-255-0"/> <!-- Yellow -->
 			<highlight name="MySQL" color="RGB-255-255-0"/> <!-- Yellow -->
 			<highlight name="PostgreSQL" color="RGB-255-255-0"/> <!-- Yellow -->
+			<highlight name="Redis" color="RGB-255-255-0"/> <!-- Yellow -->
 					
 			<highlight name="File" color="RGB-184-113-54"/> <!-- Maroon -->
 			<highlight name="Class loader" color="RGB-184-113-54"/> <!-- Maroon -->
