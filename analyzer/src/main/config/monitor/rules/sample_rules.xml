@@ -542,6 +542,16 @@
 				           message="No internal activity of interest is detected within the provided recording.&#10; You may either look at other processes in case of incident troubleshooting in a distributed system or increase the logging level of your application if the incident is sudden."/>
 			</thresholds>
 		</rule>
+		
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="Jaeger" param="Jaeger" stickers="code_quality" ref="JZR-SAMPLE-038">
+			<narrative>This rule detects the Jaeger client library usage.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           message="The Jaeger tracing client library is deprecated since 2022&#10;The Open Telemetry SDK must now be used&#10;Please inform the R&#38;D to plan the adequate migration to Open Telemetry SDK."/>
+			</thresholds>
+		</rule>
 
 		<!-- ************************************************************************ -->
 		<!--                              ADVANCED RULES                              -->
