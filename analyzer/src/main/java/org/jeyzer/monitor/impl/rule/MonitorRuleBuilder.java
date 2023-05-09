@@ -107,6 +107,7 @@ import org.jeyzer.monitor.impl.rule.system.ProcessModuleVersionRule;
 import org.jeyzer.monitor.impl.rule.system.ProcessModuleVersionSnapshotRule;
 import org.jeyzer.monitor.impl.rule.system.QuietActivityRule;
 import org.jeyzer.monitor.impl.rule.system.RecordingSizeRule;
+import org.jeyzer.monitor.impl.rule.system.SharedProfileRule;
 import org.jeyzer.monitor.impl.rule.system.StickerMatchRule;
 import org.jeyzer.monitor.impl.rule.task.ContentionTypeTaskRule;
 import org.jeyzer.monitor.impl.rule.task.ExecutionPatternTaskRule;
@@ -353,6 +354,8 @@ public class MonitorRuleBuilder {
 					rule = new GarbageCollectorNameRule(def);
 				else if (QuietActivityRule.RULE_NAME.equals(name))
 					rule = new QuietActivityRule(def);
+				else if (SharedProfileRule.RULE_NAME.equals(name))
+					rule = new SharedProfileRule(def);
 				
 				if (rule != null)
 					systemRules.add(rule);
