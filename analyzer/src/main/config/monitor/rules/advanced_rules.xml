@@ -62,14 +62,28 @@
 		<rule name="Memory consuming system" ref="JZR-ADV-004">
 			<thresholds>
 				<threshold type="session value"
-						   time="3m20s"
-						   value="70"
+						   time="10m"
+						   value="90"
 				           level="CRITICAL"
+				           sub_level="9"
+				           message="System consuming high amount of memory (>90%) for more than 10 minutes. Please check all running process states on this server."/>
+				<threshold type="session value"
+						   time="2m"
+						   value="90"
+				           level="WARNING"
+				           sub_level="10"
+				           message="System consuming high amount of memory (>90%) for more than 2 minutes. Please check all running process states on this server."/>	
+				<threshold type="session value"
+						   time="5m"
+						   value="70"
+				           level="WARNING"
+				           sub_level="8"
 				           message="System consuming high amount of memory (>70%) on long period. Please check all running process states on this server."/>
 				<threshold type="global value"
 						   time="10m"
 						   value="50"
-				           level="WARNING" 
+				           level="INFO"
+				           sub_level="9"
 				           message="System consuming high amount of memory (>50%) on very long period. If too frequent, please check all running process states on this server."/>
 			</thresholds>
 		</rule>
