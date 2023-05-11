@@ -3,9 +3,9 @@
   
     <parent>
         <groupId>org.jeyzer</groupId>
-        <artifactId>jeyzer-project</artifactId>
+        <artifactId>jeyzer-all</artifactId>
         <version>3.0-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
+		<relativePath>../../jeyzer-all/pom.xml</relativePath>
     </parent>
   
 	<modelVersion>4.0.0</modelVersion>
