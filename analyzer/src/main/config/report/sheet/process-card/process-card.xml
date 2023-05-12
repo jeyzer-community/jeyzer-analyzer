@@ -38,6 +38,7 @@
 			</category>
 			<category name="Regional settings" color="RGB-191-202-136">
 				<field name="Time zone" property="user.timezone"/>
+				<field name="System time zone" property="jzr.ext.system.timezone"/>
 				<field name="Country" property="user.country"/>
 				<field name="Language" property="user.language"/>
 				<field name="Country variant" property="user.variant"/>
