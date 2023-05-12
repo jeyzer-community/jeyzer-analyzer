@@ -14,10 +14,6 @@ package org.jeyzer.analyzer.output.poi;
 
 
 
-
-
-
-
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -27,17 +23,18 @@ public final class CellText {
 
 	private CellText(){}
 	
-	public static final String FONT_SYMBOL_DOWN_ARROW = "ï¿½";
-	public static final String FONT_SYMBOL_UP_ARROW = "ï¿½";
-	public static final String FONT_SYMBOL_RIGHT_ARROW = "ï¿½";
-	public static final String FONT_SYMBOL_LEFT_ARROW = "ï¿½";
-	public static final String FONT_SYMBOL_CLOVER = "ï¿½";
+	public static final String FONT_SYMBOL_DOWN_ARROW = "¯";
+	public static final String FONT_SYMBOL_UP_ARROW = "­";
+	public static final String FONT_SYMBOL_RIGHT_ARROW = "®";
+	public static final String FONT_SYMBOL_LEFT_ARROW = "¬";
+	public static final String FONT_SYMBOL_CLOVER = "§";
 	public static final String FONT_SYMBOL_OMEGA = "W";
 	
 	// size 22
 	private static final String[] FONT_SYMBOLS = {"a", "b", "d", "e", "f", "g", "h", "j", "l", "m", "n", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
 	
-	public static final int CELL_COMMENT_MAX_SIZE = 33035;
+	public static final int CELL_COMMENT_MAX_SIZE = 33035;	
+	public static final int CELL_VALUE_MAX_SIZE = 32767;	
 		
 	public static final int COMMENT_COLUMN_CHARS_SIZE = 12;
 	

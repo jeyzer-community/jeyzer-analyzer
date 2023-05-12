@@ -19,9 +19,6 @@ import static org.jeyzer.analyzer.output.poi.style.CellFonts.FONT_SYMBOL_BOLD_10
 import static org.jeyzer.analyzer.output.poi.style.DefaultCellStyles.*;
 import static org.jeyzer.analyzer.output.poi.theme.AbstractTheme.*;
 
-
-
-
 import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -82,7 +79,7 @@ import org.slf4j.LoggerFactory;
 public abstract class JeyzerSheet {
 
 	protected static final Logger logger = LoggerFactory.getLogger(JeyzerSheet.class);
-	
+		
 	protected static final String JEYZER = "Jeyzer";
 	
 	protected static final String NOT_AVAILABLE = "NA";
@@ -941,4 +938,7 @@ public abstract class JeyzerSheet {
 		this.displayContext.getCellRefRepository().addActionRef(Integer.toString(actionId), cellref);
 	}
 	
+	protected String secureCellDisplayValue(String value) {
+		return value.length() > CellText.CELL_VALUE_MAX_SIZE ? value.substring(0, CellText.CELL_VALUE_MAX_SIZE - 5) + "[...]" : value;
+	}
 }

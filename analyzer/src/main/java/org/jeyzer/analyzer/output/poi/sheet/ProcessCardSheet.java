@@ -106,7 +106,8 @@ public class ProcessCardSheet extends JeyzerSheet {
 	private void displayCategoryField(Sheet sheet, String name, String value, String property, int rowLine) {
 		Row row = sheet.createRow(rowLine);
 		addCell(row, 1, name, getCellStylePlainReference(rowLine));
-		addCell(row, 2, value, getCellStylePlainReference(rowLine));
+		// JEYZ-73 : if value is too large, trim it
+		addCell(row, 2, secureCellDisplayValue(value), getCellStylePlainReference(rowLine));
 		addCell(row, 3, property, getCellStylePlainReference(rowLine));
 		addEmptyCell(row, 4, getCellStylePlainReference(rowLine));
 		addEmptyCell(row, 5, getCellStylePlainReference(rowLine));
