@@ -31,8 +31,11 @@ public class JZRJVMFlagMapper {
 	private static final String FIELD_OLD_VALUE = "oldValue";
 	
 	public void mapFlags(JFRDescriptor descriptor, List<String> entries) {
-		for (RecordedEvent event : descriptor.getJVMFlagEvents())
-			entries.add(createEntry(event));
+		for (RecordedEvent event : descriptor.getJVMFlagEvents()) {
+			String entry = createEntry(event);
+			if (!entries.contains(entry))
+				entries.add(entry); // keep only the first one in case of multiple occurrences
+		}
 	}
 
 	private String createEntry(RecordedEvent event) {

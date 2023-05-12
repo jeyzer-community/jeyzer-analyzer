@@ -70,6 +70,7 @@ public class JZRProcessCardMapper {
 		initialEnvVariables.put("Path",                 "jfr.system.path");
 		initialEnvVariables.put("USERNAME",             "user.name");
 		initialEnvVariables.put("NUMBER_OF_PROCESSORS", "jzr.ext.process.available.processors");
+		initialEnvVariables.put("TZ",                   "jzr.ext.system.timezone");
 	}
 	
 	public long mapJVMInfo(JFRDescriptor descriptor, List<String> entries) {
@@ -95,7 +96,7 @@ public class JZRProcessCardMapper {
 						entries.add(jvmInformation.get(desc.getName()) + "=" + jvmStartTime); // Epoch time in ms
 					}
 					else {
-						entries.add(jvmInformation.get(desc.getName()) + "=" + event.getString(desc.getName()));						
+						addEntry(entries, jvmInformation.get(desc.getName()), event.getString(desc.getName()));
 					}
 				}
 			}
@@ -106,7 +107,7 @@ public class JZRProcessCardMapper {
 		
 		return jvmStartTime;
 	}
-	
+
 	public void mapOSInfo(JFRDescriptor descriptor, List<String> entries) {
 		if (descriptor.getOSInfoEvents().isEmpty()) {
 			logger.warn("JFR OS information is empty.");
@@ -147,13 +148,20 @@ public class JZRProcessCardMapper {
 	public void mapInitialEnvironmentVariable(JFRDescriptor descriptor, List<String> entries) {
 		for (RecordedEvent event : descriptor.getInitialEnvironmentVariableEvents()) {
 			if (initialEnvVariables.containsKey(event.getString("key")))
-				entries.add(initialEnvVariables.get(event.getString("key")) + "=" + event.getString("value"));
-			// do not report unknown variable because too many variables
+				addEntry(entries, initialEnvVariables.get(event.getString("key")), event.getString("value"));
+			// do not report unknown variable because too many variables, but in case :
+			// entries.add(event.getString("key") + "=" + event.getString("value"));
 		}
 	}
 
 	public void mapInitialSystemProperties(JFRDescriptor descriptor, List<String> entries) {
 		for (RecordedEvent tdEvent : descriptor.getSystemPropertyEvents())
-			entries.add(tdEvent.getString("key") + "=" + tdEvent.getString("value"));
+			addEntry(entries, tdEvent.getString("key"), tdEvent.getString("value"));
+	}
+	
+	private void addEntry(List<String> entries, String field, String value) {
+		String line = field + "=" + value;
+		if (!entries.contains(line))
+			entries.add(line);  // keep only the first one in case of multiple occurrences
 	}
 }
