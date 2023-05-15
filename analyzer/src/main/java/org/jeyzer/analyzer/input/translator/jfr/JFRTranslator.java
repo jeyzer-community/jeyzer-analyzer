@@ -77,7 +77,7 @@ public class JFRTranslator implements Translator {
 			throw new JzrTranslatorException("JFR analysis not supported on the JDK used by the Jeyzer Analyzer. Please ask your administrator to run it on Java 11+.");
 		}
 		
-		logger.info("Loading the JFR recording : {}", input.getTDs()[0].getName());
+		logger.info("Loading the JFR recording : {}", input.getDirectory().getName());
 		
 		validateJFRFile(input);
 
