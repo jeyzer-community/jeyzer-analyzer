@@ -12,7 +12,7 @@
 	<groupId>org.jeyzer</groupId>
 	<artifactId>jeyzer-analyzer</artifactId>
 	<packaging>jar</packaging>
-	<version>3.0</version>
+	<version>3.1-SNAPSHOT</version>
 	<name>Jeyzer Analyzer</name>
 	<url>https://jeyzer.org</url>
 	<description>The Jeyzer Analyzer and Monitor project</description>
