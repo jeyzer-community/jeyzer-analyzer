@@ -22,6 +22,7 @@ import static org.jeyzer.analyzer.output.poi.theme.AbstractTheme.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -517,6 +518,7 @@ public class TaskGroupSequenceSheet extends JeyzerSheet {
 				addCell(row1, columnPos, formatDate(new Date(startTime), TIME_DISPLAY_FORMAT), STYLE_RESTART_HEADER); // restart cell
 				missingTdCount++;
 				missingTds.put(Integer.valueOf(columnPos), Integer.valueOf(missingTdCount)); // keep track. Will be used as extra offset for lower rows
+				registerHiatusOrRestartLink(row1.getRowNum(), columnPos);
 				columnPos++;
 			}
 			else if (dump.hasHiatusBefore()){
@@ -534,6 +536,7 @@ public class TaskGroupSequenceSheet extends JeyzerSheet {
 				addCell(row1, columnPos, "Hiatus (" + difftime + unit, STYLE_MISSING_TD_HEADER); // hiatus cell
 				missingTdCount++;
 				missingTds.put(Integer.valueOf(columnPos), Integer.valueOf(missingTdCount)); // keep track. Will be used as extra offset for lower rows
+				registerHiatusOrRestartLink(row1.getRowNum(), columnPos);
 				columnPos++;
 			}
 			sheet.setColumnWidth(columnPos, columnWidth*256);
@@ -726,7 +729,20 @@ public class TaskGroupSequenceSheet extends JeyzerSheet {
 			}
 			offset++;
 		}
-    }	
+		
+		// process hiatus links
+		Set<CellReference> hiatusOrRestartRefs = this.displayContext.getCellRefRepository().getHiatusOrRestartRefs(sheetCfg.getLinkType());
+		if (hiatusOrRestartRefs.size() > 1) {
+			Iterator<CellReference> iter = hiatusOrRestartRefs.iterator();
+			CellReference currentRef = iter.next();
+			while (iter.hasNext()) {
+				CellReference nextRef = iter.next();
+				cell = row.getCell(currentRef.getCol());
+				addDocumentHyperLink(cell, nextRef.formatAsString());
+				currentRef = nextRef;
+			}
+		}
+    }
 	
     private void registerActionLink(Action action, Row row, int offset, int rowHeaderSize, int missingtdOffset) {
 		if (!this.displayContext.getSetupManager().isActionLinkEnabled())
@@ -747,7 +763,15 @@ public class TaskGroupSequenceSheet extends JeyzerSheet {
 		CellReference cellref = new CellReference(this.sheetCfg.getName(), row.getRowNum(), i, true, true);
 		this.displayContext.getCellRefRepository().addDateRef(Long.toString(date.getTime()), cellref);
 	}
-
+    
+    private void registerHiatusOrRestartLink(int rowPos, int columnPos) {
+		if (!this.displayContext.getSetupManager().isHiatusOrRestartLinkEnabled())
+			return;
+    	
+		// Prepare hiatus restart link
+		CellReference ref = new CellReference(this.sheetCfg.getName(), rowPos, columnPos, true, true);
+		this.displayContext.getCellRefRepository().addHiatusOrRestartRef(sheetCfg.getLinkType(), ref);
+	}
 	private void fillRowHeaderData(List<GroupRowHeader> rowHeaders, ThreadStackGroupAction action, Row row, int columnOffset) {
     	Cell cell;
 		int columnPos = 0;

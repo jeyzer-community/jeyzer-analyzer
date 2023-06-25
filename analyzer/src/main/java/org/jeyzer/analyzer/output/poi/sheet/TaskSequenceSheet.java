@@ -19,13 +19,10 @@ import static org.jeyzer.analyzer.output.poi.style.CellFonts.FONT_DOUBLE_UNDERLI
 import static org.jeyzer.analyzer.output.poi.style.DefaultCellStyles.*;
 import static org.jeyzer.analyzer.output.poi.theme.AbstractTheme.*;
 
-
-
-
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -518,10 +515,11 @@ public class TaskSequenceSheet extends JeyzerSheet {
 		// Set the header function names, append to row header names if any
 		for (HeaderFunction function : functions){
 			cell = row1.getCell(columnFunctionPos);
-			if (cell != null)
+			if (cell != null) {
 				// update cell text
-				if (cell.getStringCellValue() == null || cell.getStringCellValue().isEmpty())
+				if (cell.getStringCellValue() == null || cell.getStringCellValue().isEmpty()) {
 					cell.setCellValue(function.getDisplayName());
+				}
 				else{
 					String crLf = Character.toString((char)13) + Character.toString((char)10);
 					XSSFRichTextString richText = new XSSFRichTextString(function.getDisplayName() + crLf);
@@ -531,9 +529,12 @@ public class TaskSequenceSheet extends JeyzerSheet {
 				    cell.setCellValue(richText);
 				    doubleLabel = true;
 				}
-			else
+				
+			}
+			else {
 				// no row header here
 				addHeaderCell(row1, columnFunctionPos, function.getDisplayName());
+			}
 			
 			columnFunctionPos++;
 		}
@@ -558,6 +559,7 @@ public class TaskSequenceSheet extends JeyzerSheet {
 				addCell(row1, columnPos, formatDate(new Date(startTime), TIME_DISPLAY_FORMAT), STYLE_RESTART_HEADER); // restart cell
 				missingTdCount++;
 				missingTds.put(Integer.valueOf(columnPos), Integer.valueOf(missingTdCount)); // keep track. Will be used as extra offset for lower rows
+				registerHiatusOrRestartLink(row1.getRowNum(), columnPos);
 				columnPos++;
 			}
 			else if (dump.hasHiatusBefore()){
@@ -575,6 +577,7 @@ public class TaskSequenceSheet extends JeyzerSheet {
 				addCell(row1, columnPos, "Hiatus (" + difftime + unit, STYLE_MISSING_TD_HEADER); // hiatus cell
 				missingTdCount++;
 				missingTds.put(Integer.valueOf(columnPos), Integer.valueOf(missingTdCount)); // keep track. Will be used as extra offset for lower rows
+				registerHiatusOrRestartLink(row1.getRowNum(), columnPos);
 				columnPos++;
 			}
 			sheet.setColumnWidth(columnPos, columnWidth*256);
@@ -693,7 +696,7 @@ public class TaskSequenceSheet extends JeyzerSheet {
 
 				row = sheet.createRow(linePos);
 				
-				cells = new ArrayList<Cell>();
+				cells = new ArrayList<>();
 				
 				int missingtdOffsetForAction = missingtdOffset;
 				for (int j=0; j< action.size(); j++){
@@ -762,9 +765,23 @@ public class TaskSequenceSheet extends JeyzerSheet {
 				cell = row.getCell(offset + columnOffset + missingtdOffset);
 				cell.setCellStyle(this.getThemeStyle(STYLE_THEME_HEADER_TIME_ACTION));
 			}
+				
 			offset++;
 		}
-    }	
+		
+		// process hiatus links
+		Set<CellReference> hiatusOrRestartRefs = this.displayContext.getCellRefRepository().getHiatusOrRestartRefs(sheetCfg.getLinkType());
+		if (hiatusOrRestartRefs.size() > 1) {
+			Iterator<CellReference> iter = hiatusOrRestartRefs.iterator();
+			CellReference currentRef = iter.next();
+			while (iter.hasNext()) {
+				CellReference nextRef = iter.next();
+				cell = row.getCell(currentRef.getCol());
+				addDocumentHyperLink(cell, nextRef.formatAsString());
+				currentRef = nextRef;
+			}
+		}
+    }
 	
     private void registerActionLink(ThreadAction action, Row row, int offset, int rowHeaderSize, int missingtdOffset) {
 		if (!this.displayContext.getSetupManager().isActionLinkEnabled())
@@ -785,6 +802,15 @@ public class TaskSequenceSheet extends JeyzerSheet {
 		CellReference cellref = new CellReference(this.sheetCfg.getName(), row.getRowNum(), i, true, true);
 		this.displayContext.getCellRefRepository().addDateRef(Long.toString(date.getTime()), cellref);
 	}
+    
+    private void registerHiatusOrRestartLink(int rowPos, int columnPos) {
+		if (!this.displayContext.getSetupManager().isHiatusOrRestartLinkEnabled())
+			return;
+    	
+		// Prepare hiatus restart link
+		CellReference ref = new CellReference(this.sheetCfg.getName(), rowPos, columnPos, true, true);
+		this.displayContext.getCellRefRepository().addHiatusOrRestartRef(sheetCfg.getLinkType(), ref);
+	}
 
 	private void fillRowHeaderData(List<RowHeader> rowHeaders, ThreadAction action, Row row, int columnOffset) {
     	Cell cell;
@@ -803,7 +829,7 @@ public class TaskSequenceSheet extends JeyzerSheet {
 
 		// fill extra cells if more functions
 		while(columnPos < columnOffset){
-			cell = addEmptyRowHeaderCell(row, columnPos);
+			addEmptyRowHeaderCell(row, columnPos);
 			columnPos++;
 		}
 

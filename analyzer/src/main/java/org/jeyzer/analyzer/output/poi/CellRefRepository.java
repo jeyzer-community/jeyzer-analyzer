@@ -13,13 +13,9 @@ package org.jeyzer.analyzer.output.poi;
  */
 
 
-
-
-
-
-
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Date;
@@ -36,6 +32,9 @@ public class CellRefRepository {
 	private Map<String, Map<Date, CellReference>> sheetColumnRefs = new LinkedHashMap<String, Map<Date, CellReference>>();
 	private LinkedListMultimap<String, CellReference> dateRefs = LinkedListMultimap.create();
 	private LinkedListMultimap<String, CellReference> actionRefs;
+
+	// Not cross sheet yet, but prepare it for later
+	private Map<String, Set<CellReference>> hiatusOrRestartRefs = new LinkedHashMap<String, Set<CellReference>>();
 
 	private int initialCellRefSize;  // Performance optimization : create maps immediately with the right size. 
 	
@@ -81,6 +80,17 @@ public class CellRefRepository {
 		}
 		
 		return columnRefs.get(date);
+	}
+	
+	public void addHiatusOrRestartRef(String linkType, CellReference ref){
+		Set<CellReference> columnRefs = hiatusOrRestartRefs.computeIfAbsent(
+				linkType, 
+				x -> new LinkedHashSet<CellReference>());
+		columnRefs.add(ref);
+	}
+	
+	public Set<CellReference> getHiatusOrRestartRefs(String linkType){
+		return hiatusOrRestartRefs.get(linkType);
 	}
 
 	public CellReference getCellRef(String linkType, Action action){

@@ -77,9 +77,11 @@
 				<!--     add date links between task sequence sheets -->
 				<!-- action_link             -->
 				<!--     add a link to the time header cell, to link the first starting action within its column  -->
+				<!-- hiatus_or_restart_link  -->
+				<!--     add a link to the hiatus or restart header cell, to link the next hiatus or restart header cell -->
 				<!-- action_highlight        -->
 				<!--     highlight the time header cell if it column contains at least one action -->
-				<headers unfreeze_pane_threshold="10" date_link="true" action_link="true" action_highlight="true"/>
+				<headers unfreeze_pane_threshold="10" hiatus_or_restart_link="true" date_link="true" action_link="true" action_highlight="true"/>
 				
 				<row_headers unfreeze_pane_threshold="5"/>
 

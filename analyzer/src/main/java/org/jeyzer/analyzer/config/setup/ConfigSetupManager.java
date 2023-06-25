@@ -74,6 +74,7 @@ public class ConfigSetupManager {
 	private static final String JZRA_ACTION_LINK = "action_link";
 	private static final String JZRA_OPTIMIZE_STACKS_THRESHOLD = "optimize_stacks_threshold";
 	private static final String JZRA_DATE_LINK = "date_link";
+	private static final String JZRA_HIATUS_OR_RESTART_LINK = "hiatus_or_restart_link";
 	private static final String JZRA_ACTION_HIGHLIGHT = "action_highlight";
 	
 	private static final String JZRA_GRAPH = "graph";
@@ -98,6 +99,7 @@ public class ConfigSetupManager {
 	private int rowHeaderUnfreezePaneThreshold;
 	private boolean actionLinkEnabled;
 	private boolean headerDateLinkEnabled;
+	private boolean headerHiatusOrRestartLinkEnabled;
 	private boolean headerActionLinkEnabled;
 	private boolean headerActionHighlightEnabled;
 	private int optimizeStacksThreshold;
@@ -159,6 +161,7 @@ public class ConfigSetupManager {
 			rowHeaderUnfreezePaneThreshold = loadHeaderUnfreezeThreshold(xlsxReportsNode, JZRA_ROW_HEADERS, ROW_HEADERS_UNFREEZE_THRESHOLD_DEFAULT_VALUE);
 			Element headersNode = ConfigUtil.getFirstChildNode(xlsxReportsNode, JZRA_HEADERS);
 			headerDateLinkEnabled = Boolean.parseBoolean(ConfigUtil.getAttributeValue(headersNode, JZRA_DATE_LINK));
+			headerHiatusOrRestartLinkEnabled = Boolean.parseBoolean(ConfigUtil.getAttributeValue(headersNode, JZRA_HIATUS_OR_RESTART_LINK));
 			headerActionLinkEnabled = Boolean.parseBoolean(ConfigUtil.getAttributeValue(headersNode, JZRA_ACTION_LINK));
 			headerActionHighlightEnabled = Boolean.parseBoolean(ConfigUtil.getAttributeValue(headersNode, JZRA_ACTION_HIGHLIGHT));
 			
@@ -241,6 +244,10 @@ public class ConfigSetupManager {
 	
 	public boolean isHeaderDateLinkEnabled(){
 		return headerDateLinkEnabled;
+	}
+	
+	public boolean isHeaderHiatusOrRestartLinkEnabled(){
+		return 	headerHiatusOrRestartLinkEnabled;
 	}
 	
 	public boolean isHeaderActionLinkEnabled(){

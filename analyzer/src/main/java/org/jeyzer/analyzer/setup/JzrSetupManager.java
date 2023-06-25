@@ -40,6 +40,7 @@ public class JzrSetupManager {
 	private boolean columnGroupingEnabled;
 	private boolean actionLinkEnabled;
 	private boolean headerDateLinkEnabled;
+	private boolean headerHiatusOrRestartLinkEnabled;
 	private boolean headerActionLinkEnabled;
 	private boolean headerActionHighlightEnabled;
 	
@@ -69,6 +70,7 @@ public class JzrSetupManager {
 		rowHeaderUnfreezePaneThreshold = tdSetupCfg.getRowHeaderUnfreezePaneThreshold();
 		actionLinkEnabled = tdSetupCfg.isActionLinkEnabled();
 		headerDateLinkEnabled = tdSetupCfg.isHeaderDateLinkEnabled();
+		headerHiatusOrRestartLinkEnabled = tdSetupCfg.isHeaderHiatusOrRestartLinkEnabled();
 		headerActionLinkEnabled = tdSetupCfg.isHeaderActionLinkEnabled();
 		headerActionHighlightEnabled = tdSetupCfg.isHeaderActionHighlightEnabled();
 		optimizeStacksThreshold = tdSetupCfg.getReportOptimizeStacksThreshold();
@@ -145,6 +147,10 @@ public class JzrSetupManager {
 	
 	public boolean isHeaderDateLinkEnabled(){
 		return headerDateLinkEnabled;
+	}
+	
+	public boolean isHiatusOrRestartLinkEnabled(){
+		return headerHiatusOrRestartLinkEnabled;
 	}
 	
 	public boolean isHeaderActionLinkEnabled(){
