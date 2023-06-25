@@ -770,7 +770,7 @@ public class TaskSequenceSheet extends JeyzerSheet {
 		
 		// process hiatus links
 		Set<CellReference> hiatusOrRestartRefs = this.displayContext.getCellRefRepository().getHiatusOrRestartRefs(sheetCfg.getLinkType());
-		if (hiatusOrRestartRefs.size() > 1) {
+		if (hiatusOrRestartRefs != null && hiatusOrRestartRefs.size() > 1) {
 			Iterator<CellReference> iter = hiatusOrRestartRefs.iterator();
 			CellReference currentRef = iter.next();
 			while (iter.hasNext()) {

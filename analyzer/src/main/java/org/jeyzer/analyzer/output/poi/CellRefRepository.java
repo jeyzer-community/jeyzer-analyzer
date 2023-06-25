@@ -90,7 +90,7 @@ public class CellRefRepository {
 	}
 	
 	public Set<CellReference> getHiatusOrRestartRefs(String linkType){
-		return hiatusOrRestartRefs.get(linkType);
+		return hiatusOrRestartRefs.get(linkType); // can be null
 	}
 
 	public CellReference getCellRef(String linkType, Action action){
