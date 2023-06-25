@@ -229,8 +229,8 @@ public class MonitoringSequenceSheet extends JeyzerSheet {
 		
 		int anchorPosX1 = (rowHeaderSize>2) ? rowHeaderSize-2 : 0;
 		int anchorPosY1 = line + CHART_HEIGHT_SEP;
-		//int anchorPosX2 = anchorPosX1 + this.missingTds.size() + 2; // 2 is size of left legend
 		int anchorPosX2 = anchorPosX1 + 2; // 2 is size of left legend
+		anchorPosX2 = (anchorPosX2 - anchorPosX1) > EXCEL_CHART_MAX_LENGTH ? EXCEL_CHART_MAX_LENGTH : anchorPosX2;
 		int anchorPosY2 = anchorPosY1 + CHART_HEIGHT;
 
 		for (ConfigChart chartConfig : chartConfigs){
@@ -374,19 +374,16 @@ public class MonitoringSequenceSheet extends JeyzerSheet {
 	}
 
 	private void addSeries(Sheet sheet, List<Header> headers, ConfigChart chartConfig, XSSFLineChartData lineChartData, int rowHeaderSize) {
-		final int HEADER_START = 2;
-		final int DATA_RANGE_X1 = rowHeaderSize;
-		
 		int y1, y2;
-		int x1 = DATA_RANGE_X1;
-		// int x2 = DATA_RANGE_X1 + this.missingTds.size() - 1;
-		int x2 = DATA_RANGE_X1 - 1;
+		int x1 = rowHeaderSize;
+		int x2 = rowHeaderSize - 1;
+		x2 = (x2 - x1) > EXCEL_CHART_MAX_LENGTH ? EXCEL_CHART_MAX_LENGTH : x2;
 		
         // data source X axis (dates)
         ChartDataSource<Number> xs = DataSources.fromNumericCellRange(sheet, new CellRangeAddress(1, 1, x1, x2));		
 		
         for (String serie : chartConfig.getSeries()) {
-        	int pos = HEADER_START;
+        	int pos = 2; // header start
 	        for (Header header : headers) {
 	        	if (header.getName().equals(serie)){
 	        		y1 = y2 = pos;

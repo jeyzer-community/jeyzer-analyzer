@@ -88,6 +88,9 @@ public abstract class JeyzerSheet {
 	public static final String DAY_DISPLAY_FORMAT = "dd MMM yyyy";
 	public static final String DATE_TIME_DISPLAY_FORMAT = "E MMM dd HH:mm:ss yyyy";
 	
+	// JEYZ-76 : technical Excel limit on graph length
+	public static final int EXCEL_CHART_MAX_LENGTH = 1100;
+	
 	// thread safe as initialized on startup only
 	private static final Map<String, SimpleDateFormat> formatters = new HashMap<>(5);
 	static {
