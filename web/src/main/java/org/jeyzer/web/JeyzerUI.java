@@ -613,7 +613,7 @@ public class JeyzerUI extends Div implements PageConfigurator, RouterLayout {
 		generateButton.setIconAfterText(false);
 		generateButton.setClassName("generate-button");
 		generateButton.setWidth("220px");
-		generateButton.addClickShortcut(Key.ENTER);
+		// generateButton.addClickShortcut(Key.ENTER); // disabled : side effect on every carriage return in the issue description field. No way to prevent it
 		generateButton.addClickListener(event -> processClickEvent(event, listener));
 		
 		left.add(generateButton);
