@@ -18,13 +18,17 @@ import java.util.TreeMap;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 public class ProcessJarVersion {
 	
 	public static final String JAR_EXTENSION = ".jar";
-		
-	private static final Pattern JAR_VERSION_PATTERN = Pattern.compile("\\w+.*-([\\d\\.]+)(-?[\\w\\.-^0-9]+)?\\.jar$");
+
+	private static final Pattern JAR_VERSION_PATTERN = Pattern.compile("\\w+.*-([\\d\\.]+)(-?[\\w\\.-^0-9]+)?$");
+	private static final List<String> JAR_RELEASE_EXCEPTIONS = new ArrayList<>(Arrays.asList("release", "final"));
 	private static final String JAR_MANIFEST_JEYZER_REPOSITORY_FIELD = "Jeyzer-Repository";
 	
 	private String jarPath;
@@ -106,27 +110,27 @@ public class ProcessJarVersion {
 		//  file:/C:/demo-pg/jeyzer-76/recorder/lib/jeyzer-recorder-3.0beta.jar
 		//  file:/C:/demo-pg/jeyzer-76/recorder/lib/jeyzer-recorder-3.0beta4.jar
 		//  file:/C:/demo-pg/jeyzer-76/recorder/lib/jeyzer-recorder-3-SNAPSHOT.jar
+		//  file:/C:/demo-pg/jeyzer-76/recorder/lib/jeyzer-recorder-3-Final.jar
+		//  file:/C:/demo-pg/jeyzer-76/recorder/lib/jeyzer-recorder-3-RELEASE.jar
 
-		Matcher matcher = JAR_VERSION_PATTERN.matcher(jarFileName);
-		
-		if (matcher.matches()) {
-			String version;
-			if (matcher.group(2) == null) {
-				// just the version
-				version = matcher.group(1);
+		index = jarFileName.indexOf(JAR_EXTENSION);		
+		if (index != -1) {
+			String nameWithoutExtension = jarFileName.substring(0, index);
+			Matcher matcher = JAR_VERSION_PATTERN.matcher(nameWithoutExtension);
+			if (matcher.matches()) {
+				setSnapshot(matcher.group(2));
+				String version = matcher.group(2) == null ? matcher.group(1) : (matcher.group(1) + matcher.group(2));
+				index = jarFileName.indexOf(version);
+				this.versions.put(ProcessJarVersionType.JAR_FILE_VERSION, version);
+				this.jarName = jarFileName.substring(0, index-1);
 			}
 			else {
-				// version + snapshot
-				this.snapshot = true;
-				version = matcher.group(1) + matcher.group(2);
-			}
-			index = jarFileName.indexOf(version);
-			this.versions.put(ProcessJarVersionType.JAR_FILE_VERSION, version);
-			this.jarName = jarFileName.substring(0, index-1);
+				this.jarName = nameWithoutExtension;
+			}			
 		}
 		else {
-			index = jarFileName.indexOf(JAR_EXTENSION);
-			this.jarName = jarFileName.substring(0, index);
+			// default do nothing
+			this.jarName = jarFileName;
 		}
 	}
 
@@ -158,5 +162,21 @@ public class ProcessJarVersion {
 		// Jeyzer repository
 		if (JAR_MANIFEST_JEYZER_REPOSITORY_FIELD.equalsIgnoreCase(couple[0]))
 			this.jeyzerRepoId = couple[1];
+	}
+	
+	private void setSnapshot(String value) {
+		if (value == null) {
+			this.snapshot = false;
+			return;
+		}
+		
+		// Manage some exceptions
+		for (String exception : JAR_RELEASE_EXCEPTIONS) {
+			if (value.toLowerCase().contains(exception)) {
+				this.snapshot = false;
+				return;
+			}
+		}
+		this.snapshot = true;
 	}
 }
