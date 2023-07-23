@@ -41,6 +41,7 @@ import org.jeyzer.analyzer.error.JzrException;
 import org.jeyzer.analyzer.error.JzrTranslatorException;
 import org.jeyzer.analyzer.error.JzrTranslatorLimitViolationException;
 import org.jeyzer.analyzer.error.JzrTranslatorZipInvalidFileException;
+import org.jeyzer.analyzer.error.JzrTranslatorZipPasswordProtectedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -245,7 +246,21 @@ public class ZipHelper {
 			logger.info("Unzipping zip file : " + SystemHelper.sanitizePathSeparators(zipFilePath));
 			logger.info("    into directory : " + destDir.getAbsoluteFile());
 
-			ZipEntry entry = zipIn.getNextEntry();
+			ZipEntry entry = null;
+			try{
+				entry = zipIn.getNextEntry();
+			}
+			catch (ZipException ex) {
+				// password protected zip file
+				if ("encrypted ZIP entry not supported".equals(ex.getMessage())){
+					logger.warn("Failed to open the zip file : it is password encrypted");
+					throw new JzrTranslatorZipPasswordProtectedException("Failed to open the zip file : it is password encrypted");				
+				}
+				else {
+					// re-throw
+					throw ex;
+				}
+			}
 			// iterates over entries in the zip file
 			
 			// Invalid zip file. 

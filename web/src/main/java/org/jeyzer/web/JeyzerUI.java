@@ -42,6 +42,7 @@ import org.jeyzer.analyzer.error.JzrTranslatorJFRThreadDumpEventNotFoundExceptio
 import org.jeyzer.analyzer.error.JzrTranslatorLimitViolationException;
 import org.jeyzer.analyzer.error.JzrTranslatorRecordingSnapshotNotFoundException;
 import org.jeyzer.analyzer.error.JzrTranslatorZipInvalidFileException;
+import org.jeyzer.analyzer.error.JzrTranslatorZipPasswordProtectedException;
 import org.jeyzer.analyzer.output.ReportDescriptor;
 import org.jeyzer.analyzer.parser.io.SnapshotFileNameFilter;
 import org.jeyzer.analyzer.status.JeyzerStatusEventDispatcher;
@@ -830,6 +831,10 @@ public class JeyzerUI extends Div implements PageConfigurator, RouterLayout {
 			ui.getSession().lock(); // mandatory for the notifyUser
 			notifyUser("JZR Recording " + buildOriginalFileName(zipFileId) + " could not be analyzed.<br/>" + buildExceptionMessage(e), NotificationLevel.WARNING);
 		} catch (JzrTranslatorZipInvalidFileException e) {
+			logger.info("JZR report generation could not complete." + buildRefMessage(request), e);
+			ui.getSession().lock(); // mandatory for the notifyUser
+			notifyUser("JZR Recording " + buildOriginalFileName(zipFileId) + " could not be loaded.<br/>" + buildExceptionMessage(e), NotificationLevel.WARNING);
+		} catch (JzrTranslatorZipPasswordProtectedException e) {
 			logger.info("JZR report generation could not complete." + buildRefMessage(request), e);
 			ui.getSession().lock(); // mandatory for the notifyUser
 			notifyUser("JZR Recording " + buildOriginalFileName(zipFileId) + " could not be loaded.<br/>" + buildExceptionMessage(e), NotificationLevel.WARNING);
