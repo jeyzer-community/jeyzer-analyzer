@@ -45,6 +45,8 @@ public class ProcessCard {
 	
 	public static final String FILE_DESCRIPTOR_MAX = "jzr.ext.system.unix.max.file.descriptor.count";
 	
+	public static final String UNAVAILABLE_VALUE = "-1";
+	
 	private Properties props;
 
 	public ProcessCard(File processCardFile) throws IOException {

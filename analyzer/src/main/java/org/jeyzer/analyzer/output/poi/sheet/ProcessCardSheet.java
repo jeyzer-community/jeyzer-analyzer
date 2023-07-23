@@ -82,7 +82,7 @@ public class ProcessCardSheet extends JeyzerSheet {
 			}
 		}
 		
-		if (values.isEmpty())
+		if (values.isEmpty() || isCategoryWithEmptyValues(values, configCategory.getName()))
 			return count;  // nothing to log in this category
 		
 		displayCategoryHeader(sheet, configCategory.getName(), configCategory.getColor(), rowLine + count);
@@ -107,7 +107,7 @@ public class ProcessCardSheet extends JeyzerSheet {
 		Row row = sheet.createRow(rowLine);
 		addCell(row, 1, name, getCellStylePlainReference(rowLine));
 		// JEYZ-73 : if value is too large, trim it
-		addCell(row, 2, secureCellDisplayValue(value), getCellStylePlainReference(rowLine));
+		addCell(row, 2, secureCellDisplayValue(value), getCellStyleWrappedPlainReference(rowLine));
 		addCell(row, 3, property, getCellStylePlainReference(rowLine));
 		addEmptyCell(row, 4, getCellStylePlainReference(rowLine));
 		addEmptyCell(row, 5, getCellStylePlainReference(rowLine));
@@ -123,5 +123,13 @@ public class ProcessCardSheet extends JeyzerSheet {
 		addEmptyCell(row, 4, STYLE_CATEGORY_HEADER, color);
 		addEmptyCell(row, 5, STYLE_CATEGORY_HEADER, color);
 	}
-	
+
+	private boolean isCategoryWithEmptyValues(List<String> values, String category) {
+		for (int i=0; i<values.size(); i++){
+			if (! ProcessCard.UNAVAILABLE_VALUE.equals(values.get(i)))
+					return false;
+		}
+		logger.info("Category section display skipped : the " + category + " category contains only unavailable values");
+		return true;
+	}
 }

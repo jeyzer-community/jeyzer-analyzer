@@ -61,7 +61,9 @@ public class DefaultCellStyles {
 	public static final String STYLE_CELL_VERY_SMALL_TEXT_WRAPPED = "cell-very-small-text-wrapped";
 	public static final String STYLE_CELL_GREY = "cell-grey";
 	public static final String STYLE_CELL_GREY_SHADOW = "cell-grey-shadow";
+	public static final String STYLE_CELL_GREY_WRAPPED = "cell-grey-wrapped";
 	public static final String STYLE_CELL_WHITE = "cell-white";
+	public static final String STYLE_CELL_WHITE_WRAPPED = "cell-white-wrapped";
 	public static final String STYLE_CELL_ITALIC = "cell-italic";
 	public static final String STYLE_CELL_ITALIC_ALIGN_RIGHT = "cell-italic-align-right";
 	public static final String STYLE_CELL_ITALIC_WHITE = "cell-italic-white";
@@ -289,6 +291,14 @@ public class DefaultCellStyles {
         xssfstyle.setWrapText(false);
         styles.put(STYLE_CELL_GREY, xssfstyle);
 
+        // Cell wrapped grey style
+        xssfstyle = wb.createCellStyle();
+        xssfstyle.setFillForegroundColor(XSSF_ULTRA_LIGHT_GREY_COLOR);
+        xssfstyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        xssfstyle.setAlignment(HorizontalAlignment.LEFT);
+        xssfstyle.setWrapText(true);
+        styles.put(STYLE_CELL_GREY_WRAPPED, xssfstyle);
+        
         // Cell white style
         xssfstyle = wb.createCellStyle();
         xssfstyle.setFillForegroundColor(XSSF_WHITE_COLOR);
@@ -296,6 +306,14 @@ public class DefaultCellStyles {
         xssfstyle.setAlignment(HorizontalAlignment.LEFT);
         xssfstyle.setWrapText(false);
         styles.put(STYLE_CELL_WHITE, xssfstyle);
+
+        // Cell wrapped white style
+        xssfstyle = wb.createCellStyle();
+        xssfstyle.setFillForegroundColor(XSSF_WHITE_COLOR);
+        xssfstyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        xssfstyle.setAlignment(HorizontalAlignment.LEFT);
+        xssfstyle.setWrapText(true);
+        styles.put(STYLE_CELL_WHITE_WRAPPED, xssfstyle);
         
         // Cell grey number style
         xssfstyle = wb.createCellStyle();

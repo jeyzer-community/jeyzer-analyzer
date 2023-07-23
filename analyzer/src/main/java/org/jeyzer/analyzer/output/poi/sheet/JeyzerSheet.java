@@ -644,6 +644,10 @@ public abstract class JeyzerSheet {
 	protected String getCellStylePlainReference(int count){
 		return (count % 2 == 0) ? STYLE_CELL_GREY : STYLE_CELL_WHITE;
 	}
+
+	protected String getCellStyleWrappedPlainReference(int count){
+		return (count % 2 == 0) ? STYLE_CELL_GREY_WRAPPED : STYLE_CELL_WHITE_WRAPPED;
+	}	
 	
 	protected String getCellStylePlainItalicReference(int count){
 		return (count % 2 == 0) ? STYLE_CELL_GREY_ITALIC : STYLE_CELL_ITALIC_WHITE;
