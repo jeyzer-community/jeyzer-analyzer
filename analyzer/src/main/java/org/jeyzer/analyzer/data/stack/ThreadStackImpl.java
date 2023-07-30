@@ -238,6 +238,16 @@ public class ThreadStackImpl implements ThreadStack {
 	}
 	
 	@Override
+	public boolean isVirtual() {
+		return false;
+	}
+
+	@Override
+	public boolean isCarrying() {
+		return ThreadState.CARRYING_VIRTUAL_THREAD.equals(this.state);
+	}
+	
+	@Override
 	public boolean isUFO(){
 		return this.isOTBI() 
 				|| this.isATBI() 

@@ -53,6 +53,8 @@ public interface ThreadStack {
 	
 	public static final String PACKED_STACK = " Stack packed";
 	
+	public static final String VIRTUAL_THREAD_UNPARK_HEADER = "VirtualThread-unparker";
+	
 	public ThreadStackHandler getStackHandler();
 	
 	public String getHeader();
@@ -124,6 +126,10 @@ public interface ThreadStack {
 	public boolean isTimedWaiting();
 	
 	public boolean isRunning();
+	
+	public boolean isVirtual();
+	
+	public boolean isCarrying();
 	
 	public boolean isUFO();
 	

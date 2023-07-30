@@ -234,6 +234,16 @@ public class SessionDetailsSheet extends JeyzerSheet {
     	size = this.session.getActionsStackSize();
     	addNumericParam(sheet, linePos++, "Detected stacks", size, STYLE_SESSION_CELL);
 
+    	// Virtual threads
+    	String comment ="Virtual threads are available in standard in Java 21 and as experimental feature since Java 17.";
+    	addCommentedParam(sheet, linePos++, "Virtual threads presence", session.hasVirtualThreadPresence() ? "yes" : "no", STYLE_SESSION_CELL, comment);
+
+    	if (session.hasVirtualThreadPresence() && !session.hasVirtualThreads()) {
+        	comment ="Virtual threads are detected but not visible in the recording (only its carrier threads are). \n"
+        			+ "You must use the Jcmd command to view it in a JZR report.";
+        	addCommentedParam(sheet, linePos++, "Virtual threads visible", session.hasVirtualThreads() ? "yes" : "no", session.hasVirtualThreads() ? STYLE_SESSION_CELL : STYLE_SESSION_WARNING_CELL, comment);
+    	}
+    	
     	size = this.session.getActionsStackSize();
     	
     	Multiset<ThreadStackHandler> stacks = session.getStackSet();

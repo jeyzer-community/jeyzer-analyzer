@@ -16,6 +16,7 @@ package org.jeyzer.analyzer.data;
 
 import static org.jeyzer.analyzer.math.FormulaHelper.DOUBLE_TO_LONG_NA;
 import static org.jeyzer.analyzer.util.SystemHelper.CR;
+import static org.jeyzer.analyzer.data.stack.ThreadStack.VIRTUAL_THREAD_UNPARK_HEADER;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -100,6 +101,8 @@ public class ThreadDump {
 	private double applicativeMemoryActivityUsage = -1;  // percentage
 
 	private int cpuRunnableThreadsCount = 0;
+	
+	private Boolean hasVirtualThreads = null;
 	
 	private List<ThreadStack> stacks = new ArrayList<>();
 	private Map<String, ThreadStack> stacksPerId = new HashMap<>();
@@ -669,7 +672,41 @@ public class ThreadDump {
 		
 		return count;
 	}
+	
+	public boolean hasVirtualThreadPresence() {
+		if (hasVirtualThreads())
+			return true;
+		
+		// check otherwise if we have carrier threads
+		for (ThreadStack stack : this.stacks) {
+			if (stack.isCarrying())
+				return true;
+		}
+		
+		// At last, check if we have a VirtualThread-unparker thread
+		for (ThreadStack stack : this.stacks) {
+			if (VIRTUAL_THREAD_UNPARK_HEADER.equals(stack.getName()))
+				return true;
+		}
+		
+		return false;
+	}
 
+	public boolean hasVirtualThreads() {
+		if (this.hasVirtualThreads != null)
+			return this.hasVirtualThreads;
+		
+		for (ThreadStack stack : this.stacks) {
+			if (stack.isVirtual()) {
+				this.hasVirtualThreads = Boolean.TRUE;
+				return true;
+			}
+		}
+		
+		this.hasVirtualThreads = Boolean.FALSE;
+		return this.hasVirtualThreads;
+	}	
+	
 	public void addJeyzerMXContextParam(String param, String value) {
 		jHContextParams.put(param, value);
 	}

@@ -43,6 +43,9 @@ public class ProcessCard {
 	public static final String GC_OLD_NAME = "jzr.analysis.gc.old.name";
 	public static final String GC_YOUNG_NAME = "jzr.analysis.gc.young.name";
 	
+	public static final String VIRTUAL_THREAD_PRESENCE = "jzr.analysis.virtual.thread.presence";
+	public static final String VIRTUAL_THREAD_CARRIERS_ONLY = "jzr.analysis.virtual.thread.carriers.only";
+	
 	public static final String FILE_DESCRIPTOR_MAX = "jzr.ext.system.unix.max.file.descriptor.count";
 	
 	public static final String UNAVAILABLE_VALUE = "-1";

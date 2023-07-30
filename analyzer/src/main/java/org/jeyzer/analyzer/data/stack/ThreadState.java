@@ -12,12 +12,6 @@ package org.jeyzer.analyzer.data.stack;
  * ----------------------------LICENSE_END----------------------------
  */
 
-
-
-
-
-
-
 public enum ThreadState {
 
 	// Standard Java states (obtained in hung mode)
@@ -36,7 +30,9 @@ public enum ThreadState {
 	IN_VM_TRANS("In virtual Machine transition"), 	// Corresponding transition state.
 	IN_JAVA("In Java"),			 					// Running in Java or in stub code.
 	SYS_BLOCKED("Sys blocked"),			 			// Virtual. Used to differentiate from BLOCKED. Less meaning full.
-	SYS_BLOCKED_TRANS("Blocked transition");	 	// Corresponding transition state.	
+	SYS_BLOCKED_TRANS("Blocked transition"),	 	// Corresponding transition state.	
+	
+	CARRYING_VIRTUAL_THREAD("Carrying"); 			// Virtual thread carrier
 	
 	private String name;
 	
@@ -68,6 +64,10 @@ public enum ThreadState {
 		return TERMINATED.equals(this);
 	}
 	
+	public boolean isCarryingVirtualThread(){
+		return CARRYING_VIRTUAL_THREAD.equals(this);
+	}
+	
 	public boolean isRunning(){
 		if (RUNNABLE.equals(this))
 			return true;
@@ -77,7 +77,8 @@ public enum ThreadState {
 				&& !isTimedWaiting()
 				&& !isBlocked()
 				&& !isNew()
-				&& !isTerminated();
+				&& !isTerminated()
+				&& !isCarryingVirtualThread();
 	}
 
 }

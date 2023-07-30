@@ -269,4 +269,9 @@ public class TDASimpleParser extends ThreadDumpParser {
 	public boolean isSuspendedUsed() {
 		return false;
 	}
+	
+	@Override
+	public boolean hasVirtualThreadSupport() {
+		return false;
+	}
 }

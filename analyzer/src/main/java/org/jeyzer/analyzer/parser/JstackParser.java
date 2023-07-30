@@ -60,6 +60,7 @@ public class JstackParser extends ThreadDumpParser {
 	public static final String ID_TAG = "tid=";
 	public static final String STATE_TAG_START = "   java.lang.Thread.State: ";
 	public static final String STATE_TAG_END = " ";
+	protected static final String CARRYING_VIRTUAL_THREAD = "   Carrying virtual";
 	protected static final String SUSPENDED = "at breakpoint";
 
 	// dump content
@@ -189,6 +190,13 @@ public class JstackParser extends ThreadDumpParser {
 
 				if (line.startsWith(STATE_TAG_START)) {
 					// java.lang.Thread.State: BLOCKED (on object monitor)
+					threadLines.add(line);
+					lineCount++;
+					continue;
+				}
+				
+				if (line.startsWith(CARRYING_VIRTUAL_THREAD)) {
+					// Carrying virtual thread #29
 					threadLines.add(line);
 					lineCount++;
 					continue;
@@ -673,6 +681,11 @@ public class JstackParser extends ThreadDumpParser {
 	
 	@Override
 	public boolean isSuspendedUsed() {
+		return true;
+	}
+
+	@Override
+	public boolean hasVirtualThreadSupport() {
 		return true;
 	}
 }

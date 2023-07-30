@@ -124,6 +124,9 @@ public abstract class ThreadDumpParser {
 	
 	public abstract boolean isJeyzerMXUsed();
 	
+	// Parser compatible with JDK 17+, able at least to parse carrier threads
+	public abstract boolean hasVirtualThreadSupport();
+	
 	/**
 	 * Parse thread name
 	 * 

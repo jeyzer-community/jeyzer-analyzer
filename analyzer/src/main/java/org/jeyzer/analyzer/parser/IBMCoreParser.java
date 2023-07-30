@@ -390,4 +390,9 @@ public class IBMCoreParser extends ThreadDumpParser {
 	public boolean isSuspendedUsed() {
 		return false;
 	}
+
+	@Override
+	public boolean hasVirtualThreadSupport() {
+		return true;
+	}
 }

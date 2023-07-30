@@ -201,6 +201,11 @@ public class JzrSession implements JzrMonitorSession {
 	
 	private boolean moduleSupport;
 	
+	// Carrier (and possibly virtual) threads
+	private boolean virtualThreadPresence;
+	// Virtual threads
+	private boolean virtualThreadsAvailable;
+	
 	private String midiFilePath;
 
 	private long jumpLimit = -1;
@@ -547,6 +552,14 @@ public class JzrSession implements JzrMonitorSession {
 	public boolean isBiasedInfoAvailable(){
 		return parser.isBiasedLockUsed();
 	}
+	
+	public boolean hasVirtualThreadPresence() {
+		return this.virtualThreadPresence;
+	}
+	
+	public boolean hasVirtualThreads() {
+		return this.virtualThreadsAvailable;
+	}
 
 	public boolean isJeyzerMXInfoAvailable(){
 		return parser.isJeyzerMXUsed();
@@ -632,6 +645,9 @@ public class JzrSession implements JzrMonitorSession {
 		// inject the GC names in the process card
 		addGCNames();
 		
+		// handle the virtual thread presence
+		detectVirtualThreadSupport();
+		
 		this.startDate = dumps.get(0).getTimestamp();
 		this.endDate = dumps.get(dumps.size()-1).getTimestamp();
 	}
@@ -664,6 +680,41 @@ public class JzrSession implements JzrMonitorSession {
 		if (youngName != null)
 			props.put(ProcessCard.GC_YOUNG_NAME, youngName);
 		processCard.addProperties(props);
+	}
+	
+	private void detectVirtualThreadSupport() {
+		// optimize
+		if (parser.hasVirtualThreadSupport()) {
+			for (ThreadDump dump : this.dumps) {
+				if (dump.hasVirtualThreadPresence()) {
+					// 1. set the virtual thread presence
+					virtualThreadPresence = true;
+					break;
+				}
+			}
+		}
+
+		// 2. determine if we have only carrier threads
+		if (virtualThreadPresence) {
+			for (ThreadDump dump : this.dumps) {
+				if (dump.hasVirtualThreads()) {
+					virtualThreadsAvailable = true;
+					break;
+				}
+			}
+		}
+		
+		// 3. Enrich the property card for monitoring rules
+		if (processCard != null) {
+			Properties props = new Properties();
+			
+			props.put(ProcessCard.VIRTUAL_THREAD_PRESENCE, Boolean.toString(virtualThreadPresence));
+			
+			if (virtualThreadPresence)
+				props.put(ProcessCard.VIRTUAL_THREAD_CARRIERS_ONLY, Boolean.toString(!virtualThreadsAvailable));
+			
+			processCard.addProperties(props);
+		}
 	}
 
 	private void redirectProfile(File[] tDs) throws JzrMasterProfileRedirectException {

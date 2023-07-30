@@ -36,6 +36,9 @@ public final class StateParser {
 	public static final String IN_JAVA_STATE = "IN_JAVA"; 					// Running in Java or in stub code.
 	public static final String SYS_BLOCKED_STATE = "SYS_BLOCKED"; 			// Virtual. Used to differentiate from BLOCKED. Less meaning full.
 	public static final String SYS_BLOCKED_TRANS_STATE = "BLOCKED_TRANS"; 	// Corresponding transition state.	
+
+	// Carrier thread
+	public static final String CARRYING_STATE = "Carrying virtual thread";
 	
 	// JRockit Mission Control thread state
 	public static final String JRMC_STATE_PARKED = ", parked,";
@@ -59,6 +62,10 @@ public final class StateParser {
 	}
 	
 	public static ThreadState parseState(String header, String startTag, String endTag) throws ParseException{
+		// virtual thread carrier case
+		if (header.contains(CARRYING_STATE))
+			return ThreadState.CARRYING_VIRTUAL_THREAD;
+		
 		String value = parseHeader(header, startTag, endTag);
 
 		if (RUNNABLE_STATE.equals(value))

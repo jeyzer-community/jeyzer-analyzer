@@ -72,6 +72,8 @@ public class JFRReader {
 	public static final String JFR_JDK_UNSIGNEDINTFLAGCHANGED		 	= "jdk.UnsignedIntFlagChanged";
 	public static final String JFR_JDK_UNSIGNEDLONGFLAG				 	= "jdk.UnsignedLongFlag";
 	public static final String JFR_JDK_UNSIGNEDLONGFLAGCHANGED		 	= "jdk.UnsignedLongFlagChanged";
+	public static final String JFR_JDK_VIRTUALTHREADSTART		 		= "jdk.VirtualThreadStart";
+	public static final String JFR_JDK_VIRTUALTHREADEND				 	= "jdk.VirtualThreadEnd";
 	private static final String JFR_JDK_YOUNGGARBAGECOLLECTION 			= "jdk.YoungGarbageCollection";
 	
 	private static final String LOG_JFR_NO_CONTAINS 					= "The JFR file contains no ";
@@ -219,6 +221,10 @@ public class JFRReader {
 	private void loadEvent(RecordedEvent event, JFRDescriptor jfrDescriptor) {
 		if (JFR_JDK_THREADDUMP.equals(event.getEventType().getName()))
 			jfrDescriptor.addThreadDumpEvent(event);
+		else if (JFR_JDK_VIRTUALTHREADSTART.equals(event.getEventType().getName()))
+			logger.info("Virtual thread start detected");
+		else if (JFR_JDK_VIRTUALTHREADEND.equals(event.getEventType().getName()))
+			logger.info("Virtual thread end detected");		
 		else if (JFR_JDK_INITIALSYSTEMPROPERTY.equals(event.getEventType().getName()))
 			jfrDescriptor.addSystemPropertyEvent(event);
 		else if (JFR_JDK_JVMINFORMATION.equals(event.getEventType().getName()))

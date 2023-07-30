@@ -337,4 +337,9 @@ public class JMXStackParser extends ThreadDumpParser {
 	public boolean isSuspendedUsed() {
 		return true;
 	}
+	
+	@Override
+	public boolean hasVirtualThreadSupport() {
+		return true;
+	}
 }

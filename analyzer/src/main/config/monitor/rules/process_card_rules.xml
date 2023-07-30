@@ -93,6 +93,32 @@
 			</thresholds>
 		</rule>
 		
+		<!--  If process card property value contains the given pattern, generate event. -->
+		<rule name="Process card property pattern" param_display="Virtual thread usage" param="jzr.analysis.virtual.thread.presence" ref="JZR-PCD-018">
+			<narrative>This rule detects the usage of virtual threads.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="true" 
+				           level="INFO"
+				           sub_level="7" 
+				           message="Java virtual threads are used.&#10; In case of massive usage, you may monitor closely the VM memory."/>
+			</thresholds>
+		</rule>
+
+		<!--  If process card property value contains the given pattern, generate event. -->
+		<rule name="Process card property pattern" param_display="Virtual threads not visible" param="jzr.analysis.virtual.thread.carriers.only" ref="JZR-PCD-019">
+			<narrative>This rule detects the presence of only virtual thread carriers.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="true" 
+				           level="WARNING"
+				           sub_level="6" 
+				           message="Java virtual threads are used but cannot be displayed (because not available in the recording).&#10;You must use the Jcmd command to get it in your recording.&#10;Command is : jcmd &lt;pid&gt; Thread.dump_to_file -format=text &lt;txt file path&gt;"/>
+			</thresholds>
+		</rule>
+		
 		<!-- ************************************************************************ -->
 		<!--                   APPLICATIVE PROCESS COMMAND LINE RULES                 -->
 		<!-- ************************************************************************ -->
@@ -210,7 +236,19 @@
 			</thresholds>
 		</rule>
 		
-		<!-- Next is JZR-PCD-017 -->
+		<!--  If process card property value contains the given pattern, generate event. -->
+		<rule name="Process command line parameter pattern" param_display="Java preview active" param="enable-preview" ref="JZR-PCD-017" stickers="environment">
+			<narrative>This rule detects if the Java preview features are active.</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="enable-preview" 
+				           level="WARNING"
+				           sub_level="7"
+				           message="Java preview features are active : make sure it is enabled on purpose.&#10;Never use preview features on production environments as those are experimental."/>
+			</thresholds>
+		</rule>
+		<!-- Next is JZR-PCD-020 -->
 		
 	</rules>
 
