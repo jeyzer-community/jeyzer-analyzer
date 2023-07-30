@@ -78,6 +78,7 @@ import org.jeyzer.monitor.impl.rule.system.ContentionTypeGlobalPercentRule;
 import org.jeyzer.monitor.impl.rule.system.ContentionTypeInPrincipalPercentRule;
 import org.jeyzer.monitor.impl.rule.system.ContentionTypePresenceRule;
 import org.jeyzer.monitor.impl.rule.system.DiskSpaceTotalRule;
+import org.jeyzer.monitor.impl.rule.system.ExecutorPresenceRule;
 import org.jeyzer.monitor.impl.rule.system.FunctionGlobalPercentRule;
 import org.jeyzer.monitor.impl.rule.system.FunctionInPrincipalPercentRule;
 import org.jeyzer.monitor.impl.rule.system.FunctionPresenceRule;
@@ -316,6 +317,8 @@ public class MonitorRuleBuilder {
 					rule = new FunctionInPrincipalPercentRule(def);
 				else if (FunctionPresenceRule.RULE_NAME.equals(name))
 					rule = new FunctionPresenceRule(def);
+				else if (ExecutorPresenceRule.RULE_NAME.equals(name))
+					rule = new ExecutorPresenceRule(def);
 				else if (OperationPresenceRule.RULE_NAME.equals(name))
 					rule = new OperationPresenceRule(def);
 				else if (ContentionTypePresenceRule.RULE_NAME.equals(name))

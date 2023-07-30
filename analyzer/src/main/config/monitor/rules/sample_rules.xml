@@ -552,6 +552,16 @@
 				           message="The Jaeger tracing client library is deprecated since 2022&#10;The Open Telemetry SDK must now be used&#10;Please inform the R&#38;D to plan the adequate migration to Open Telemetry SDK."/>
 			</thresholds>
 		</rule>
+		
+		<!--  If executor is detected across current session, generate event. -->
+		<rule name="Executor presence" param_display="Virtual thread detection" param="Virtual thread manager" stickers="environment" ref="JZR-SAMPLE-039">
+			<narrative>This rule detects the usage of Java virtual threads (Loom).</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           message="Java virtual threads are used.&#10; In case of massive usage, you may monitor closely the VM memory."/>
+			</thresholds>
+		</rule>
 
 		<!-- ************************************************************************ -->
 		<!--                              ADVANCED RULES                              -->

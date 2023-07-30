@@ -46,6 +46,7 @@ import org.jeyzer.monitor.impl.rule.system.ContentionTypeGlobalPercentRule;
 import org.jeyzer.monitor.impl.rule.system.ContentionTypeInPrincipalPercentRule;
 import org.jeyzer.monitor.impl.rule.system.ContentionTypePresenceRule;
 import org.jeyzer.monitor.impl.rule.system.DiskSpaceTotalRule;
+import org.jeyzer.monitor.impl.rule.system.ExecutorPresenceRule;
 import org.jeyzer.monitor.impl.rule.system.FunctionGlobalPercentRule;
 import org.jeyzer.monitor.impl.rule.system.FunctionInPrincipalPercentRule;
 import org.jeyzer.monitor.impl.rule.system.FunctionPresenceRule;
@@ -199,6 +200,7 @@ public class ConfigMonitorRules {
 					|| OperationPresenceRule.RULE_NAME.equals(name)
 					|| ContentionTypePresenceRule.RULE_NAME.equals(name)
 					|| FunctionPresenceRule.RULE_NAME.equals(name)
+					|| ExecutorPresenceRule.RULE_NAME.equals(name)
 					|| ProcessCommandLinePropertyNumberRule.RULE_NAME.equals(name)
 					|| ProcessCommandLinePropertyPatternRule.RULE_NAME.equals(name)
 					|| ProcessCommandLineParameterPatternRule.RULE_NAME.equals(name)
