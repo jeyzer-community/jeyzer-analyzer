@@ -40,6 +40,7 @@ public class GlobalVirtualThreadLimitRule extends MonitorSessionRule implements 
 			+ "The physical limit will be the process memory one as one virtual thread consumes around 1 Mb."
 			+ "A very large number of virtual threads - most of them unmounted - may indicate some thread leak or bad design. "
 			+ "It implies also potentially some important contention on any backend (REST server, database..). "
+			+ "To limit this contention, it is recommended to use semaphores up front. "
 			+ "It needs immediate R&D attention.";
 	
 	public GlobalVirtualThreadLimitRule(ConfigMonitorRule def)
