@@ -72,6 +72,13 @@ public class ThreadDumpParserFactory {
 				return parser;
 			}
 			
+			// let's try JCMD format : 1st line starts with process id
+			if (!lines.isEmpty() && lines.get(0).matches("\\d+(\\.\\d+)?")) {
+				logger.info(LOG_FORMAT_DETECTED_PREFIX + JFRStackParser.FORMAT_SHORT_NAME);
+				parser = new JcmdParser(setupMgr);
+				return parser;
+			}
+			
 			// let's try JMX advanced format : 1st line starts with "Full Java Advanced thread dump"
 			if (!lines.isEmpty() && lines.get(0).startsWith(AdvancedJMXStackParser.FIRST_LINE)) {
 				logger.info(LOG_FORMAT_DETECTED_PREFIX + AdvancedJMXStackParser.FORMAT_SHORT_NAME);

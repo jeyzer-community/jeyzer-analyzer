@@ -29,6 +29,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import org.jeyzer.analyzer.parser.JRockitParser;
+import org.jeyzer.analyzer.parser.JcmdParser;
 import org.jeyzer.analyzer.parser.JstackHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,6 +120,25 @@ public class ThreadDumpFileDateHelper {
 				logger.debug("Jstack date not found in file :" + filename);
 			}
 			
+			// Jcmd : First 3 lines --> get date from second line
+			// 9844
+			// 2023-07-28T11:33:35.254146100Z
+			// 20.0.1+9-29
+			
+			dateText = reader.readLine();
+			
+			sdf = new SimpleDateFormat(JcmdParser.DATE_FORMAT);
+			try {
+				if (dateText.length() >= JcmdParser.DATE_FORMAT.length()) {
+					// remove the T and the end
+					String date = dateText.substring(0,10);
+					String time = dateText.substring(11,19);
+					return sdf.parse(date + time);					
+				}
+			} catch (ParseException e) {
+				logger.debug("Jcmd date not found in file :" + filename);
+			}
+			
 			// Jstack 1.5 : First 4 lines --> get date from second line
 			/*
 			 * <empty line> 
@@ -126,7 +146,6 @@ public class ThreadDumpFileDateHelper {
 			 * Full thread dump Java HotSpot(TM) Server VM (1.5.0_22-b03 mixed mode): 
 			 * <empty line>
 			 */
-			dateText = reader.readLine();
 			try {
 				return sdf.parse(dateText);
 			} catch (ParseException e) {
