@@ -74,7 +74,7 @@ public abstract class AbstractCPUDisplayRule extends AbstractCellDisplayRule {
 		this.cpuRange_76_100_Stats = duplicateStats();
 	}
 	
-	protected void displaySingleValue(Cell cell, String label, int value, ActionStatsContext actionStatsContext){
+	protected void displaySingleValue(Cell cell, String label, int value, ActionStatsContext actionStatsContext, int stackCount){
 		StringBuilder cpuTimes;
 		
 		if (valueActivity && value <= 0)
@@ -91,7 +91,7 @@ public abstract class AbstractCPUDisplayRule extends AbstractCellDisplayRule {
 			return;
 		}
 		
-		updateStats(value, actionStatsContext);
+		updateStats(value, actionStatsContext, stackCount);
 		
 		setColorHighlight(cell, getRange(value));
 	}
@@ -171,39 +171,39 @@ public abstract class AbstractCPUDisplayRule extends AbstractCellDisplayRule {
     	return line; 
 	}
 	
-	private void updateStats(int cpuPercent, ActionStatsContext actionStatsContext) {
+	private void updateStats(int cpuPercent, ActionStatsContext actionStatsContext, int stackCount) {
 		if (cpuPercent < 16){
-			actionStatsContext.cpuRange_01_15_StatsActionHit = hitStats(cpuRange_01_15_Stats, actionStatsContext.cpuRange_01_15_StatsActionHit);
+			actionStatsContext.cpuRange_01_15_StatsActionHit = hitStats(cpuRange_01_15_Stats, actionStatsContext.cpuRange_01_15_StatsActionHit, stackCount);
 		}
 		else if (cpuPercent < 31){
-			actionStatsContext.cpuRange_01_15_StatsActionHit = hitStats(cpuRange_01_15_Stats, actionStatsContext.cpuRange_01_15_StatsActionHit);
-			actionStatsContext.cpuRange_16_30_StatsActionHit = hitStats(cpuRange_16_30_Stats, actionStatsContext.cpuRange_16_30_StatsActionHit);
+			actionStatsContext.cpuRange_01_15_StatsActionHit = hitStats(cpuRange_01_15_Stats, actionStatsContext.cpuRange_01_15_StatsActionHit, stackCount);
+			actionStatsContext.cpuRange_16_30_StatsActionHit = hitStats(cpuRange_16_30_Stats, actionStatsContext.cpuRange_16_30_StatsActionHit, stackCount);
 		}
 		else if (cpuPercent < 41){
-			actionStatsContext.cpuRange_01_15_StatsActionHit = hitStats(cpuRange_01_15_Stats, actionStatsContext.cpuRange_01_15_StatsActionHit);
-			actionStatsContext.cpuRange_16_30_StatsActionHit = hitStats(cpuRange_16_30_Stats, actionStatsContext.cpuRange_16_30_StatsActionHit);
-			actionStatsContext.cpuRange_31_10_StatsActionHit = hitStats(cpuRange_31_40_Stats, actionStatsContext.cpuRange_31_10_StatsActionHit);
+			actionStatsContext.cpuRange_01_15_StatsActionHit = hitStats(cpuRange_01_15_Stats, actionStatsContext.cpuRange_01_15_StatsActionHit, stackCount);
+			actionStatsContext.cpuRange_16_30_StatsActionHit = hitStats(cpuRange_16_30_Stats, actionStatsContext.cpuRange_16_30_StatsActionHit, stackCount);
+			actionStatsContext.cpuRange_31_10_StatsActionHit = hitStats(cpuRange_31_40_Stats, actionStatsContext.cpuRange_31_10_StatsActionHit, stackCount);
 		}
 		else if (cpuPercent < 51){
-			actionStatsContext.cpuRange_01_15_StatsActionHit = hitStats(cpuRange_01_15_Stats, actionStatsContext.cpuRange_01_15_StatsActionHit);
-			actionStatsContext.cpuRange_16_30_StatsActionHit = hitStats(cpuRange_16_30_Stats, actionStatsContext.cpuRange_16_30_StatsActionHit);
-			actionStatsContext.cpuRange_31_10_StatsActionHit = hitStats(cpuRange_31_40_Stats, actionStatsContext.cpuRange_31_10_StatsActionHit);
-			actionStatsContext.cpuRange_40_50_StatsActionHit = hitStats(cpuRange_41_50_Stats, actionStatsContext.cpuRange_40_50_StatsActionHit);
+			actionStatsContext.cpuRange_01_15_StatsActionHit = hitStats(cpuRange_01_15_Stats, actionStatsContext.cpuRange_01_15_StatsActionHit, stackCount);
+			actionStatsContext.cpuRange_16_30_StatsActionHit = hitStats(cpuRange_16_30_Stats, actionStatsContext.cpuRange_16_30_StatsActionHit, stackCount);
+			actionStatsContext.cpuRange_31_10_StatsActionHit = hitStats(cpuRange_31_40_Stats, actionStatsContext.cpuRange_31_10_StatsActionHit, stackCount);
+			actionStatsContext.cpuRange_40_50_StatsActionHit = hitStats(cpuRange_41_50_Stats, actionStatsContext.cpuRange_40_50_StatsActionHit, stackCount);
 		}
 		else if (cpuPercent < 76){
-			actionStatsContext.cpuRange_01_15_StatsActionHit = hitStats(cpuRange_01_15_Stats, actionStatsContext.cpuRange_01_15_StatsActionHit);
-			actionStatsContext.cpuRange_16_30_StatsActionHit = hitStats(cpuRange_16_30_Stats, actionStatsContext.cpuRange_16_30_StatsActionHit);
-			actionStatsContext.cpuRange_31_10_StatsActionHit = hitStats(cpuRange_31_40_Stats, actionStatsContext.cpuRange_31_10_StatsActionHit);
-			actionStatsContext.cpuRange_40_50_StatsActionHit = hitStats(cpuRange_41_50_Stats, actionStatsContext.cpuRange_40_50_StatsActionHit);
-			actionStatsContext.cpuRange_51_75_StatsActionHit = hitStats(cpuRange_51_75_Stats, actionStatsContext.cpuRange_51_75_StatsActionHit);
+			actionStatsContext.cpuRange_01_15_StatsActionHit = hitStats(cpuRange_01_15_Stats, actionStatsContext.cpuRange_01_15_StatsActionHit, stackCount);
+			actionStatsContext.cpuRange_16_30_StatsActionHit = hitStats(cpuRange_16_30_Stats, actionStatsContext.cpuRange_16_30_StatsActionHit, stackCount);
+			actionStatsContext.cpuRange_31_10_StatsActionHit = hitStats(cpuRange_31_40_Stats, actionStatsContext.cpuRange_31_10_StatsActionHit, stackCount);
+			actionStatsContext.cpuRange_40_50_StatsActionHit = hitStats(cpuRange_41_50_Stats, actionStatsContext.cpuRange_40_50_StatsActionHit, stackCount);
+			actionStatsContext.cpuRange_51_75_StatsActionHit = hitStats(cpuRange_51_75_Stats, actionStatsContext.cpuRange_51_75_StatsActionHit, stackCount);
 		}
 		else{
-			actionStatsContext.cpuRange_01_15_StatsActionHit = hitStats(cpuRange_01_15_Stats, actionStatsContext.cpuRange_01_15_StatsActionHit);
-			actionStatsContext.cpuRange_16_30_StatsActionHit = hitStats(cpuRange_16_30_Stats, actionStatsContext.cpuRange_16_30_StatsActionHit);
-			actionStatsContext.cpuRange_31_10_StatsActionHit = hitStats(cpuRange_31_40_Stats, actionStatsContext.cpuRange_31_10_StatsActionHit);
-			actionStatsContext.cpuRange_40_50_StatsActionHit = hitStats(cpuRange_41_50_Stats, actionStatsContext.cpuRange_40_50_StatsActionHit);
-			actionStatsContext.cpuRange_51_75_StatsActionHit = hitStats(cpuRange_51_75_Stats, actionStatsContext.cpuRange_51_75_StatsActionHit);
-			actionStatsContext.cpuRange_76_100_StatsActionHit = hitStats(cpuRange_76_100_Stats, actionStatsContext.cpuRange_76_100_StatsActionHit);
+			actionStatsContext.cpuRange_01_15_StatsActionHit = hitStats(cpuRange_01_15_Stats, actionStatsContext.cpuRange_01_15_StatsActionHit, stackCount);
+			actionStatsContext.cpuRange_16_30_StatsActionHit = hitStats(cpuRange_16_30_Stats, actionStatsContext.cpuRange_16_30_StatsActionHit, stackCount);
+			actionStatsContext.cpuRange_31_10_StatsActionHit = hitStats(cpuRange_31_40_Stats, actionStatsContext.cpuRange_31_10_StatsActionHit, stackCount);
+			actionStatsContext.cpuRange_40_50_StatsActionHit = hitStats(cpuRange_41_50_Stats, actionStatsContext.cpuRange_40_50_StatsActionHit, stackCount);
+			actionStatsContext.cpuRange_51_75_StatsActionHit = hitStats(cpuRange_51_75_Stats, actionStatsContext.cpuRange_51_75_StatsActionHit, stackCount);
+			actionStatsContext.cpuRange_76_100_StatsActionHit = hitStats(cpuRange_76_100_Stats, actionStatsContext.cpuRange_76_100_StatsActionHit, stackCount);
 		}
 	}
 	

@@ -13,11 +13,6 @@ package org.jeyzer.monitor.impl.event.session;
  */
 
 
-
-
-
-
-
 import java.util.List;
 
 import org.jeyzer.analyzer.data.ThreadDump;
@@ -38,19 +33,18 @@ public class GlobalThreadLimitEvent extends MonitorSessionEvent {
 
 	@Override
 	public void updateContext(ThreadDump dump) {
-		if (dump.size() > this.threadNumber)
-			this.threadNumber = dump.size();
+		if (dump.getNativeStackSize() > this.threadNumber)
+			this.threadNumber = dump.getNativeStackSize();
 	}
 
 	@Override
 	public void addPrintableExtraParameters(List<String> params) {
-		params.add("Max number of active threads detected");
+		params.add("Max number of native threads detected");
 		params.add(Integer.toString(this.threadNumber));
 	}
 
 	@Override
 	protected void dumpExtraParameters(StringBuilder msg) {
-		msg.append("Max number of active threads detected :" + this.threadNumber + "\n");
+		msg.append("Max number of native threads detected :" + this.threadNumber + "\n");
 	}
-
 }

@@ -23,7 +23,7 @@
 			<row_headers>
 				<thread_id action_link="true"/>
 				<thread_name/>
-				<action_size/>
+				<action_stack_size color="ORANGE" threshold="1000"/>
 				<cpu_runnable threshold="1" color="BRIGHT_GREEN"/>
 			</row_headers>
 		

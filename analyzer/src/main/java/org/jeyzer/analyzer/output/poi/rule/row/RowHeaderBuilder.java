@@ -13,11 +13,6 @@ package org.jeyzer.analyzer.output.poi.rule.row;
  */
 
 
-
-
-
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +52,8 @@ public class RowHeaderBuilder {
     			rule = new ExecutorRule(headerCfg, displayContext);
 	    	else if (ActionSizeRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
     			rule = new ActionSizeRule(headerCfg, displayContext);
+	    	else if (ActionStackSizeRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
+    			rule = new ActionStackSizeRule(headerCfg, displayContext);
 	    	else if (ActionDurationRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
     			rule = new ActionDurationRule(headerCfg, displayContext);
 	    	else if (ActionConsumedMemoryRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName())){

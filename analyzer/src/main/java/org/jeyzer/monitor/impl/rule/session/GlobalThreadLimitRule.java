@@ -13,13 +13,8 @@ package org.jeyzer.monitor.impl.rule.session;
  */
 
 
-
 import static org.jeyzer.monitor.config.engine.ConfigMonitorThreshold.THRESHOLD_GLOBAL_VALUE;
 import static org.jeyzer.monitor.config.engine.ConfigMonitorThreshold.THRESHOLD_SESSION_VALUE;
-
-
-
-
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,12 +33,13 @@ public class GlobalThreadLimitRule extends MonitorSessionRule implements ValueSe
 
 	public static final String RULE_NAME = "Global thread limit";
 	
-	public static final String RULE_CONDITION_DESCRIPTION = "Global number of threads is greater or equal to (value).";
-	public static final String RULE_NARRATIVE = "The " + RULE_NAME + " rule permits to detect high thread number at process level. "
+	public static final String RULE_CONDITION_DESCRIPTION = "Global number of native threads is greater or equal to (value).";
+	public static final String RULE_NARRATIVE = "The " + RULE_NAME + " rule permits to detect high native thread number at process level. "
 			+ "It is recommended to use this rule in standard and make it OS dependant with stickers. "
-			+ "Maximum number of threads in a process is operating system dependant, usually around X thousands of threads. "
-			+ "Breaking the process limit will result in out of memory errors related to file descriptors. "
-			+ "Breaking the process limit usually means that the application is leaking threads or generates too many threads. "
+			+ "Maximum number of threads in a process is operating system dependant, and is usually set between 3 and 30 thousands. "
+			+ "On Unix, it is closely related to the maximum number of available open file descriptors. "
+			+ "Breaking the process limit will result in out of memory errors : it usually means that the application is leaking threads or generates too many threads. "
+			+ "Process memory consumption - outside the heap - is also impacted because one native thread consumes around 2 Mb. "
 			+ "It needs immediate R&D attention.";
 	
 	public GlobalThreadLimitRule(ConfigMonitorRule def)
@@ -68,7 +64,7 @@ public class GlobalThreadLimitRule extends MonitorSessionRule implements ValueSe
 
 	@Override
 	public boolean matchValue(ThreadDump dump, long value) {
-		return dump.size() >= value;
+		return dump.getNativeStackSize() >= value;
 	}
 	
 	@Override

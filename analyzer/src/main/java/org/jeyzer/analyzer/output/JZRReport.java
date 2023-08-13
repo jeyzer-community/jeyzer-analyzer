@@ -264,7 +264,7 @@ public class JZRReport {
     			setup,
     			new CellRefRepository(
     					session.getActionsSize(),
-    					session.getActionsStackSize()) // Created a bit late, this may be an issue if the link creator is coming after the one that needs it..
+    					session.getActionsStackSize(false)) // Created a bit late, this may be an issue if the link creator is coming after the one that needs it..
     			);
 
     	// at this stage, we know which configuration is finally valid for display

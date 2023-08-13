@@ -34,7 +34,7 @@ public class ThreadStackGroupAction extends AbstractAction {
 	private List<List<ThreadStack>> stacksGroups = null; // cached
 	
 	public ThreadStackGroupAction(ThreadStack stack, Date timestamp, int id){
-		super(id);
+		super(id, stack.isVirtual());
 		List<ThreadStack> stacks = new ArrayList<>();
 		stacks.add(stack);
 		this.stacksPerTimeStamp.put(timestamp, stacks);
@@ -65,11 +65,16 @@ public class ThreadStackGroupAction extends AbstractAction {
 		return this.stacksPerTimeStamp.size();
 	}
 	
-	public int groupSize(){
-		int groupSize = 0;
-		for (List<ThreadStack> stacks : this.stacksPerTimeStamp.values())
-			groupSize += stacks.size();
-		return groupSize;
+	@Override
+	public int getStackSize(){
+		int stackSize = 0;
+		for (List<ThreadStack> stacks : this.stacksPerTimeStamp.values()) {
+			// Should be : stacks.size() for ThreadStack
+			//             stacks.get(0).getInstancecount() for VirtualThreadStack 
+			for (ThreadStack stack : stacks)
+				stackSize += stack.getInstanceCount();
+		}
+		return stackSize;
 	}
 	
 	@Override
@@ -257,7 +262,12 @@ public class ThreadStackGroupAction extends AbstractAction {
 		if (stacksGroups == null)
 			this.stacksGroups = new ArrayList<>(this.stacksPerTimeStamp.values());
 		
-		return stacksGroups.get(pos).size();
+		// Should be : stacksGroups.get(pos).size() for ThreadStack
+		//             sum of stacksGroups.get(pos).getInstancecount() for VirtualThreadStack 
+		int stackGroupSize = 0;
+		for (ThreadStack stack : stacksGroups.get(pos))
+			stackGroupSize += stack.getInstanceCount();
+		return stackGroupSize;
 	}
 	
 	public void updateStackGroupAction(Date timestamp, ThreadStack stack){

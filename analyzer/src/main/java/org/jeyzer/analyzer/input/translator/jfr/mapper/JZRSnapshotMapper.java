@@ -96,6 +96,22 @@ public class JZRSnapshotMapper {
 		enrichProcessUpTime();
 		enrichGarbageCollection(descriptor);
 		enrichThreadFigures(descriptor);
+		enrichVirtualThreadCounters(descriptor);
+	}
+
+	private void enrichVirtualThreadCounters(JFRDescriptor descriptor) {
+		Map<Date, Integer> startCounters = descriptor.getVirtualThreadStartCounters();
+		if (startCounters == null)
+			return; // virtual threads not supported (or not available as per jfc)
+		
+		Map<Date, Integer> endCounters = descriptor.getVirtualThreadEndCounters();
+		for (JFRThreadDump dump : this.dumps) {
+			Integer startCounter = startCounters.get(dump.getDate());
+			dump.addVirtualThreadStartCounter(startCounter != null ? startCounter : 0);
+			
+			Integer endCounter = endCounters.get(dump.getDate());
+			dump.addVirtualThreadEndCounter(endCounter != null ? endCounter : 0);
+		}
 	}
 
 	private void enrichThreadFigures(JFRDescriptor descriptor) {

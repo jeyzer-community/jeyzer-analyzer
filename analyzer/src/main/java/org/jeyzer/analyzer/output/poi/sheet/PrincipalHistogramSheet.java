@@ -162,7 +162,7 @@ public class PrincipalHistogramSheet extends JeyzerSheet{
     		
     		int actionStackCount = 0;
     		for (ThreadAction action : actions)
-    			actionStackCount += action.size();
+    			actionStackCount += action.getStackSize(); // include virtual threads
 
     		// use multi set to get it order by appearance
     		Multiset<Tag> tagMultiSet = HashMultiset.create();

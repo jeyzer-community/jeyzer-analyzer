@@ -34,10 +34,10 @@ public class SectionDelimiterRule extends AbstractDisplayRule implements Header 
 
 	public static final String RULE_NAME = "section_delimiter";
 	
+	public static final String TITLE_FIELD = "title";
+	
 	private static final String DISPLAY_NAME = "";
-	
-	private static final String TITLE_FIELD = "title";
-	
+		
 	private String title;
 	
 	public SectionDelimiterRule(ConfigDisplay headerCfg, SheetDisplayContext context){

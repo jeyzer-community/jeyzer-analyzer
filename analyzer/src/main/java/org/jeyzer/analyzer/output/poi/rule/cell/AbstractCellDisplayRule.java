@@ -102,8 +102,8 @@ public abstract class AbstractCellDisplayRule extends AbstractDisplayRule {
 		}
 	}
 	
-	protected boolean hitStats(Stats statsToUpdate, boolean actionAlreadyHit){
-		statsToUpdate.hitStack();
+	protected boolean hitStats(Stats statsToUpdate, boolean actionAlreadyHit, int stackCount){
+		statsToUpdate.hitStack(stackCount);
 		if (!actionAlreadyHit){
 			statsToUpdate.hitAction();
 		}

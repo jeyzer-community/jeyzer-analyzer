@@ -23,6 +23,8 @@
 				<locked_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/locked-thread-counter.xml"/>
 				<frozen_code_state_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/frozen-code-state-thread-counter.xml"/>
 				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+				<virtual-thread-mounted-counter     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-mounted-counter.xml"/>
+				<virtual-thread-mounted-cpu-usage-percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-mounted-cpu-usage-percent.xml"/>
 
 				<section_delimiter title="CPU" color="RGB-201-208-168"/>
 				<system_cpu           header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/system-cpu.xml"/>
@@ -76,6 +78,15 @@
 				<frozen_code_state_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/frozen-code-state-thread-counter.xml"/>
 				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
 
+				<!-- This section may be skipped programmaticaly  -->
+				<section_delimiter title="Virtual threads" color="RGB-201-208-168"/>
+				<virtual_thread_counter             header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-counter.xml"/>
+				<virtual_thread_created_counter     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-created-counter.xml"/>
+				<virtual_thread_terminated_counter  header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-terminated-counter.xml"/>
+				<virtual_thread_diff                header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-diff.xml"/>
+				<virtual-thread-mounted-counter     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-mounted-counter.xml"/>
+				<virtual-thread-mounted-cpu-usage-percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-mounted-cpu-usage-percent.xml"/>
+
 				<section_delimiter title="CPU" color="RGB-201-208-168"/>
 				<system_cpu           header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/system-cpu.xml"/>
 				<process_cpu          header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/process-cpu.xml"/>
@@ -118,6 +129,27 @@
 				<frozen_code_state_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/frozen-code-state-thread-counter.xml"/>
 				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
 			</headers>
+			<headers formats="Jcmd">
+			
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<average/>
+					<min/>
+					<max/>
+					<cumulative/>
+					<variance/>
+					<standard_deviation/>
+				</math_functions>
+			
+				<!-- Headers -->
+				<thread_counter               header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
+				<native_thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/native-thread-counter.xml"/>
+				<virtual_thread_counter       header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-counter.xml"/>
+				<virtual-thread-mounted-counter   header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-mounted-counter.xml"/>
+				<frozen_code_state_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/frozen-code-state-thread-counter.xml"/>
+				<action_counter               header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+				
+			</headers>
 			<headers formats="IBM core dump,TDA,default">
 				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
 				<math_functions>
@@ -145,6 +177,8 @@
 				</chart>
 				<chart title="Threads">
 					<serie header="thread_counter"/>
+					<serie header="native_thread_counter"/>
+					<serie header="virtual_thread_counter"/>
 					<serie header="locked_thread_counter"/>
 					<serie header="frozen_code_state_thread_counter"/>
 					<serie header="action_counter"/>

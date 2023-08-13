@@ -30,6 +30,10 @@ public class ConfigDisplay {
 	private ConfigHighlights highlights; // can be null
 	private ConfigDisplay cfgDelta; // can be null
 	private String name;
+
+	public ConfigDisplay(String name) {
+		this.name = name;
+	}
 	
 	public ConfigDisplay(Element configNode){
 		this.name = configNode.getTagName();
@@ -48,7 +52,7 @@ public class ConfigDisplay {
 		if (deltaNode != null)
 			this.cfgDelta = new ConfigDisplay(deltaNode);
 	}
-	
+
 	public Object getValue(String field){
 		return this.fields.get(field);
 	}

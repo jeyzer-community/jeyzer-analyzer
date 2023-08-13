@@ -4,4 +4,6 @@
 
 	<sticker name="jfr-recording" type="property card" property="jzr.jdk.flag.FlightRecorder" pattern="true"/>
 
+	<sticker name="virtual-threads" type="property card" property="jzr.analysis.virtual.thread.presence" pattern="true"/>
+
 </stickers>

@@ -101,7 +101,7 @@ public class FunctionInPrincipalPercentRule extends MonitorSystemRule implements
     	// get percentage
 		int actionStackCount = 0;
 		for (ThreadAction action : actions)
-			actionStackCount += action.size();
+			actionStackCount += action.getStackSize();
     	
 		int tagFunctionStackCount = functionTagMultiSet.count(functionTag);
     	int tagPercent = FormulaHelper.percentRound(tagFunctionStackCount, actionStackCount);

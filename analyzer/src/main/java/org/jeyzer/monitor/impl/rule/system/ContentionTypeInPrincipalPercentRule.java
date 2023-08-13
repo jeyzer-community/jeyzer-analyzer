@@ -101,7 +101,7 @@ public class ContentionTypeInPrincipalPercentRule extends MonitorSystemRule impl
     	// get percentage
 		int actionStackCount = 0;
 		for (ThreadAction action : actions)
-			actionStackCount += action.size();
+			actionStackCount += action.getStackSize();
     	
 		int tagContentionTypeStackCount = contentionTypeTagMultiSet.count(contentionTypeTag);
     	int tagPercent = FormulaHelper.percentRound(tagContentionTypeStackCount, actionStackCount);

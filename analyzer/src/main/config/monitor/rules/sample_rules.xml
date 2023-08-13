@@ -562,6 +562,18 @@
 				           message="Java virtual threads are used.&#10; In case of massive usage, you may monitor closely the VM memory."/>
 			</thresholds>
 		</rule>
+		
+		<!--  If number of threads greater than [value], generate event -->
+		<rule name="Global virtual thread limit" ref="JZR-SAMPLE-040">
+			<thresholds>
+				<threshold type="global value" 
+						   count="20"
+				           value="30000"
+				           level="WARNING" 
+				           message="High number of virtual threads created (30 000+). Please send the Jeyzer recording to your Support service and monitor closely the application."/>
+   			</thresholds>
+		</rule>
+		
 
 		<!-- ************************************************************************ -->
 		<!--                              ADVANCED RULES                              -->
@@ -948,6 +960,22 @@
 						   value="3000" 
 				           level="WARNING"
 				           message="The process is handling a high number of open file descriptors.&#10;Make sure the max open file descriptors limit is sized enough on the system, otherwise the Too Many Open Files exception may occur (or in any other started with the same user)."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If Virtual threads CPU usage is greater than [value] % for [count] or [time], generate event. -->
+		<rule name="Virtual threads CPU consuming" ref="JZR-SAMPLE-127" stickers="virtual-threads">
+			<thresholds>
+				<threshold type="global value"
+						   time="60s"
+						   value="90" 
+				           level="CRITICAL"
+				           message="Virtual threads are highly CPU consuming.&#10;You sould review with the developer team the underlying tasks to be less CPU consuming."/>
+				<threshold type="global value"
+						   time="120s"
+						   value="60"
+				           level="WARNING" 
+				           message="Virtual threads are CPU consuming.&#10;You may review with the developer team the underlying tasks to be less CPU consuming."/>
 			</thresholds>
 		</rule>
 

@@ -244,8 +244,6 @@ public class SessionDetailsSheet extends JeyzerSheet {
         	addCommentedParam(sheet, linePos++, "Virtual threads visible", session.hasVirtualThreads() ? "yes" : "no", session.hasVirtualThreads() ? STYLE_SESSION_CELL : STYLE_SESSION_WARNING_CELL, comment);
     	}
     	
-    	size = this.session.getActionsStackSize();
-    	
     	Multiset<ThreadStackHandler> stacks = session.getStackSet();
     	int percent = getIdentifiedActionPercentage(stacks);
     	addNumericParam(sheet, linePos++, "Action identification %", percent, percent < 30? STYLE_SESSION_WARNING_CELL : STYLE_SESSION_OK_CELL);
@@ -272,7 +270,7 @@ public class SessionDetailsSheet extends JeyzerSheet {
     	
     	size = 0;
     	for (ThreadDump dump : session.getDumps())
-    		size += dump.size();
+    		size += dump.getStackSize();
 	    percent = FormulaHelper.percentRound(stacks.size(), size);
 	    if (percent == 0)
 	    	percent = stacks.size() > 0 ? 1 : 0; // adjust to 1 if some identified stacks do exist
@@ -436,7 +434,7 @@ public class SessionDetailsSheet extends JeyzerSheet {
     	int identifiedFunctionCount = 0;
     	for (ThreadStackHandler stack : stacks.elementSet()) {
     		if (!ThreadStack.FUNC_TO_BE_IDENTIFIED.equals(stack.getThreadStack().getPrincipalTag()))
-    			identifiedFunctionCount++;
+    			identifiedFunctionCount++;   // virtual threads already in stacks
     	}
     	return FormulaHelper.percentRound(identifiedFunctionCount, stacks.elementSet().size());
 	}
@@ -445,7 +443,7 @@ public class SessionDetailsSheet extends JeyzerSheet {
     	int identifiedOperationCount = 0;
     	for (ThreadStackHandler stack : stacks.elementSet()) {
     		if (!ThreadStack.OPER_TO_BE_IDENTIFIED.equals(stack.getThreadStack().getPrincipalOperation()))
-    			identifiedOperationCount++;
+    			identifiedOperationCount++;   // virtual threads already in stacks
     	}
     	return FormulaHelper.percentRound(identifiedOperationCount, stacks.elementSet().size());
 	}
@@ -454,7 +452,7 @@ public class SessionDetailsSheet extends JeyzerSheet {
     	int identifiedExecutorCount = 0;
     	for (ThreadStackHandler stack : stacks.elementSet()) {
     		if (!ThreadStack.EXECUTOR_TO_BE_IDENTIFIED.equals(stack.getThreadStack().getExecutor()))
-    			identifiedExecutorCount++;
+    			identifiedExecutorCount++;   // virtual threads already in stacks
     	}
     	return FormulaHelper.percentRound(identifiedExecutorCount, stacks.elementSet().size());
 	}
@@ -505,7 +503,7 @@ public class SessionDetailsSheet extends JeyzerSheet {
 		addSessionHeader(row, name);
 		Cell cell = addCell(row, 2, param, style);
 		if (comment != null)
-			addComment(sheet, cell, comment, linePos, 2);
+			addComment(sheet, cell, comment, 3, 2);
 		
 		cell = row.createCell(3);
 		cell.setCellStyle(getThemeStyle(STYLE_THEME_SESSION));

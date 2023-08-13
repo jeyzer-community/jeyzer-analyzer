@@ -295,6 +295,22 @@
 				           message="The process is handling a a very large number of open file descriptors.&#10;You may execute the lsof command on the process pid and communicate the result to the development team that will check if the application is not accessing intensively system resources in an abnormal way."/>
 			</thresholds>
 		</rule>
+
+		<!--  If Virtual thread CPU usage is greater than [value] % for [count] or [time], generate event. -->
+		<rule name="Virtual threads CPU consuming" ref="JZR-ADV-021" stickers="virtual-threads">
+			<thresholds>
+				<threshold type="global value"
+						   time="60s"
+						   value="90" 
+				           level="CRITICAL"
+				           message="Virtual threads are highly CPU consuming.&#10;You sould review with the developer team the underlying tasks to be less CPU consuming."/>
+				<threshold type="global value"
+						   time="120s"
+						   value="60"
+				           level="WARNING" 
+				           message="Virtual threads are CPU consuming.&#10;You may review with the developer team the underlying tasks to be less CPU consuming."/>
+			</thresholds>
+		</rule>
 		
 	</rules>
 

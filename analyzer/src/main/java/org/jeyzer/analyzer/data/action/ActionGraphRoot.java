@@ -80,10 +80,11 @@ public class ActionGraphRoot {
 			section.updateActionCount();
 			for (int i=0; i<action.size(); i++){
 				ThreadStack stack = action.getThreadStack(i);
-				if (!section.acceptNewStack(stack))
-					// should never happen. there is always a common root code line. 
-					// Also, one of the children must accept it at some point
-					logger.error("Failed to integrate stack into any graph section. Stack is : \n{}", stack.toString());
+				for (int j=0; j<stack.getInstanceCount(); j++) // include virtual threads
+					if (!section.acceptNewStack(stack))
+						// should never happen. there is always a common root code line. 
+						// Also, one of the children must accept it at some point
+						logger.error("Failed to integrate stack into any graph section. Stack is : \n{}", stack.toString());
 			}
 		}
 		else{
@@ -93,9 +94,10 @@ public class ActionGraphRoot {
 			
 			for (int i=1; i<action.size(); i++){
 				stack = action.getThreadStack(i);
-				if (!section.acceptNewStack(stack))
-					// should never happen. there is always a common root code line
-					logger.error("Failed to integrate stack into new root action graph. Stack is : \n{}", stack.toString());
+				for (int j=0; j<stack.getInstanceCount(); j++) // include virtual threads
+					if (!section.acceptNewStack(stack))
+						// should never happen. there is always a common root code line
+						logger.error("Failed to integrate stack into new root action graph. Stack is : \n{}", stack.toString());
 			}
 			
 			actionGraphSectionRoots.put(key, section);

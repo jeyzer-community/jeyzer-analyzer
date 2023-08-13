@@ -36,7 +36,7 @@ public class GroupActionSizeRule extends AbstractNumericDisplayRule implements G
 
 	@Override
 	public boolean apply(ThreadStackGroupAction action, Cell cell) {
-		Long value = (long) action.groupSize();
+		Long value = (long) action.size();
 		setValue(cell, value);
 		setValueBasedColorForeground(cell, value, -1, false);
 		return true;

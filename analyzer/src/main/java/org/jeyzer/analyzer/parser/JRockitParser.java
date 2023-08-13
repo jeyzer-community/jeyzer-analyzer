@@ -370,4 +370,14 @@ public class JRockitParser extends ThreadDumpParser {
 	public boolean hasVirtualThreadSupport() {
 		return false;
 	}
+	
+	@Override
+	public boolean areVirtualThreadVariationCountersUsed() {
+		return false;
+	}
+	
+	@Override
+	public boolean hasVirtualThreadStackSupport() {
+		return false;
+	}
 }

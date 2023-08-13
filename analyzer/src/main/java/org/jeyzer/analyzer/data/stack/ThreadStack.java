@@ -67,6 +67,10 @@ public interface ThreadStack {
 	
 	public ThreadState getState();
 	
+	public int getInstanceCount();
+	
+	public boolean hasUniqueInstance();
+	
 	public boolean isSuspended();
 	
 	public DAEMON getDaemon();

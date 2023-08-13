@@ -44,6 +44,14 @@ public class DisplayRuleBuilder {
 		List<DisplayRule> rules = new ArrayList<>();
 		DisplayRule rule;
 
+		if (session.hasVirtualThreads()) {
+			// Handle virtual threads in transparent way
+			//  Choice is made to always display the number of virtual threads up front
+			//  Not done for GroupDisplayRuleBuilder as it is handled as part of the group feature
+			rule = new VirtualThreadCountRule(new ConfigDisplay("Virtual thread count"), context);
+			rules.add(rule);
+		}
+		
 	    for (ConfigDisplay displayCfg : displayCfgs){
 	    	rule = null;
 	    	
@@ -77,7 +85,7 @@ public class DisplayRuleBuilder {
 	    	else if (StackRule.RULE_NAME.equalsIgnoreCase(displayCfg.getName())){
 	    		boolean optimized = false;
 	    		if (context.getSetupManager().getReportOptimizeStacksThreshold() != -1)
-	    			optimized = session.getActionsStackSize() > context.getSetupManager().getReportOptimizeStacksThreshold(); 
+	    			optimized = session.getActionsStackSize(false) > context.getSetupManager().getReportOptimizeStacksThreshold(); 
     			rule = new StackRule(displayCfg, context, optimized);
 	    	}
 

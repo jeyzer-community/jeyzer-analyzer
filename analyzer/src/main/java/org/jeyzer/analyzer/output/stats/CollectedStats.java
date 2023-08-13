@@ -22,8 +22,8 @@ public class CollectedStats implements Stats{
 	private int actionCount = 0;
 	private int stackCount = 0;
 	
-	private int actionTotal;
-	private int stackTotal;
+	private int actionTotal; // limitation : actions containing virtual threads counted only once (as the number of virtual threads may differ during the life time of the action)
+	private int stackTotal;  // virtual threads included
 	
 	public CollectedStats(int actionTotal, int stackTotal){
 		this.actionTotal = actionTotal;
@@ -41,8 +41,8 @@ public class CollectedStats implements Stats{
 	}
 	
 	@Override
-	public void hitStack(){
-		stackCount++;
+	public void hitStack(int count){
+		stackCount += count;
 	}
 	
 	@Override

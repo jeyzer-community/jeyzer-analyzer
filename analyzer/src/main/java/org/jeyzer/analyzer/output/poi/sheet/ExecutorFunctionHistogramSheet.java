@@ -162,7 +162,7 @@ public class ExecutorFunctionHistogramSheet extends JeyzerSheet{
     		
     		int actionStackCount = 0;
     		for (ThreadAction action : actions)
-    			actionStackCount += action.size();
+    			actionStackCount += action.getStackSize();
 
     		// use multi set to get it ordered by appearance
     		Multiset<Tag> tagMultiSet = HashMultiset.create();

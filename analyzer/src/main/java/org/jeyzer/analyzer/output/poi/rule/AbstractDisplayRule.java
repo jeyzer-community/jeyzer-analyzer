@@ -81,7 +81,7 @@ public abstract class AbstractDisplayRule {
 		// update existing cell if any
 		prevValue = cell.getStringCellValue();
 		if (delimiter && !prevValue.isEmpty())
-			cellValue = prevValue + "/" + value;
+			cellValue = prevValue + " / " + value;
 		else
 			cellValue = prevValue + " " + value;
 		

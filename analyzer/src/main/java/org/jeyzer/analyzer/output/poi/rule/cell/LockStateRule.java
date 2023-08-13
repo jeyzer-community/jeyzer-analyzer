@@ -111,32 +111,32 @@ public class LockStateRule extends AbstractCellDisplayRule implements DisplayRul
 			if (ts.isInDeadlock()){
 				state = getLockingLabel(ts) + " // " + getLockedLabel(ts);
 				setColorForeground(cell, this.deadlockColor);
-				actionDeadlockHit = hitStats(this.deadlockStats, actionDeadlockHit);
+				actionDeadlockHit = hitStats(this.deadlockStats, actionDeadlockHit, ts.getInstanceCount());
 			}
 			else if (locked && locking){
 				state = getLockingLabel(ts) + " // " + getLockedLabel(ts);
 				setColorForeground(cell, this.lockOwnerAndLockedColor);
-				actionOwnerAndLockedHit = hitStats(this.lockOwnerAndLockedStats, actionOwnerAndLockedHit);
+				actionOwnerAndLockedHit = hitStats(this.lockOwnerAndLockedStats, actionOwnerAndLockedHit, ts.getInstanceCount());
 			}
 			else if (locked){
 				state = getLockedLabel(ts);
 				setColorForeground(cell);
-				actionLockedHit = hitStats(this.stats, actionLockedHit);
+				actionLockedHit = hitStats(this.stats, actionLockedHit, ts.getInstanceCount());
 			}
 			else if (locking){
 				state = getLockingLabel(ts);
 				setColorForeground(cell, this.lockOwnerColor);
-				actionOwnerHit = hitStats(this.lockOwnerStats, actionOwnerHit);
+				actionOwnerHit = hitStats(this.lockOwnerStats, actionOwnerHit, ts.getInstanceCount());
 			}
 			else if (codeLocked){
 				state = "ADV LOCKED (" + ts.getCodeLockName() + ")";
 				setColorForeground(cell, this.codeLockedColor);
-				actionCodeLockedHit = hitStats(this.codeLockedStats, actionCodeLockedHit);
+				actionCodeLockedHit = hitStats(this.codeLockedStats, actionCodeLockedHit, ts.getInstanceCount());
 			}
 			else if(ts.isSuspended()) {
 				state = "SUSPENDED";
 				setColorForeground(cell, this.suspendedColor);
-				suspendedHit = hitStats(this.suspendedStats, suspendedHit);
+				suspendedHit = hitStats(this.suspendedStats, suspendedHit, ts.getInstanceCount());
 			}
 			
 			if (state != null)

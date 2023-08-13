@@ -14,7 +14,7 @@
 						   count="20"
 				           value="2000"
 				           level="WARNING" 
-				           message="High number of threads created (2000+). Please send the Jeyzer recording to your Support service and monitor closely the application."/>
+				           message="High number of native threads created (2000+). Please send the Jeyzer recording to your Support service and monitor closely the application."/>
    			</thresholds>
 		</rule>
 		
@@ -27,7 +27,7 @@
 						   delta_x="10"
 						   delta_y="5"
 				           level="CRITICAL"
-				           message="Huge number of threads, increasing : potential thread leakage. &#10;Check the Pools sheet. &#10;Risk of process crash. &#10;Please plan applicative restart."/>
+				           message="Huge number of native threads, increasing : potential thread leakage. &#10;Check the Pools sheet. &#10;Risk of process crash. &#10;Please plan applicative restart."/>
 			</thresholds>
 		</rule>
 	
@@ -206,6 +206,17 @@
 				           value="2"
 				           message="Your JFR recording could be improved by collecting periodic thread dumps.&#10;It will permit to reveal the cinematic of the issues and also collect extra figures (CPU, memory, GC..) to help in the diagnosis.&#10;To do so, it is recommended to use the Jeyzer profile for JFR available at https://jeyzer.org/resources/jfr/jeyzer.jfc.&#10;Note this is not invasive, even for a production environment (unless hard real time)."/>
 			</thresholds>
+		</rule>
+		
+		<!--  If number of threads greater than [value], generate event -->
+		<rule name="Global virtual thread limit" ref="JZR-STD-017">
+			<thresholds>
+				<threshold type="global value" 
+						   count="20"
+				           value="30000"
+				           level="WARNING" 
+				           message="High number of virtual threads created (30 000+). Please send the Jeyzer recording to your Support service and monitor closely the application."/>
+   			</thresholds>
 		</rule>
 
 		<!--  If number of active threads greater than [value] for [count] thread dumps or [time], generate event -->

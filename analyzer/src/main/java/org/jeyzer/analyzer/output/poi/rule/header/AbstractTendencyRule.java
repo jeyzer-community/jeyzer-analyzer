@@ -61,7 +61,8 @@ public abstract class AbstractTendencyRule extends AbstractDisplayRule implement
 
 		Multiset<String> valueMultiSet = HashMultiset.create();
 		for (ThreadStack stack : stacks){
-			valueMultiSet.add(getElementValue(stack));
+			for (int j=0; j<stack.getInstanceCount(); j++)
+				valueMultiSet.add(getElementValue(stack)); // yes we inject as much as needed for virtual threads (one otherwise)
 		}
 		
 		String tendencyValue = Multisets.copyHighestCountFirst(valueMultiSet).elementSet().iterator().next();

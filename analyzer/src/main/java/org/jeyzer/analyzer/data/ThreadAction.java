@@ -16,10 +16,6 @@ package org.jeyzer.analyzer.data;
 
 import static org.jeyzer.analyzer.util.SystemHelper.CR;
 
-
-
-
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -38,6 +34,8 @@ import org.jeyzer.analyzer.util.AnalyzerHelper;
 public class ThreadAction extends AbstractAction {
 	
 	private List<ThreadStack> stacks = new ArrayList<>();
+	private int stackSize = 0;
+	
 	private String principalFunction = null;
 	private String principalOperation = null;
 	private String principalContentionType = null;
@@ -58,12 +56,14 @@ public class ThreadAction extends AbstractAction {
 	private double applicativeMemoryActivityUsageMax = -1; // percentage
 	
 	public ThreadAction(ThreadStack stack, int id){
-		super(id);
+		super(id, stack.isVirtual());
 		this.stacks.add(stack);
+		this.stackSize = stack.getInstanceCount();
 	}
 	
 	public void updateAction(ThreadStack stack){
 		this.stacks.add(stack);
+		this.stackSize += stack.getInstanceCount();
 	}
 	
 	@Override
@@ -145,6 +145,11 @@ public class ThreadAction extends AbstractAction {
 	@Override
 	public int size(){
 		return this.stacks.size();
+	}
+	
+	@Override
+	public int getStackSize(){
+		return this.stackSize;
 	}
 	
 	@Override

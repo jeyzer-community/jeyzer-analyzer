@@ -62,6 +62,12 @@ public class HeaderBuilder {
 	    	else if (ThreadCounterRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
     			rule = new ThreadCounterRule(headerCfg, displayContext);
 
+	    	else if (NativeThreadCounterRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
+    			rule = new NativeThreadCounterRule(headerCfg, displayContext);
+	    	
+	    	else if ((session.areVirtualThreadVariationCountersAvailable() || session.hasVirtualThreads()) && VirtualThreadCounterRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
+    			rule = new VirtualThreadCounterRule(headerCfg, displayContext);
+	    	
 	    	else if (PoolThreadCounterRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
     			rule = new PoolThreadCounterRule(headerCfg, displayContext);
 
@@ -140,8 +146,14 @@ public class HeaderBuilder {
 	    	else if (GarbageCollectorNameRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
     			rule = new GarbageCollectorNameRule(headerCfg, displayContext);
 	    	
-	    	else if (SectionDelimiterRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
-    			rule = new SectionDelimiterRule(headerCfg, displayContext);
+	    	else if (SectionDelimiterRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName())) {
+	    		// special case for virtual threads..
+	    		String title = (String)headerCfg.getValue(SectionDelimiterRule.TITLE_FIELD);
+	    		if (title.equalsIgnoreCase("Virtual threads") && session.hasVirtualThreadPresence())
+	    			rule = new SectionDelimiterRule(headerCfg, displayContext);
+	    		else
+	    			rule = new SectionDelimiterRule(headerCfg, displayContext);
+	    	}
 
 	    	else if (GarbageCollectorMemoryPoolRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
     			rule = new GarbageCollectorMemoryPoolRule(headerCfg, displayContext);	    	
@@ -235,6 +247,21 @@ public class HeaderBuilder {
 	    	
 	    	else if (OpenFileDescriptorCounterRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
     			rule = new OpenFileDescriptorCounterRule(headerCfg, displayContext);
+	    	
+	    	else if (session.areVirtualThreadVariationCountersAvailable() && VirtualThreadCreatedCounterRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
+    			rule = new VirtualThreadCreatedCounterRule(headerCfg, displayContext);
+	    	
+	    	else if (session.areVirtualThreadVariationCountersAvailable() && VirtualThreadTerminatedCounterRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
+    			rule = new VirtualThreadTerminatedCounterRule(headerCfg, displayContext);
+	    	
+	    	else if (session.areVirtualThreadVariationCountersAvailable() && VirtualThreadDiffRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
+    			rule = new VirtualThreadDiffRule(headerCfg, displayContext);
+	    	
+	    	else if (session.hasVirtualThreadPresence() && VirtualThreadMountedCounterRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
+    			rule = new VirtualThreadMountedCounterRule(headerCfg, displayContext);
+
+	    	else if (session.hasVirtualThreadPresence() && VirtualThreadMountedCPUUsagePercentRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
+    			rule = new VirtualThreadMountedCPUUsagePercentRule(headerCfg, displayContext);
 	    	
 	    	else
 	    		logger.warn("Could not instanciate header rule for configuration node : {}", headerCfg.getName());

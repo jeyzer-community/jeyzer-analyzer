@@ -62,7 +62,7 @@ public class LongTaskRule extends AbstractCellDisplayRule implements DisplayRule
 			for (int j=0; j< action.size(); j++){
 				cell = cells.get(j);
 				setColorForeground(cell);
-				stats.hitStack();
+				stats.hitStack(action.getThreadStack(j).getInstanceCount());
 			}
 		}
 		

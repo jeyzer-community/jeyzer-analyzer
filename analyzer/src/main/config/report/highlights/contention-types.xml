@@ -37,5 +37,11 @@
 			<highlight name="Timed waiting" color="PALE_BLUE"/>
 					
 			<highlight name="Blocked" color="ORANGE"/>
+			
+			<!-- Virtual threads -->
+			<highlight name="VT carrier" color="RGB-0-255-255"/> <!-- Blue pacific -->
+			<highlight name="VT unmounted" color="RGB-0-255-255"/> <!-- Blue pacific -->
+
+			<highlight name="Unknown" color="GREY_25_PERCENT"/>
 
 		</highlights>

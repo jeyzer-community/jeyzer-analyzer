@@ -91,7 +91,7 @@
 			<row_headers>
 				<thread_id action_link="true"/>
 				<thread_name/>
-				<action_size color="RGB-231-213-137" threshold="10"/> <!-- Light brown -->
+				<action_stack_size color="ORANGE" threshold="1000"/>
 			</row_headers>
 		
 			<display>

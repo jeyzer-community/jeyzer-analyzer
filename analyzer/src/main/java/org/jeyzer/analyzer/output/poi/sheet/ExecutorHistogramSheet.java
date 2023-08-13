@@ -79,7 +79,7 @@ public class ExecutorHistogramSheet extends JeyzerSheet{
     		
     		int actionStackCount = 0;
     		for (ThreadAction action : actions)
-    			actionStackCount += action.size();
+    			actionStackCount += action.getStackSize();
     		
    			linePos++;
    			displayExecutor(executor, actions.size(), globalActionsSize, actionStackCount, globalActionsStackSize, sheet, groupCount, linePos);

@@ -118,6 +118,7 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
+import com.google.common.primitives.Ints;
 import com.google.common.primitives.Longs;
 
 
@@ -189,7 +190,8 @@ public class JzrSession implements JzrMonitorSession {
 	private Map<Date, ThreadDump> dumpHistory = new HashMap<>();
 	
 	private int actionTotal = 0; //computed
-	private int actionStackTotal = 0; //computed
+	private int actionStackTotal = 0; //computed, includes the virtual thread stacks, used for data manipulation (stats..)
+	private int actionStackTotalNotVirtualExpanded = 0; //computed, virtual thread stacks represented only once, used for display
 	private int stackMinimumSize = -1; //computed
 	
 	private ProcessCard processCard = null;	
@@ -357,6 +359,13 @@ public class JzrSession implements JzrMonitorSession {
 	public int getActionsStackSize(){
 		return this.actionStackTotal;
 	}
+
+	public int getActionsStackSize(boolean expandVirtual){
+		if (expandVirtual)
+			return getActionsStackSize();
+		else
+			return this.actionStackTotalNotVirtualExpanded;
+	}	
 	
 	public Map<Date,Set<ThreadStackGroupAction>> getThreadStackGroupActionHistory(){
 		if (this.stackGroupActionHistory != null)
@@ -552,7 +561,11 @@ public class JzrSession implements JzrMonitorSession {
 	public boolean isBiasedInfoAvailable(){
 		return parser.isBiasedLockUsed();
 	}
-	
+
+	public boolean areVirtualThreadVariationCountersAvailable(){
+		return parser.areVirtualThreadVariationCountersUsed();
+	}
+
 	public boolean hasVirtualThreadPresence() {
 		return this.virtualThreadPresence;
 	}
@@ -694,7 +707,7 @@ public class JzrSession implements JzrMonitorSession {
 			}
 		}
 
-		// 2. determine if we have only carrier threads
+		// 2. determine if we have virtual threads in dumps
 		if (virtualThreadPresence) {
 			for (ThreadDump dump : this.dumps) {
 				if (dump.hasVirtualThreads()) {
@@ -1150,7 +1163,8 @@ public class JzrSession implements JzrMonitorSession {
 			this.actionTotal += actions.size();
 			for(ThreadAction action : actions){
 				action.flagFrozenStacks();
-				this.actionStackTotal += action.size();
+				this.actionStackTotal += action.getStackSize();
+				this.actionStackTotalNotVirtualExpanded += action.size();
 			}
 		}
 		
@@ -1172,6 +1186,10 @@ public class JzrSession implements JzrMonitorSession {
 		if (parser.isOpenFileDescriptorMeasurementUsed())
 			computeOpenFileDescriptor();
 		
+		// compute virtual threads
+		if (parser.hasVirtualThreadSupport())
+			computeVirtualThreads();
+		
 		// process applicative events
 		processExternalEvents();
 		
@@ -1188,6 +1206,61 @@ public class JzrSession implements JzrMonitorSession {
 		}
 		System.gc();
 	}
+
+	private void computeVirtualThreads() {
+		// variation counters
+		if (this.parser.areVirtualThreadVariationCountersUsed()) {
+			ThreadDump prevTd = null;
+			for (ThreadDump td : this.dumps){
+				td.updateVirtualThreadVariationCounters(prevTd);
+				prevTd = td;
+			}
+		}
+		
+		int cpuCores = getAvailableProcessors();
+		if (this.parser.hasVirtualThreadSupport()) {
+			for (ThreadDump td : this.dumps){
+				td.updateVirtualThreadMountedCounters(cpuCores);
+			}
+		}
+		
+		if (this.parser.hasVirtualThreadStackSupport()) {
+			for (ThreadDump td : this.dumps){
+				td.updateVirtualThreadStackCounters();
+			}			
+		}
+	}
+	
+	private int getAvailableProcessors() {
+		if (this.processCard == null) {
+			return -1;
+		}
+
+		// System CPUs (can be x2 cores)
+		ProcessCardProperty property = processCard.getValue(ProcessCard.AVAILABLE_PROCESSORS);
+    	if (property != null) {
+        	String value = property.getValue();
+    		if (value != null && !value.isEmpty()) {
+    			Integer parsedValue = Ints.tryParse(value);
+    			if (parsedValue != null)
+    				return parsedValue;	    		
+    		}
+		}		
+		
+    	// system cores
+    	property = processCard.getValue(ProcessCard.JFR_AVAILABLE_PROCESSORS);
+    	if (property != null) {
+        	String value = property.getValue();
+    		if (value != null && !value.isEmpty()) {
+    			Integer parsedValue = Ints.tryParse(value);
+    			if (parsedValue != null)
+    				return parsedValue;	    		
+    		}
+		}
+		
+		return -1;
+	}
+	
 
 	private void processExternalEvents() {
 		if (!this.isJeyzerMXInfoAvailable())
@@ -1969,8 +2042,10 @@ public class JzrSession implements JzrMonitorSession {
 			Set<ThreadAction> actions = this.actionHistory.get(timestamp);
 			
 			for(ThreadAction action : actions){
-				for (int i=0; i<action.size(); i++){
-					stacks.add(action.getThreadStack(i).getStackHandler());
+				for (int i=0; i<action.size(); i++) {
+					ThreadStack stack = action.getThreadStack(i);
+					for (int j=0; j<stack.getInstanceCount(); j++)
+						stacks.add(stack.getStackHandler()); // yes we inject as much as needed for virtual threads (otherwise 1 for standard)
 				}
 			}
 		}
@@ -1988,8 +2063,10 @@ public class JzrSession implements JzrMonitorSession {
 			for(ThreadAction action : actions){
 				for (int i=0; i<action.size(); i++){
 					ThreadStack stack = action.getThreadStack(i);
-					if (stack.isUFO())
-						stacks.add(action.getThreadStack(i).getStackHandler());
+					if (stack.isUFO()) {
+						for (int j=0; j<action.getThreadStack(i).getInstanceCount(); j++)
+							stacks.add(action.getThreadStack(i).getStackHandler()); // yes we inject as much as needed for virtual threads (otherwise 1 for standard)						
+					}
 				}
 			}
 		}
@@ -2027,15 +2104,18 @@ public class JzrSession implements JzrMonitorSession {
 	
 	private void fillFunctionSet(ThreadAction action) {
 		for (int i=0; i<action.size(); i++){
-			if (action.getThreadStack(i).isATBI()){
-				// include ATBI
-				this.functionSets.add(FunctionTag.ATBI_TAG);
-			}
-
-			else{
-				for(String functionTag : action.getThreadStack(i).getFunctionTags()){
-					this.functionSets.add(new FunctionTag(functionTag));
+			ThreadStack stack = action.getThreadStack(i);
+			for (int j=0; j<stack.getInstanceCount(); j++) { // do it as much as needed for virtual threads
+				if (stack.isATBI()){
+					// include ATBI
+					this.functionSets.add(FunctionTag.ATBI_TAG);
 				}
+
+				else{
+					for(String functionTag : stack.getFunctionTags()){
+						this.functionSets.add(new FunctionTag(functionTag));
+					}
+				}				
 			}
 		}
 	}
@@ -2085,12 +2165,15 @@ public class JzrSession implements JzrMonitorSession {
 	
 	private void fillOperationSet(ThreadAction action) {
 		for (int i=0; i<action.size(); i++){
-			if (action.getThreadStack(i).isOTBI()){
-				this.operationSets.add(OperationTag.OTBI_TAG);
-			}
-			else{
-				for(String operationTag : action.getThreadStack(i).getOperationTags()){
-					this.operationSets.add(new OperationTag(operationTag));
+			ThreadStack stack = action.getThreadStack(i);
+			for (int j=0; j<stack.getInstanceCount(); j++) { // do it as much as needed for virtual threads
+				if (stack.isOTBI()){
+					this.operationSets.add(OperationTag.OTBI_TAG);
+				}
+				else{
+					for(String operationTag : stack.getOperationTags()){
+						this.operationSets.add(new OperationTag(operationTag));
+					}
 				}
 			}
 		}
@@ -2116,8 +2199,11 @@ public class JzrSession implements JzrMonitorSession {
 	
 	private void fillContentionTypeSet(ThreadAction action) {
 		for (int i=0; i<action.size(); i++){
-			for(String contentionTypeTag : action.getThreadStack(i).getContentionTypeTags()){
-				this.contentionTypeSets.add(new ContentionTypeTag(contentionTypeTag));
+			ThreadStack stack = action.getThreadStack(i);
+			for (int j=0; j<stack.getInstanceCount(); j++) { // do it as much as needed for virtual threads
+				for(String contentionTypeTag : stack.getContentionTypeTags()){
+					this.contentionTypeSets.add(new ContentionTypeTag(contentionTypeTag));
+				}
 			}
 		}
 	}
@@ -2167,11 +2253,13 @@ public class JzrSession implements JzrMonitorSession {
 	private void fillContentionTypeSetPerFunctionPrincipal(Multimap<String, Tag> contentionTypes, ThreadAction action) {
 		String principal = action.getPrincipalCompositeFunction();
 		for (int i=0; i<action.size(); i++){
-			for(String contentionTypeTag : action.getThreadStack(i).getContentionTypeTags()){
-				contentionTypes.put(
-						principal, 
-						new ContentionTypeTag(contentionTypeTag)
-						);
+			ThreadStack stack = action.getThreadStack(i);
+			for(String contentionTypeTag : stack.getContentionTypeTags()){
+				for (int j=0; j<stack.getInstanceCount(); j++) // include virtual threads
+					contentionTypes.put(
+							principal, 
+							new ContentionTypeTag(contentionTypeTag)
+							);
 			}
 		}
 	}
@@ -2197,11 +2285,13 @@ public class JzrSession implements JzrMonitorSession {
 	private void fillOperationSetPerFunctionPrincipal(Multimap<String, Tag> operations, ThreadAction action) {
 		String principal = action.getPrincipalCompositeFunction();
 		for (int i=0; i<action.size(); i++){
-			for(String operationTag : action.getThreadStack(i).getOperationTags()){
-				operations.put(
-						principal, 
-						new OperationTag(operationTag)
-						);
+			ThreadStack stack = action.getThreadStack(i);
+			for(String operationTag : stack.getOperationTags()){
+				for (int j=0; j<stack.getInstanceCount(); j++)
+					operations.put(
+							principal, 
+							new OperationTag(operationTag)
+							);
 			}
 		}
 	}
@@ -2227,11 +2317,13 @@ public class JzrSession implements JzrMonitorSession {
 	private void fillFunctionSetPerFunctionPrincipal(Multimap<String, Tag> functions, ThreadAction action) {
 		String principal = action.getPrincipalCompositeFunction();
 		for (int i=0; i<action.size(); i++){
-			for(String functionTag : action.getThreadStack(i).getFunctionTags()){
-				functions.put(
-						principal, 
-						new FunctionTag(functionTag)
-						);
+			ThreadStack stack = action.getThreadStack(i);
+			for(String functionTag : stack.getFunctionTags()){
+				for (int j=0; j<stack.getInstanceCount(); j++) // include virtual threads
+					functions.put(
+							principal, 
+							new FunctionTag(functionTag)
+							);
 			}
 		}
 	}
@@ -2257,11 +2349,13 @@ public class JzrSession implements JzrMonitorSession {
 	private void fillContentionTypeSetPerExecutor(Multimap<String, Tag> contentionTypes, ThreadAction action) {
 		String executor = action.getExecutor();
 		for (int i=0; i<action.size(); i++){
-			for(String contentionTypeTag : action.getThreadStack(i).getContentionTypeTags()){
-				contentionTypes.put(
-						executor, 
-						new ContentionTypeTag(contentionTypeTag)
-						);
+			ThreadStack stack = action.getThreadStack(i);
+			for(String contentionTypeTag : stack.getContentionTypeTags()){
+				for (int j=0; j<stack.getInstanceCount(); j++)
+					contentionTypes.put(
+							executor, 
+							new ContentionTypeTag(contentionTypeTag)
+							); // add as much as needed for virtual threads for virtual threads
 			}
 		}
 	}
@@ -2288,11 +2382,13 @@ public class JzrSession implements JzrMonitorSession {
 	private void fillOperationSetPerExecutor(Multimap<String, Tag> operations, ThreadAction action) {
 		String executor = action.getExecutor();
 		for (int i=0; i<action.size(); i++){
-			for(String operationTag : action.getThreadStack(i).getOperationTags()){
-				operations.put(
-						executor, 
-						new OperationTag(operationTag)
-						);
+			ThreadStack stack = action.getThreadStack(i);
+			for(String operationTag : stack.getOperationTags()){
+				for (int j=0; j<stack.getInstanceCount(); j++)
+					operations.put(
+							executor, 
+							new OperationTag(operationTag)
+							); // add as much as needed for virtual threads
 			}
 		}
 	}
@@ -2318,11 +2414,13 @@ public class JzrSession implements JzrMonitorSession {
 	private void fillFunctionSetPerExecutor(Multimap<String, Tag> functions, ThreadAction action) {
 		String executor = action.getExecutor();
 		for (int i=0; i<action.size(); i++){
-			for(String functionTag : action.getThreadStack(i).getFunctionTags()){
-				functions.put(
-						executor, 
-						new FunctionTag(functionTag)
-						);
+			ThreadStack stack = action.getThreadStack(i);
+			for(String functionTag : stack.getFunctionTags()){
+				for (int j=0; j<stack.getInstanceCount(); j++)
+					functions.put(
+							executor, 
+							new FunctionTag(functionTag)
+							); // add as much as needed for virtual threads
 			}
 		}
 	}

@@ -16,5 +16,9 @@
 			<highlight name="IN_JAVA" color="GREEN"/>
 			<highlight name="SYS_BLOCKED" color="LIGHT_BLUE"/>
 			<highlight name="BLOCKED_TRANS" color="LIGHT_BLUE"/>
-
+			<!-- Virtual threads -->
+			<highlight name="CARRYING_VIRTUAL_THREAD" color="RGB-0-255-255"/> <!-- Blue pacific -->
+			<highlight name="UNMOUNTED_VIRTUAL_THREAD" color="RGB-0-255-255"/> <!-- Blue pacific -->
+			<highlight name="UNKNOWN" color="GREY_25_PERCENT"/>
+			
 		</highlights>

@@ -13,10 +13,6 @@ package org.jeyzer.analyzer.parser;
  */
 
 
-
-
-
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -341,5 +337,15 @@ public class JMXStackParser extends ThreadDumpParser {
 	@Override
 	public boolean hasVirtualThreadSupport() {
 		return true;
+	}
+	
+	@Override
+	public boolean areVirtualThreadVariationCountersUsed() {
+		return false;
+	}
+	
+	@Override
+	public boolean hasVirtualThreadStackSupport() {
+		return false;
 	}
 }

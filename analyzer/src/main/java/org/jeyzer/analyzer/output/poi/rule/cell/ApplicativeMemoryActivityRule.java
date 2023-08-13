@@ -79,7 +79,7 @@ public class ApplicativeMemoryActivityRule extends AbstractCellDisplayRule imple
 				setColorForeground(cell,COLOR_NOT_AVAILABLE);
 			else if (applicativeMemoryActivity >= this.threshold){
 				setColorForeground(cell);
-				actionHit = hitStats(this.stats, actionHit);
+				actionHit = hitStats(this.stats, actionHit, stack.getInstanceCount());
 			}
 		}
 		

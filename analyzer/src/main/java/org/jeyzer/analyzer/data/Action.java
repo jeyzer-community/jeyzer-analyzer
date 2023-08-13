@@ -21,6 +21,8 @@ import org.jeyzer.analyzer.data.stack.ThreadStackJeyzerMXInfo;
 public interface Action {
 
 	public int size();
+	public int getStackSize(); // includes the virtual threads
+	public boolean isVirtual();
 	public int getId();	
 	public String getStrId();
 	public Date getStartDate();	

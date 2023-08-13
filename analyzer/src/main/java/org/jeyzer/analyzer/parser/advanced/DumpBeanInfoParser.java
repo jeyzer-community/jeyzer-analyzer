@@ -34,6 +34,8 @@ public class DumpBeanInfoParser {
 	public static final String SYSTEM_PHYSICAL_FREE_MEMORY = "system free memory\t";
 	public static final String SYSTEM_PHYSICAL_TOTAL_MEMORY = "system total memory\t";
 	public static final String MEMORY_OBJ_PENDING_FINALIZATION = "memory:obj pending finalization\t";
+	public static final String VIRTUAL_THREAD_CREATED_COUNT = "virtual thread created\t";
+	public static final String VIRTUAL_THREAD_TERMINATED_COUNT = "virtual thread terminated\t";
 	public static final String JEYZER_CTX_PARAM = "Jz cxt param-";
 	public static final String MX_BEAN_PARAM = "mx:";
 	public static final String PARAM_EQUALS = "\t";
@@ -84,6 +86,12 @@ public class DumpBeanInfoParser {
 		}
 		else if (line.startsWith(MEMORY_OBJ_PENDING_FINALIZATION)){
 			parseMemoryObjectPendingFinalization(dump, line);
+		}
+		else if (line.startsWith(VIRTUAL_THREAD_CREATED_COUNT)){
+			parseVirtualThreadCreatedCount(dump, line);
+		}
+		else if (line.startsWith(VIRTUAL_THREAD_TERMINATED_COUNT)){
+			parseVirtualThreadTerminatedCount(dump, line);
 		}
 		else if (line.startsWith(MemoryPoolBeanInfoParser.MEMORY_POOL_PREFIX)){
 			memoryPoolParser.parse(dump, line, true);
@@ -170,6 +178,30 @@ public class DumpBeanInfoParser {
 		
 		dump.setProcessOpenFileDescriptorCount(processOpenFDCount);
 	}
+	
+	private void parseVirtualThreadCreatedCount(ThreadDump dump, String line) {
+		int posStart = line.indexOf(VIRTUAL_THREAD_CREATED_COUNT) + VIRTUAL_THREAD_CREATED_COUNT.length();
+		
+		Integer vtCreatedCount = Ints.tryParse(line.substring(posStart));
+		if (vtCreatedCount == null){
+			logger.warn("Failed to convert virtual thread created count : {}", line.substring(posStart));
+			vtCreatedCount = -1;
+		}
+		
+		dump.getVirtualThreads().setCreatedCount(vtCreatedCount);
+	}
+
+	private void parseVirtualThreadTerminatedCount(ThreadDump dump, String line) {
+		int posStart = line.indexOf(VIRTUAL_THREAD_TERMINATED_COUNT) + VIRTUAL_THREAD_TERMINATED_COUNT.length();
+		
+		Integer vtTerminatedCount = Ints.tryParse(line.substring(posStart));
+		if (vtTerminatedCount == null){
+			logger.warn("Failed to convert virtual thread terminated count : {}", line.substring(posStart));
+			vtTerminatedCount = -1;
+		}
+		
+		dump.getVirtualThreads().setTerminatedCount(vtTerminatedCount);
+	}	
 	
 	private void parseSystemCPUInfo(ThreadDump dump, String line) {
 		int posStart = line.indexOf(SYSTEM_CPU) + SYSTEM_CPU.length();

@@ -33,6 +33,9 @@ public class JFRThreadDump {
 	private static final String PROCESS_CPU_FIELD = JZ_PREFIX + "process cpu" + JZR_FIELD_EQUALS;
 	private static final String PROCESS_UP_TIME = JZ_PREFIX + "process up time" + JZR_FIELD_EQUALS;
 	
+	private static final String VIRTUAL_THREAD_CREATED = JZ_PREFIX + "virtual thread created" + JZR_FIELD_EQUALS;
+	private static final String VIRTUAL_THREAD_TERMINATED = JZ_PREFIX + "virtual thread terminated" + JZR_FIELD_EQUALS;
+	
 	private static final String MEMORY_HEAP_USED = JZ_PREFIX + "memory:heap:used" + JZR_FIELD_EQUALS;
 	private static final String MEMORY_HEAP_MAX = JZ_PREFIX + "memory:heap:max" + JZR_FIELD_EQUALS;
 	
@@ -63,6 +66,9 @@ public class JFRThreadDump {
 //	private Map<Long, Float> threadSysCPULoad = new HashMap<>();
 	
 	private JFRGarbageCollection gc;
+
+	private int virtualThreadStartCounter = -1;
+	private int virtualThreadEndCounter = -1;
 	
 	public JFRThreadDump(RecordedEvent tdEvent) {
 		this.jfrTd = tdEvent.getString("result");
@@ -109,6 +115,14 @@ public class JFRThreadDump {
 //	public void addThreadSysCPULoad(long threadId, float sysCPULoad) {
 //		this.threadSysCPULoad.put(threadId, sysCPULoad);
 //	}
+	
+	public void addVirtualThreadStartCounter(int value) {
+		virtualThreadStartCounter = value;
+	}
+
+	public void addVirtualThreadEndCounter(int value) {
+		virtualThreadEndCounter = value;
+	}
 
 	public void setJFRGarbageCollection(JFRGarbageCollection gc) {
 		this.gc = gc;
@@ -127,6 +141,13 @@ public class JFRThreadDump {
 		writer.write(SYSTEM_TOTAL_MEMORY_FIELD + this.sysTotalMemory + System.lineSeparator());
 		writer.write(PROCESS_CPU_FIELD + this.processCpu + System.lineSeparator());
 		writer.write(PROCESS_UP_TIME + this.processUpTime + System.lineSeparator());
+		
+		// Virtual thread counters if available
+		if (virtualThreadStartCounter != -1)
+			writer.write(VIRTUAL_THREAD_CREATED + this.virtualThreadStartCounter + System.lineSeparator());
+		if (virtualThreadEndCounter != -1)
+			writer.write(VIRTUAL_THREAD_TERMINATED + this.virtualThreadEndCounter + System.lineSeparator());
+		
 		writeGCData(descriptor, writer);
 		writer.write(System.lineSeparator());
 		

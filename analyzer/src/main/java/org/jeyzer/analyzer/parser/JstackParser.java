@@ -13,10 +13,6 @@ package org.jeyzer.analyzer.parser;
  */
 
 
-
-
-
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -559,7 +555,7 @@ public class JstackParser extends ThreadDumpParser {
 		
 		// stack section - store it as intern to save memory
 		List<String> codeLines = internCodeLines(context);
-
+		
 		return new ThreadStackImpl(header, name, id, state, suspended,
 				context.filePos, context.fileName, context.timestamp, codeLines, 
 				context.lockedOn, context.lockedOnClassName, context.ownedLocks, context.biasedLocks, false,
@@ -687,5 +683,15 @@ public class JstackParser extends ThreadDumpParser {
 	@Override
 	public boolean hasVirtualThreadSupport() {
 		return true;
+	}
+	
+	@Override
+	public boolean areVirtualThreadVariationCountersUsed() {
+		return false;
+	}
+	
+	@Override
+	public boolean hasVirtualThreadStackSupport() {
+		return false;
 	}
 }

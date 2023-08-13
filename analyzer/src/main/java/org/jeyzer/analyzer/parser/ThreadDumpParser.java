@@ -48,6 +48,8 @@ public abstract class ThreadDumpParser {
 	private static final Logger logger = LoggerFactory.getLogger(ThreadDumpParser.class);		
 	
 	private static final String WEBLO_THREAD_NAME = "ExecuteThread:";
+
+	protected static final String VIRTUAL_THREAD_CARRIER_CODE_SIGNATURE = "java.lang.VirtualThread.runContinuation";
 	
 	protected static final String EMPTY_STRING = "";
 
@@ -126,6 +128,10 @@ public abstract class ThreadDumpParser {
 	
 	// Parser compatible with JDK 17+, able at least to parse carrier threads
 	public abstract boolean hasVirtualThreadSupport();
+	
+	public abstract boolean areVirtualThreadVariationCountersUsed();
+	
+	public abstract boolean hasVirtualThreadStackSupport();
 	
 	/**
 	 * Parse thread name

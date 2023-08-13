@@ -262,6 +262,9 @@ public class AdvancedJMXStackParser extends ThreadDumpParser {
 		for (String lineToIntern : context.threadLines.subList(linePos,context.threadLines.size())){
 			codeLines.add(lineToIntern.intern());
 		}
+		
+		if (codeLines.size() >= 2 && codeLines.get(1).contains(VIRTUAL_THREAD_CARRIER_CODE_SIGNATURE))
+			state = ThreadState.CARRYING_VIRTUAL_THREAD;
 
 		return new ThreadStackImpl(header, name, id, state, suspended,
 				context.filePos, context.fileName, context.timestamp, codeLines, 
@@ -371,5 +374,15 @@ public class AdvancedJMXStackParser extends ThreadDumpParser {
 	@Override
 	public boolean hasVirtualThreadSupport() {
 		return true;
+	}
+
+	@Override
+	public boolean areVirtualThreadVariationCountersUsed() {
+		return false;
+	}
+	
+	@Override
+	public boolean hasVirtualThreadStackSupport() {
+		return false;
 	}
 }

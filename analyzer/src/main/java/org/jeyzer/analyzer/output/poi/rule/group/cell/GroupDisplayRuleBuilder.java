@@ -76,7 +76,7 @@ public class GroupDisplayRuleBuilder {
 	    	else if (StackRule.RULE_NAME.equalsIgnoreCase(displayCfg.getName())){
 	    		boolean optimized = false;
 	    		if (context.getSetupManager().getReportOptimizeStacksThreshold() != -1)
-	    			optimized = session.getActionsStackSize() > context.getSetupManager().getReportOptimizeStacksThreshold(); 
+	    			optimized = session.getActionsStackSize(false) > context.getSetupManager().getReportOptimizeStacksThreshold(); 
     			rule = new StackRule(displayCfg, context, optimized);
 	    	}
 

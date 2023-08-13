@@ -13,11 +13,6 @@ package org.jeyzer.analyzer.output.stats;
  */
 
 
-
-
-
-
-
 public class VoidStats implements Stats{
 	
 	public static final VoidStats VOID_STATS = new VoidStats();  
@@ -28,7 +23,7 @@ public class VoidStats implements Stats{
 	}
 
 	@Override
-	public void hitStack() {
+	public void hitStack(int stackCount) {
 		// do nothing
 	}
 

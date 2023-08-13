@@ -1,6 +1,7 @@
 package org.jeyzer.analyzer.input.translator.jfr.reader;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 
 /*-
  * ---------------------------LICENSE_START---------------------------
@@ -18,8 +19,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +52,7 @@ public class JFRDescriptor {
 	private List<String> loadedEventTypes = new ArrayList<>();
 	private boolean gcDataValidated = true;
 	
-	private Map<Date, RecordedEvent> tdEvents = new HashMap<>();
+	private Map<Date, RecordedEvent> tdEvents = new TreeMap<>();
 	private List<RecordedEvent> systemPropertyEvents = new ArrayList<>();
 	private List<RecordedEvent> jvmInformationEvents = new ArrayList<>();
 	private List<RecordedEvent> osInformationEvents = new ArrayList<>();
@@ -73,6 +76,22 @@ public class JFRDescriptor {
 	private List<RecordedEvent> threadAllocationStatisticsEvents = new ArrayList<>();
 	private List<RecordedEvent> threadCPULoadEvents = new ArrayList<>();
 	private List<RecordedEvent> threadEndEvents = new ArrayList<>();
+	
+	// contextual, optimization for virtual thread events
+	private int startVTCounter; 
+	private Instant startVTNextTdInstant;
+	private Iterator<RecordedEvent> startTdIterator;
+	private boolean startAllTDsCovered;
+	
+	private Map<Date, Integer> startVTCounterMap = null;
+
+	// contextual, optimization for virtual thread events
+	private int endVTCounter;
+	private Instant endVTNextTdInstant;
+	private Iterator<RecordedEvent> endTdIterator;
+	private boolean endAllTDsCovered;
+	
+	private Map<Date, Integer> endVTCounterMap = new HashMap<>();
 	
 	public void addThreadDumpEvent(RecordedEvent event) {
 		Date date = new Date(event.getStartTime().toEpochMilli());
@@ -274,5 +293,88 @@ public class JFRDescriptor {
 	
 	public boolean hasGCValidData() {
 		return this.gcDataValidated;
+	}
+
+	public Map<Date, Integer> getVirtualThreadStartCounters() {
+		return this.startVTCounterMap;
+	}
+	
+	public Map<Date, Integer> getVirtualThreadEndCounters() {
+		return this.endVTCounterMap;
+	}
+	
+	public void incrementVirtualThreadStart(JFRDescriptor jfrDescriptor, Instant endTime) {
+		if (!jfrDescriptor.hasThreadDumpEvents() || startAllTDsCovered)
+			return;
+		
+		if (startVTNextTdInstant == null) {
+			// initialize
+			startVTCounterMap = new HashMap<>();
+			startTdIterator = jfrDescriptor.getThreadDumpEvents().iterator();
+			startVTNextTdInstant = jfrDescriptor.getThreadDumpEvents().iterator().next().getEndTime();
+		}		
+
+		if (endTime.isBefore(startVTNextTdInstant)) {
+			startVTCounter++;
+		}
+		else {
+			// store the counter
+			startVTCounterMap.put(Date.from(startVTNextTdInstant), startVTCounter);
+			
+			// move to the next slot
+			while(startTdIterator.hasNext()) {
+				startVTNextTdInstant = startTdIterator.next().getEndTime();
+				
+				if (endTime.isAfter(startVTNextTdInstant)){
+					// store zero and jump to next slot slot
+					startVTCounterMap.put(Date.from(startVTNextTdInstant), 0);
+					continue;
+				}
+				else {
+					startVTCounter = 1;
+					return;
+				}
+			}
+			// last slot
+			startAllTDsCovered = true;
+		}
+	}
+	
+	public void incrementVirtualThreadEnd(JFRDescriptor jfrDescriptor, Instant endTime) {
+		if (!jfrDescriptor.hasThreadDumpEvents() || endAllTDsCovered)
+			return;
+		
+		if (endVTNextTdInstant == null) {
+			// initialize
+			endVTCounterMap = new HashMap<>();
+			endTdIterator = jfrDescriptor.getThreadDumpEvents().iterator();
+			endVTNextTdInstant = jfrDescriptor.getThreadDumpEvents().iterator().next().getEndTime();
+		}		
+
+		if (endTime.isBefore(endVTNextTdInstant)) {
+			endVTCounter++;
+		}
+		else {
+			// store the counter
+			endVTCounterMap.put(Date.from(endVTNextTdInstant), endVTCounter);
+			
+			// move to the next slot
+			while(endTdIterator.hasNext()) {
+				endVTNextTdInstant = endTdIterator.next().getEndTime();
+				
+				if (endTime.isAfter(endVTNextTdInstant)){
+					// store zero and jump to next slot
+					endVTCounterMap.put(Date.from(endVTNextTdInstant), 0);
+					continue;
+				}
+				else {
+					// adequate slot, start new counter
+					endVTCounter = 1;
+					return;
+				}
+			}
+			// last slot
+			endAllTDsCovered = true;
+		}
 	}
 }

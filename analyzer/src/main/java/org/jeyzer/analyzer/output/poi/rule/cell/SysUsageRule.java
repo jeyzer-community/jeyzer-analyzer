@@ -50,7 +50,7 @@ public class SysUsageRule extends AbstractCPUDisplayRule implements DisplayRule 
 			if (stackCPUInfo == null)
 				continue;
 			
-			displaySingleValue(cell, LABEL_SYS_USAGE, (int)Math.round(stackCPUInfo.getSystemUsage()), actionStatsContext);
+			displaySingleValue(cell, LABEL_SYS_USAGE, (int)Math.round(stackCPUInfo.getSystemUsage()), actionStatsContext, stack.getInstanceCount());
 		}
 		
 		return true;

@@ -42,6 +42,7 @@ import org.jeyzer.monitor.impl.rule.session.FunctionAndOperationParallelContenti
 import org.jeyzer.monitor.impl.rule.session.FunctionParallelContentionRule;
 import org.jeyzer.monitor.impl.rule.session.GlobalThreadLeakRule;
 import org.jeyzer.monitor.impl.rule.session.GlobalThreadLimitRule;
+import org.jeyzer.monitor.impl.rule.session.GlobalVirtualThreadLimitRule;
 import org.jeyzer.monitor.impl.rule.session.HiatusTimeRule;
 import org.jeyzer.monitor.impl.rule.session.LocksContentionRule;
 import org.jeyzer.monitor.impl.rule.session.MissingThreadDumpRule;
@@ -74,6 +75,7 @@ import org.jeyzer.monitor.impl.rule.session.advanced.OpenFileDescriptorPercentRu
 import org.jeyzer.monitor.impl.rule.session.advanced.RecordingSnapshotCaptureTimeRule;
 import org.jeyzer.monitor.impl.rule.session.advanced.RestartProcessRule;
 import org.jeyzer.monitor.impl.rule.session.advanced.UpTimeProcessRule;
+import org.jeyzer.monitor.impl.rule.session.advanced.VirtualThreadsCPUPercentRule;
 import org.jeyzer.monitor.impl.rule.system.ContentionTypeGlobalPercentRule;
 import org.jeyzer.monitor.impl.rule.system.ContentionTypeInPrincipalPercentRule;
 import org.jeyzer.monitor.impl.rule.system.ContentionTypePresenceRule;
@@ -378,6 +380,8 @@ public class MonitorRuleBuilder {
 			try {
 				if (GlobalThreadLimitRule.RULE_NAME.equals(name))
 					rule = new GlobalThreadLimitRule(def);
+				if (GlobalVirtualThreadLimitRule.RULE_NAME.equals(name))
+					rule = new GlobalVirtualThreadLimitRule(def);
 				else if (NamedThreadLimitRule.RULE_NAME.equals(name))
 					rule = new NamedThreadLimitRule(def);
 				else if (GlobalThreadLeakRule.RULE_NAME.equals(name))
@@ -460,6 +464,8 @@ public class MonitorRuleBuilder {
 					rule = new OpenFileDescriptorNumberRule(def);
 				else if (OpenFileDescriptorPercentRule.RULE_NAME.equals(name))
 					rule = new OpenFileDescriptorPercentRule(def);
+				else if (VirtualThreadsCPUPercentRule.RULE_NAME.equals(name))
+					rule = new VirtualThreadsCPUPercentRule(def);
 				
 				if (rule != null)
 					sessionRules.add(rule);

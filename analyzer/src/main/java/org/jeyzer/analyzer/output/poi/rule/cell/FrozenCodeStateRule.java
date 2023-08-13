@@ -45,7 +45,7 @@ public class FrozenCodeStateRule extends AbstractCellDisplayRule implements Disp
 			
 			// update stats
 			if (stack.isFrozenStackCode())
-				actionFrozenHit = hitStats(this.stats, actionFrozenHit);
+				actionFrozenHit = hitStats(this.stats, actionFrozenHit, stack.getInstanceCount());
 			
 			switch (stack.getStackCodeState()){
 				case FREEZE_BEGIN :

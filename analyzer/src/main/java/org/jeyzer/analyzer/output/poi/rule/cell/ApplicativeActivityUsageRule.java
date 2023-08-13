@@ -50,7 +50,7 @@ public class ApplicativeActivityUsageRule extends AbstractCPUDisplayRule impleme
 			if (stackCPUInfo == null)
 				continue;
 			
-			displaySingleValue(cell, LABEL_ACT_USAGE, (int)Math.round(stackCPUInfo.getApplicativeActivityUsage()), actionStatsContext);
+			displaySingleValue(cell, LABEL_ACT_USAGE, (int)Math.round(stackCPUInfo.getApplicativeActivityUsage()), actionStatsContext, stack.getInstanceCount());
 		}
 		
 		return true;

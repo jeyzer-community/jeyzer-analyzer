@@ -56,6 +56,7 @@ public class JFRStackParser extends JstackParser {
 	private static final char SIMPLE_ID_TAG = '#';
 	
 	private DumpBeanInfoParser dumpBeanInfoParser;     // important : must be state less
+	private boolean virtualThreadVariationCountersUsed;
 	
 	public JFRStackParser(JzrSetupManager setupMgr) {
 		super();
@@ -98,6 +99,11 @@ public class JFRStackParser extends JstackParser {
 	}
 	
 	@Override
+	public boolean areVirtualThreadVariationCountersUsed() {
+		return virtualThreadVariationCountersUsed;
+	}
+	
+	@Override
 	protected int parseHeader(ThreadDump dump, BufferedReader reader, File file, Map<String, Object> dumpContext) throws IOException, JzrParsingException {
 		int lineCount = 0;
 
@@ -120,6 +126,9 @@ public class JFRStackParser extends JstackParser {
 			lineCount++;
 			line = reader.readLine();
 		}
+		
+		if (dump.getVirtualThreads().hasCreatedCount() && dump.getVirtualThreads().hasTerminatedCount())
+			virtualThreadVariationCountersUsed = true;
 
 		lineCount = parseThreadMemoryFigures(dumpContext, reader, lineCount);
 		

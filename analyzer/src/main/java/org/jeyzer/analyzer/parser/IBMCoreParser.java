@@ -395,4 +395,14 @@ public class IBMCoreParser extends ThreadDumpParser {
 	public boolean hasVirtualThreadSupport() {
 		return true;
 	}
+	
+	@Override
+	public boolean areVirtualThreadVariationCountersUsed() {
+		return false;
+	}
+	
+	@Override
+	public boolean hasVirtualThreadStackSupport() {
+		return false;
+	}
 }

@@ -109,12 +109,12 @@ public class ConsumedMemoryRule extends AbstractCellDisplayRule implements Displ
 				setColorForeground(cell,COLOR_NOT_AVAILABLE);
 			else if (consumedMemory >= this.threshold){
 				setColorForeground(cell);
-				actionThresholdHit = hitStats(this.stats, actionThresholdHit);
-				actionActivityHit = hitStats(this.colorActivityStats, actionActivityHit);
+				actionThresholdHit = hitStats(this.stats, actionThresholdHit, stack.getInstanceCount());
+				actionActivityHit = hitStats(this.colorActivityStats, actionActivityHit, stack.getInstanceCount());
 			}
 			else if (colorActivity != null && consumedMemory > 0){
 				setColorForeground(cell, this.colorActivity);
-				actionActivityHit = hitStats(this.colorActivityStats, actionActivityHit);
+				actionActivityHit = hitStats(this.colorActivityStats, actionActivityHit, stack.getInstanceCount());
 			}
 		}
 		

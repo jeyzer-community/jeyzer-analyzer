@@ -94,7 +94,7 @@
 		</rule>
 		
 		<!--  If process card property value contains the given pattern, generate event. -->
-		<rule name="Process card property pattern" param_display="Virtual thread usage" param="jzr.analysis.virtual.thread.presence" ref="JZR-PCD-018">
+		<rule name="Process card property pattern" param_display="Virtual thread usage" param="jzr.analysis.virtual.thread.presence" ref="JZR-PCD-018" stickers="virtual-threads">
 			<narrative>This rule detects the usage of virtual threads.</narrative>
 			<thresholds>
 				<threshold type="system pattern" 
@@ -107,7 +107,7 @@
 		</rule>
 
 		<!--  If process card property value contains the given pattern, generate event. -->
-		<rule name="Process card property pattern" param_display="Virtual threads not visible" param="jzr.analysis.virtual.thread.carriers.only" ref="JZR-PCD-019">
+		<rule name="Process card property pattern" param_display="Virtual threads not visible" param="jzr.analysis.virtual.thread.carriers.only" ref="JZR-PCD-019" stickers="virtual-threads">
 			<narrative>This rule detects the presence of only virtual thread carriers.</narrative>
 			<thresholds>
 				<threshold type="system pattern" 

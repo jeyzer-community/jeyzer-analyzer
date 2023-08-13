@@ -74,7 +74,7 @@ public class FunctionInPrincipalPercentEvent extends MonitorSystemEvent {
     	// get percentage
 		int actionStackCount = 0;
 		for (ThreadAction action : actions)
-			actionStackCount += action.size();
+			actionStackCount += action.getStackSize();
     	
 		int tagfunctionStackCount = functionTagMultiSet.count(functionTag);
     	int tagPercent = FormulaHelper.percentRound(tagfunctionStackCount, actionStackCount);

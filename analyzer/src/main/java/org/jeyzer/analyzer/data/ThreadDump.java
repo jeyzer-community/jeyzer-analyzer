@@ -38,6 +38,7 @@ import org.jeyzer.analyzer.data.stack.ThreadStackCPUInfo;
 import org.jeyzer.analyzer.data.stack.ThreadStackMemoryInfo;
 import org.jeyzer.analyzer.data.tag.ContentionTypeTag;
 import org.jeyzer.analyzer.data.tag.Tag;
+import org.jeyzer.analyzer.data.virtual.VirtualThreads;
 import org.jeyzer.analyzer.math.FormulaHelper;
 import org.jeyzer.analyzer.rule.Rule;
 import org.jeyzer.analyzer.setup.CPURunnableContentionTypesManager;
@@ -103,6 +104,7 @@ public class ThreadDump {
 	private int cpuRunnableThreadsCount = 0;
 	
 	private Boolean hasVirtualThreads = null;
+	private VirtualThreads virtualThreads = new VirtualThreads();
 	
 	private List<ThreadStack> stacks = new ArrayList<>();
 	private Map<String, ThreadStack> stacksPerId = new HashMap<>();
@@ -278,11 +280,45 @@ public class ThreadDump {
 	}	
 	
 	/**
-	 * Get the number of threads (active and non active) in the dump
+	 * Get the number of threads (active and non active) in the dump. Virtual threads are counted only once.
 	 */
 	public int size(){
 		return this.stacks.size();
-	}		
+	}
+	
+	/**
+	 * Get the number of threads (active and non active) in the dump, including virtual threads
+	 */
+	public int getStackSize(){
+		int stackSize = 0;
+		for (int i=0; i<this.stacks.size(); i++)
+			stackSize += this.stacks.get(i).getInstanceCount(); // include virtual threads
+		return stackSize;
+	}
+
+	/**
+	 * Get the number of native threads (active and non active) in the dump
+	 */
+	public int getNativeStackSize(){
+		int stackSize = 0;
+		for (int i=0; i<this.stacks.size(); i++)
+			if (!stacks.get(i).isVirtual())
+				stackSize++;
+		return stackSize;
+	}
+	
+	/**
+	 * Get the number of virtual threads (active and non active) in the dump
+	 */
+	public int getVirtualStackSize(){
+		int stackSize = 0;
+		for (int i=0; i<this.stacks.size(); i++) {
+			ThreadStack stack = stacks.get(i);
+			if (stack.isVirtual())
+				stackSize += stack.getInstanceCount();
+		}
+		return stackSize;
+	}
 	
 	public List<ThreadStack> getUFOThreads(){
 		List<ThreadStack> wt = getWorkingThreads();
@@ -459,7 +495,11 @@ public class ThreadDump {
 	public double getApplicativeMemoryActivityUsage() {
 		return applicativeMemoryActivityUsage;
 	}
-
+	
+	public VirtualThreads getVirtualThreads() {
+		return this.virtualThreads;
+	}
+	
 	public void updateApplicativeActivityUsage(long cpuTimePeak, long timeSlicePeak) {
 		double ratio = (double) this.previousTimeSlice / timeSlicePeak;
 		
@@ -822,5 +862,27 @@ public class ThreadDump {
 			closeThreadStackGroupAction(stackGroupActionHistory, remainingStackGroupActions, rid);
 			openStackGroupActions.remove(rid);
 		}
+	}
+
+	public void updateVirtualThreadVariationCounters(ThreadDump prev) {
+		this.virtualThreads.updateDiffAndActiveCounterData(prev != null ? prev.getVirtualThreads() : null);
+	}
+
+	public void updateVirtualThreadMountedCounters(int cpuCount) {
+		int count = 0;
+		for (ThreadStack stack : this.stacks) {
+			if (stack.isCarrying())
+				count++;
+		}
+		this.virtualThreads.updateMountedData(count, cpuCount);
+	}
+	
+	public void updateVirtualThreadStackCounters() {
+		int count = 0;
+		for (ThreadStack stack : this.stacks) {
+			if (stack.isVirtual())
+				count += stack.getInstanceCount();
+		}
+		this.virtualThreads.setActiveCount(count);
 	}
 }

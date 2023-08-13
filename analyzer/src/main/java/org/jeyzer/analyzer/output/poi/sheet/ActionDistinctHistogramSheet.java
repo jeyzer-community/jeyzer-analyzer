@@ -308,15 +308,18 @@ public class ActionDistinctHistogramSheet extends JeyzerSheet {
 
 		for (int i = 0 ; i<action.size(); i++){
 			for(String functionTag : action.getThreadStack(i).getFunctionTags()){
-				tagMultiSet.add(new FunctionTag(functionTag));
+				for (int j = 0 ; j < action.getThreadStack(i).getInstanceCount(); j++)
+					tagMultiSet.add(new FunctionTag(functionTag)); // add as much as needed for virtual threads
 			}
 				
 			for(String operationTag : action.getThreadStack(i).getOperationTags()){
-				tagMultiSet.add(new OperationTag(operationTag));
+				for (int j = 0 ; j < action.getThreadStack(i).getInstanceCount(); j++)
+					tagMultiSet.add(new OperationTag(operationTag));  // add as much as needed for virtual threads
 			}
 
 			for(String contentionTypeTag : action.getThreadStack(i).getContentionTypeTags()){
-				tagMultiSet.add(new ContentionTypeTag(contentionTypeTag));
+				for (int j = 0 ; j < action.getThreadStack(i).getInstanceCount(); j++)
+					tagMultiSet.add(new ContentionTypeTag(contentionTypeTag));  // add as much as needed for virtual threads
 			}
 		}
 		

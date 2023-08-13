@@ -21,7 +21,7 @@ package org.jeyzer.analyzer.output.stats;
 public interface Stats {
 
 	public void hitAction();
-	public void hitStack();
+	public void hitStack(int stackCount);
 	
 	public int getActionPercentage();
 	public int getStackPercentage();

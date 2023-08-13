@@ -18,13 +18,15 @@ import java.util.Set;
 public abstract class AbstractAction implements Action {
 	
 	private int id;
+	protected boolean virtual;
 	
 	// equal to timestamp of the thread dumps that precede and follow the current action
 	private Date minStartDate;   // action has started at least after this date 
 	private Date maxEndDate;     // action has ended at least before this date 
 	
-	public AbstractAction(int id) {
+	public AbstractAction(int id, boolean virtual) {
 		this.id = id;
+		this.virtual = virtual;
 	}	
 	
 	@Override
@@ -35,6 +37,11 @@ public abstract class AbstractAction implements Action {
 	@Override
 	public String getStrId(){
 		return Integer.toString(this.id);
+	}
+	
+	@Override
+	public boolean isVirtual() {
+		return this.virtual;
 	}
 
 	@Override

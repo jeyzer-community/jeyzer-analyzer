@@ -32,7 +32,10 @@ public enum ThreadState {
 	SYS_BLOCKED("Sys blocked"),			 			// Virtual. Used to differentiate from BLOCKED. Less meaning full.
 	SYS_BLOCKED_TRANS("Blocked transition"),	 	// Corresponding transition state.	
 	
-	CARRYING_VIRTUAL_THREAD("Carrying"); 			// Virtual thread carrier
+	CARRYING_VIRTUAL_THREAD("VT carrier"), 			// Virtual thread carrier
+	UNMOUNTED_VIRTUAL_THREAD("VT unmounted"), 		// Virtual thread unmounted
+	
+	UNKNOWN("Unknown"); 							// Not available (in jcmd thread dump)
 	
 	private String name;
 	
@@ -67,6 +70,14 @@ public enum ThreadState {
 	public boolean isCarryingVirtualThread(){
 		return CARRYING_VIRTUAL_THREAD.equals(this);
 	}
+
+	public boolean isUnmountedVirtualThread(){
+		return UNMOUNTED_VIRTUAL_THREAD.equals(this);
+	}	
+	
+	public boolean isUnknown(){
+		return UNKNOWN.equals(this);
+	}
 	
 	public boolean isRunning(){
 		if (RUNNABLE.equals(this))
@@ -78,7 +89,9 @@ public enum ThreadState {
 				&& !isBlocked()
 				&& !isNew()
 				&& !isTerminated()
-				&& !isCarryingVirtualThread();
+				&& !isCarryingVirtualThread()
+				&& !isUnmountedVirtualThread()
+				&& !isUnknown();
 	}
 
 }

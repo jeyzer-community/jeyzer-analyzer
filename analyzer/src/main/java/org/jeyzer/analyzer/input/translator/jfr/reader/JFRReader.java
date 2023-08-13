@@ -74,6 +74,8 @@ public class JFRReader {
 	public static final String JFR_JDK_UNSIGNEDLONGFLAGCHANGED		 	= "jdk.UnsignedLongFlagChanged";
 	public static final String JFR_JDK_VIRTUALTHREADSTART		 		= "jdk.VirtualThreadStart";
 	public static final String JFR_JDK_VIRTUALTHREADEND				 	= "jdk.VirtualThreadEnd";
+	public static final String JFR_JDK_VIRTUALTHREADSUBMITFAILED		= "jdk.VirtualThreadSubmitFailed";
+	public static final String JFR_JDK_VIRTUALTHREADPINNED				= "jdk.VirtualThreadPinned";
 	private static final String JFR_JDK_YOUNGGARBAGECOLLECTION 			= "jdk.YoungGarbageCollection";
 	
 	private static final String LOG_JFR_NO_CONTAINS 					= "The JFR file contains no ";
@@ -222,9 +224,13 @@ public class JFRReader {
 		if (JFR_JDK_THREADDUMP.equals(event.getEventType().getName()))
 			jfrDescriptor.addThreadDumpEvent(event);
 		else if (JFR_JDK_VIRTUALTHREADSTART.equals(event.getEventType().getName()))
-			logger.info("Virtual thread start detected");
+			jfrDescriptor.incrementVirtualThreadStart(jfrDescriptor, event.getStartTime());
 		else if (JFR_JDK_VIRTUALTHREADEND.equals(event.getEventType().getName()))
-			logger.info("Virtual thread end detected");		
+			jfrDescriptor.incrementVirtualThreadEnd(jfrDescriptor, event.getStartTime());
+//		else if (JFR_JDK_VIRTUALTHREADSUBMITFAILED.equals(event.getEventType().getName()))
+//			logger.info("Virtual thread submit failed detected");
+//		else if (JFR_JDK_VIRTUALTHREADPINNED.equals(event.getEventType().getName()))
+//			logger.info("Virtual thread pinned detected");
 		else if (JFR_JDK_INITIALSYSTEMPROPERTY.equals(event.getEventType().getName()))
 			jfrDescriptor.addSystemPropertyEvent(event);
 		else if (JFR_JDK_JVMINFORMATION.equals(event.getEventType().getName()))
@@ -325,8 +331,13 @@ public class JFRReader {
 		try {
 			while (recordingFile.hasMoreEvents()) {
 				RecordedEvent event = recordingFile.readEvent();
-				if (!eventTypeNames.contains(event.getEventType().getName()))
-					eventTypeNames.add(event.getEventType().getName());
+				if (!eventTypeNames.contains(event.getEventType().getName())) {
+					if (JFR_JDK_THREADDUMP.equals(event.getEventType().getName()))
+						// Must be put first to allow cumulative and dependent event processing (cf. virtual thread events)
+						eventTypeNames.add(0, event.getEventType().getName());
+					else 
+						eventTypeNames.add(event.getEventType().getName());					
+				}
 			}
 		} catch (IOException ex) {
 			throw new JzrTranslatorException("Failed to iterate over the JFR events.", ex);
