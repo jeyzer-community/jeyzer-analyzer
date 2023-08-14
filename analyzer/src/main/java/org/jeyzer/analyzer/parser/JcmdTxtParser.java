@@ -34,13 +34,13 @@ import org.jeyzer.analyzer.setup.JzrSetupManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JcmdParser extends ThreadDumpParser {
+public class JcmdTxtParser extends ThreadDumpParser {
 
 	// format name
-	public static final String FORMAT_NAME = "Jcmd tool";
-	public static final String FORMAT_SHORT_NAME = "Jcmd";
+	public static final String FORMAT_NAME = "Jcmd txt tool";
+	public static final String FORMAT_SHORT_NAME = "Jcmd txt";
 
-	private static final Logger logger = LoggerFactory.getLogger(JcmdParser.class);
+	private static final Logger logger = LoggerFactory.getLogger(JcmdTxtParser.class);
 	
 	// stack content
 	public static final String STACK_HEADER_START_TAG = "#";
@@ -52,7 +52,7 @@ public class JcmdParser extends ThreadDumpParser {
 	
 	private VirtualStackBuilder vtBuilder = new VirtualStackBuilder();
 	
-	public JcmdParser(JzrSetupManager setupMgr) {
+	public JcmdTxtParser(JzrSetupManager setupMgr) {
 	}
 
 	@Override

@@ -74,8 +74,8 @@ public class ThreadDumpParserFactory {
 			
 			// let's try JCMD format : 1st line starts with process id
 			if (!lines.isEmpty() && lines.get(0).matches("\\d+(\\.\\d+)?")) {
-				logger.info(LOG_FORMAT_DETECTED_PREFIX + JcmdParser.FORMAT_SHORT_NAME);
-				parser = new JcmdParser(setupMgr);
+				logger.info(LOG_FORMAT_DETECTED_PREFIX + JcmdTxtParser.FORMAT_SHORT_NAME);
+				parser = new JcmdTxtParser(setupMgr);
 				return parser;
 			}
 			

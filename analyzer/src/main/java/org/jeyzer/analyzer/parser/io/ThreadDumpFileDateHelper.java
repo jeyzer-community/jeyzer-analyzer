@@ -30,7 +30,7 @@ import java.util.TimeZone;
 
 import org.jeyzer.analyzer.parser.JRockitParser;
 import org.jeyzer.analyzer.parser.JcmdJsonParser;
-import org.jeyzer.analyzer.parser.JcmdParser;
+import org.jeyzer.analyzer.parser.JcmdTxtParser;
 import org.jeyzer.analyzer.parser.JstackHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -128,9 +128,9 @@ public class ThreadDumpFileDateHelper {
 			
 			dateText = reader.readLine();
 			
-			sdf = new SimpleDateFormat(JcmdParser.DATE_FORMAT);
+			sdf = new SimpleDateFormat(JcmdTxtParser.DATE_FORMAT);
 			try {
-				if (dateText.length() >= JcmdParser.DATE_FORMAT.length()) {
+				if (dateText.length() >= JcmdTxtParser.DATE_FORMAT.length()) {
 					// remove the T and the end
 					String date = dateText.substring(0,10);
 					String time = dateText.substring(11,19);

@@ -138,7 +138,7 @@
 				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
 				<native_thread_memory		header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mt/native-thread-memory.xml"/>
 			</headers>
-			<headers formats="Jcmd,Jcmd JSON">
+			<headers formats="Jcmd txt,Jcmd JSON">
 			
 				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
 				<math_functions>
