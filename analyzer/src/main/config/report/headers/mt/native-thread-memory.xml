@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<header>
+	
+		<native_thread_memory color="RED">
+			
+			<!-- Factor defined in percentage gain or loss -->
+			<delta 
+				increase_factor="10" 
+				increase_color="ORANGE" 
+				decrease_factor="10" 
+				decrease_color="GREEN"/>
+		
+		</native_thread_memory>
+		
+	</header>

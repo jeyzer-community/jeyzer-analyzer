@@ -44,6 +44,10 @@
 				<garbage_collection_memory_released      header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-all-memory-released.xml"/>
 				<garbage_collection_memory_used_after_gc_percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-all-memory-used-after-gc-percent.xml"/>
 				<garbage_collection_memory_released_percent      header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-all-memory-released-percent.xml"/>
+				<!-- Threads -->
+				<thread_memory      		header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mt/thread-memory.xml"/>
+				<virtual_thread_memory      header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mt/virtual-thread-memory.xml"/>
+				<native_thread_memory		header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mt/native-thread-memory.xml"/>
 
 				<section_delimiter title="GC time" color="RGB-201-208-168"/>
 				<garbage_collection_time         header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-all-time.xml"/>
@@ -105,6 +109,10 @@
 				<garbage_collection_memory_released      header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-all-memory-released.xml"/>
 				<garbage_collection_memory_used_after_gc_percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-all-memory-used-after-gc-percent.xml"/>
 				<garbage_collection_memory_released_percent      header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-old-all-memory-released-percent.xml"/>
+				<!-- Threads -->
+				<thread_memory      		header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mt/thread-memory.xml"/>
+				<virtual_thread_memory      header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mt/virtual-thread-memory.xml"/>
+				<native_thread_memory		header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mt/native-thread-memory.xml"/>
 
 				<section_delimiter title="GC time" color="RGB-201-208-168"/>
 				<garbage_collection_time         header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-all-time.xml"/>
@@ -128,8 +136,9 @@
 				<locked_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/locked-thread-counter.xml"/>
 				<frozen_code_state_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/frozen-code-state-thread-counter.xml"/>
 				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+				<native_thread_memory		header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mt/native-thread-memory.xml"/>
 			</headers>
-			<headers formats="Jcmd">
+			<headers formats="Jcmd,Jcmd JSON">
 			
 				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
 				<math_functions>
@@ -142,13 +151,17 @@
 				</math_functions>
 			
 				<!-- Headers -->
+				<section_delimiter title="Threads" color="RGB-201-208-168"/>
 				<thread_counter               header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
 				<native_thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/native-thread-counter.xml"/>
 				<virtual_thread_counter       header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-counter.xml"/>
 				<virtual-thread-mounted-counter   header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-mounted-counter.xml"/>
 				<frozen_code_state_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/frozen-code-state-thread-counter.xml"/>
 				<action_counter               header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
-				
+				<section_delimiter title="Thread memory" color="RGB-201-208-168"/>
+				<thread_memory      		header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mt/thread-memory.xml"/>
+				<virtual_thread_memory      header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mt/virtual-thread-memory.xml"/>
+				<native_thread_memory		header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mt/native-thread-memory.xml"/>				
 			</headers>
 			<headers formats="IBM core dump,TDA,default">
 				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
@@ -195,6 +208,9 @@
 					<serie header="computed_process_memory"/>
 					<serie header="garbage_collection_memory_used_after_gc-old-all"/>
 					<serie header="garbage_collection_memory_released-old-all"/>
+					<serie header="thread_memory"/>
+					<serie header="native_thread_memory"/>
+					<serie header="virtual_thread_memory"/>
 				</chart>
 				<chart title="Memory %">
 					<serie header="memory_pool_heap_ratio"/>

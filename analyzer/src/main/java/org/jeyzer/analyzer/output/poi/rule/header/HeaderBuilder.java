@@ -13,11 +13,6 @@ package org.jeyzer.analyzer.output.poi.rule.header;
  */
 
 
-
-
-
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +23,6 @@ import org.jeyzer.analyzer.output.poi.context.SheetDisplayContext;
 import org.jeyzer.analyzer.session.JzrSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 
 public class HeaderBuilder {
@@ -262,6 +256,15 @@ public class HeaderBuilder {
 
 	    	else if (session.hasVirtualThreadPresence() && VirtualThreadMountedCPUUsagePercentRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
     			rule = new VirtualThreadMountedCPUUsagePercentRule(headerCfg, displayContext);
+
+	    	else if (ThreadMemoryRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
+    			rule = new ThreadMemoryRule(headerCfg, displayContext);
+	    	
+	    	else if (NativeThreadMemoryRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
+    			rule = new NativeThreadMemoryRule(headerCfg, displayContext);
+	    	
+	    	else if (session.hasVirtualThreadPresence() && VirtualThreadMemoryRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
+    			rule = new VirtualThreadMemoryRule(headerCfg, displayContext);
 	    	
 	    	else
 	    		logger.warn("Could not instanciate header rule for configuration node : {}", headerCfg.getName());
