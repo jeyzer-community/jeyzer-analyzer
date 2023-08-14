@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-                                                    
+                                                                    
     
 
 
+    
+    
+    
+    
     
     <wb-module deploy-name="jeyzer-web">
-                                                                                                        
+                                                                                                                                        
+        
+        
+        
+        
         
         
         
@@ -18,7 +26,11 @@
         
         
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
-                                                                                                        
+                                                                                                                                        
+        
+        
+        
+        
         
         
         
@@ -31,7 +43,11 @@
         
         
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
-                                                                                                        
+                                                                                                                                        
+        
+        
+        
+        
         
         
         
@@ -44,10 +60,20 @@
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+                
         <dependent-module archiveName="Jeyzer-Analyzer.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Jeyzer-Analyzer/Jeyzer-Analyzer">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+        <dependent-module archiveName="gson-2.10.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-                                                                                                        
+                                                                                                                                        
+        
+        
+        
+        
         
         
         
@@ -60,7 +86,11 @@
         
         
         <property name="java-output-path" value="/jeyzer-web-10/target/classes"/>
-                                                                                                        
+                                                                                                                                        
+        
+        
+        
+        
         
         
         
@@ -73,7 +103,11 @@
         
         
         <property name="context-root" value="jeyzer-web"/>
-                                                                                                    
+                                                                                                                                    
+    
+    
+    
+    
     
     
     
@@ -86,5 +120,9 @@
     
     
     </wb-module>
-    
+                    
+
+
+
+
 </project-modules>
