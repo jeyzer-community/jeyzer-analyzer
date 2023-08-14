@@ -13,6 +13,7 @@ package org.jeyzer.analyzer.data.stack;
  */
 
 import static org.jeyzer.analyzer.util.SystemHelper.CR;
+import static org.jeyzer.analyzer.util.SystemHelper.JSON_EXTENSION;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -31,6 +32,7 @@ import java.util.TreeMap;
 import org.jeyzer.analyzer.rule.Rule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 public abstract class AbstractThreadStack implements ThreadStack {
 
@@ -627,6 +629,14 @@ public abstract class AbstractThreadStack implements ThreadStack {
 		if (this.stackText != null)
 			return this.stackText;
 		
+		
+		if (this.fileName.endsWith(JSON_EXTENSION)) {
+			// JCMD JSON format includes only code lines, 
+			// so the stack text can be directly set with the stack code lines
+			this.stackText = buildJsonStackText();
+			return this.stackText;
+		}
+			
 		File file = new File(this.fileName);
 		StackText st = new StackText();
 						
@@ -667,6 +677,16 @@ public abstract class AbstractThreadStack implements ThreadStack {
 		return st;
 	}
 	
+	private StackText buildJsonStackText() {
+		StackText st = new StackText();
+		
+		for (String line : this.codeLines) {
+			st.appendLine(' ' + line); // add cosmetic space for Excel
+		}
+		
+		return st;
+	}
+
 	/*
 	 * Provides an equal method focused on the stack content
 	 */
@@ -684,11 +704,11 @@ public abstract class AbstractThreadStack implements ThreadStack {
 			if (this == obj)
 				return true;
 			
-			if (obj == null || !(obj instanceof ThreadStackImpl.ThreadStackHandlerImpl))
+			if (obj == null || !(obj instanceof AbstractThreadStack.ThreadStackHandlerImpl))
 				return false;
 			
 			// comparison
-			ThreadStackImpl.ThreadStackHandlerImpl otherStack = (ThreadStackImpl.ThreadStackHandlerImpl)obj;
+			AbstractThreadStack.ThreadStackHandlerImpl otherStack = (AbstractThreadStack.ThreadStackHandlerImpl)obj;
 			List<String> stackLines = this.stack.getCodeLines();
 			
 			if (otherStack == null || otherStack.getCodeLines() == null)

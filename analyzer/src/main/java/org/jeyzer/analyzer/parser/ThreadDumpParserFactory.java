@@ -74,8 +74,15 @@ public class ThreadDumpParserFactory {
 			
 			// let's try JCMD format : 1st line starts with process id
 			if (!lines.isEmpty() && lines.get(0).matches("\\d+(\\.\\d+)?")) {
-				logger.info(LOG_FORMAT_DETECTED_PREFIX + JFRStackParser.FORMAT_SHORT_NAME);
+				logger.info(LOG_FORMAT_DETECTED_PREFIX + JcmdParser.FORMAT_SHORT_NAME);
 				parser = new JcmdParser(setupMgr);
+				return parser;
+			}
+			
+			// let's try JCMD Json format : 2nd line starts with threadDump
+			if (lines.size() >=2 && lines.get(1).contains(JcmdJsonParser.SECOND_LINE)) {
+				logger.info(LOG_FORMAT_DETECTED_PREFIX + JcmdJsonParser.FORMAT_SHORT_NAME);
+				parser = new JcmdJsonParser(setupMgr);
 				return parser;
 			}
 			

@@ -37,7 +37,7 @@ public class StackContext {
 		this(lines, pos, name, locks, biasedLocks, date, lockedOn, lockedOnClassName);
 		this.any = any; 
 	}
-
+	
 	public List<String> threadLines; 
 	public int filePos;
 	public String fileName;

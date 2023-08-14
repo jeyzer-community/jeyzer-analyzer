@@ -13,9 +13,6 @@ package org.jeyzer.analyzer.util;
  */
 
 
-
-
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,9 +28,6 @@ import org.jeyzer.analyzer.error.JzrException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
-
 public class SystemHelper {
 	
 	private static final Logger logger = LoggerFactory.getLogger(SystemHelper.class);
@@ -44,6 +38,7 @@ public class SystemHelper {
 	public static final boolean WINDOWS_OS = System.getProperty(SYSTEM_PROPERTY_OS_NAME).startsWith("Win");
 	public static final String CR = System.getProperty("line.separator");
 	public static final String JPG_EXTENSION = ".jpg";
+	public static final String JSON_EXTENSION = ".json";
 	private static final Date JAVA_START_DATE = new Date(0); // 1970
 	
 	public static final String HTTP_PREFIX = "http://";

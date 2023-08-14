@@ -50,6 +50,7 @@ public abstract class ThreadDumpParser {
 	private static final String WEBLO_THREAD_NAME = "ExecuteThread:";
 
 	protected static final String VIRTUAL_THREAD_CARRIER_CODE_SIGNATURE = "java.lang.VirtualThread.runContinuation";
+	protected static final String VIRTUAL_THREAD_UNMOUNTED_CODE_SIGNATURE = "java.lang.VirtualThread.yieldContinuation";
 	
 	protected static final String EMPTY_STRING = "";
 

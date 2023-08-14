@@ -29,6 +29,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import org.jeyzer.analyzer.parser.JRockitParser;
+import org.jeyzer.analyzer.parser.JcmdJsonParser;
 import org.jeyzer.analyzer.parser.JcmdParser;
 import org.jeyzer.analyzer.parser.JstackHelper;
 import org.slf4j.Logger;
@@ -133,12 +134,12 @@ public class ThreadDumpFileDateHelper {
 					// remove the T and the end
 					String date = dateText.substring(0,10);
 					String time = dateText.substring(11,19);
-					return sdf.parse(date + time);					
+					return sdf.parse(date + time);
 				}
 			} catch (ParseException e) {
 				logger.debug("Jcmd date not found in file :" + filename);
 			}
-			
+
 			// Jstack 1.5 : First 4 lines --> get date from second line
 			/*
 			 * <empty line> 
@@ -154,6 +155,18 @@ public class ThreadDumpFileDateHelper {
 			
 			reader.readLine();
 			dateText = reader.readLine();
+			// Jcmd Json : get date on line 4
+			// {
+			//   "threadDump": {
+			//     "processId": "47604",
+            //	   "time": "2023-08-13T06:28:55.329818700Z",
+			if (dateText.contains(JcmdJsonParser.FOURTH_LINE)) {
+				// remove the T and the end
+				String date = dateText.substring(13,23);
+				String time = dateText.substring(24,32);
+				return sdf.parse(date + time);	
+			}
+			
 			// JRockit : date on line 4
 			/*
 			 * 17625:

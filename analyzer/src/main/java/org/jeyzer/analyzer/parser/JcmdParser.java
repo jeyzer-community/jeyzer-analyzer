@@ -41,8 +41,6 @@ public class JcmdParser extends ThreadDumpParser {
 	public static final String FORMAT_SHORT_NAME = "Jcmd";
 
 	private static final Logger logger = LoggerFactory.getLogger(JcmdParser.class);
-
-	private static final String VIRTUAL_THREAD_UNMOUNTED_CODE_SIGNATURE = "java.lang.VirtualThread.yieldContinuation";
 	
 	// stack content
 	public static final String STACK_HEADER_START_TAG = "#";
@@ -209,15 +207,10 @@ public class JcmdParser extends ThreadDumpParser {
 					name, 
 					id, 
 					state, 
-					false,
 					context.filePos, 
 					context.fileName, 
 					context.timestamp, 
-					codeLines, 
-					context.lockedOn, 
-					context.lockedOnClassName, 
-					context.ownedLocks, 
-					false
+					codeLines
 					);
 	}
 

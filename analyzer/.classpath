@@ -40,8 +40,10 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-11.0.6">
 		<attributes>
+			<attribute name="module" value="true"/>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry exported="true" kind="var" path="M2_REPO/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

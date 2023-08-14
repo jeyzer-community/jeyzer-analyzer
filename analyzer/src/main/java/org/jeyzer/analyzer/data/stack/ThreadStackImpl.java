@@ -18,7 +18,12 @@ import java.util.List;
 
 
 public class ThreadStackImpl extends AbstractThreadStack {
-
+	
+	public ThreadStackImpl(String header, String id, String name, ThreadState state, int filePos, String fileName, Date timestamp, 
+			List<String> codeLines){
+		super(header, id, name, state, filePos, fileName, timestamp, codeLines);
+	}
+	
 	public ThreadStackImpl(String header, String name, String id, ThreadState state, boolean suspended, int filePos, String fileName, Date timestamp, 
 							List<String> codeLines, String lockName, String lockClassName, List<String> ownedlocks, boolean deadlock){
 		super(header, name, id, state, suspended, filePos, fileName, timestamp, codeLines, lockName, lockClassName, ownedlocks, deadlock);
