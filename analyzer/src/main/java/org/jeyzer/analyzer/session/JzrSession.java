@@ -636,7 +636,7 @@ public class JzrSession implements JzrMonitorSession {
 		
 		if (dumps.isEmpty()){
 			logger.error("No thread dump file found in : " + outputData.getDirectory().getPath());
-			throw new JzrNoThreadDumpFileFound("No thread dump file found in : " + outputData.getDirectory().getPath());
+			throw new JzrNoThreadDumpFileFound("No thread dump file found in : " + outputData.getDirectory().getPath(), filter.getSupportedFileFormats());
 		}
 
 		// sort dumps by date

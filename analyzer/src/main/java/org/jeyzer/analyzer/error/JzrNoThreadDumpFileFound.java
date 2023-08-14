@@ -20,10 +20,6 @@ public class JzrNoThreadDumpFileFound  extends JzrExecutionException {
 
 	private Set<String> supportedFileFormats = null;
 	
-	public JzrNoThreadDumpFileFound(String message){
-		super(message);
-	}
-	
 	public JzrNoThreadDumpFileFound(String message, Set<String> supportedFileFormats){
 		super(message);
 		this.supportedFileFormats = supportedFileFormats;
