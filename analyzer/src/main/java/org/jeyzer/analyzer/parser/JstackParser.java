@@ -43,7 +43,7 @@ import com.google.common.primitives.Ints;
 public class JstackParser extends ThreadDumpParser {
 
 	// format name
-	public static final String FORMAT_NAME = "Jstack jdk 1.6+ tool";
+	public static final String FORMAT_NAME = "Jcmd Thread.print or Jstack jdk 1.6+ tool";
 	public static final String FORMAT_SHORT_NAME = "Jstack 1.6+";
 
 	public static final String TD_HEADER_PATTERN = "Full thread dump";
