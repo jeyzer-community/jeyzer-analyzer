@@ -257,7 +257,7 @@ public class HeaderBuilder {
 	    	else if (session.hasVirtualThreadPresence() && VirtualThreadMountedCPUUsagePercentRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
     			rule = new VirtualThreadMountedCPUUsagePercentRule(headerCfg, displayContext);
 
-	    	else if (ThreadMemoryRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
+	    	else if (session.hasVirtualThreadPresence() && ThreadMemoryRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName())) // Global is only interesting if virtual threads are available
     			rule = new ThreadMemoryRule(headerCfg, displayContext);
 	    	
 	    	else if (NativeThreadMemoryRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
