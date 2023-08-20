@@ -210,7 +210,8 @@ public class JcmdTxtParser extends ThreadDumpParser {
 					context.filePos, 
 					context.fileName, 
 					context.timestamp, 
-					codeLines
+					codeLines,
+					!state.isCarryingVirtualThread()  // we exclude carrier threads from working threads
 					);
 	}
 

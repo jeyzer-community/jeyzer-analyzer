@@ -286,7 +286,8 @@ public class JcmdJsonParser extends ThreadDumpParser {
 							-1, // Not used
 							dump.getFilePath(),
 							dump.getTimestamp(),
-							codeLines
+							codeLines,
+							!state.isCarryingVirtualThread() // we exclude carrier threads from working threads
 						);
 		}
 		
