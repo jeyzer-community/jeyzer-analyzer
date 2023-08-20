@@ -59,6 +59,8 @@ public interface ThreadStack {
 	
 	public String getHeader();
 	
+	public boolean hasHeader();
+	
 	public String getName();
 	
 	public String getFilePath();

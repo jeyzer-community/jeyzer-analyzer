@@ -237,6 +237,10 @@ public abstract class AbstractThreadStack implements ThreadStack {
 	public String getHeader() {
 		return this.header;
 	}
+	
+	public boolean hasHeader() {
+		return !this.isVirtual();
+	}
 
 	@Override
 	public String getID() {

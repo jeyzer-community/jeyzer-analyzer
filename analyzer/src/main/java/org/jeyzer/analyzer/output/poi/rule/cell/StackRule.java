@@ -77,8 +77,7 @@ public class StackRule extends AbstractCellDisplayRule implements DisplayRule{
 
 	private void addStackOnCell(Cell cell, ThreadStack stack, boolean sample) {
 		StackText st = stack.getStackHandler().getJzrFilteredText();
-		String prefix = sample ? "Sample : " : "";
-		
+		String prefix = sample ? ("Sample : " + (stack.hasHeader() ? "" : "\n"))  : "";
 		
 		// Prevent this Excel warning on file opening when stack text is huge:
 		//   Repaired Records: Sorting from /xl/comments20.xml part (Comments)
