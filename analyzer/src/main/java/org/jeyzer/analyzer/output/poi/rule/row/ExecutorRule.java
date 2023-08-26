@@ -30,7 +30,7 @@ public class ExecutorRule extends AbstractDisplayRule implements RowHeader{
 	
 	public static final String CELL_LABEL_COMMENT = "Thread type, aka executor";
 	
-	private static final String DISPLAY_NAME = "Thread type";
+	private static final String DISPLAY_NAME = "Executor";
 	
 	private boolean hasLink;
 	
