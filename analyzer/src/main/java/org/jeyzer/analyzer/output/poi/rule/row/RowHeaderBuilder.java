@@ -48,6 +48,8 @@ public class RowHeaderBuilder {
     			rule = new ThreadIdRule(headerCfg, displayContext);
 	    	else if (ThreadNameRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
     			rule = new ThreadNameRule(headerCfg, displayContext);
+	    	else if (ThreadTypeRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
+    			rule = new ThreadTypeRule(headerCfg, displayContext);
 	    	else if (ExecutorRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
     			rule = new ExecutorRule(headerCfg, displayContext);
 	    	else if (ActionSizeRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
