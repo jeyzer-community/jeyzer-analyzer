@@ -870,10 +870,20 @@ public class ThreadDump {
 
 	public void updateVirtualThreadMountedCounters(int cpuCount) {
 		int count = 0;
+		
 		for (ThreadStack stack : this.stacks) {
-			if (stack.isCarrying())
+			if (stack.isVirtual() && !stack.getState().isUnmountedVirtualThread())
 				count++;
 		}
+
+		// If virtual threads are not available, get it from the carrying threads
+		if (count == 0) {
+			for (ThreadStack stack : this.stacks) {
+				if (stack.isCarrying())
+					count++;
+			}
+		}
+
 		this.virtualThreads.updateMountedData(count, cpuCount);
 	}
 	
