@@ -36,6 +36,7 @@ public class DumpBeanInfoParser {
 	public static final String MEMORY_OBJ_PENDING_FINALIZATION = "memory:obj pending finalization\t";
 	public static final String VIRTUAL_THREAD_CREATED_COUNT = "virtual thread created\t";
 	public static final String VIRTUAL_THREAD_TERMINATED_COUNT = "virtual thread terminated\t";
+	public static final String VIRTUAL_THREAD_PINNED_COUNT = "virtual thread pinned\t";
 	public static final String JEYZER_CTX_PARAM = "Jz cxt param-";
 	public static final String MX_BEAN_PARAM = "mx:";
 	public static final String PARAM_EQUALS = "\t";
@@ -92,6 +93,9 @@ public class DumpBeanInfoParser {
 		}
 		else if (line.startsWith(VIRTUAL_THREAD_TERMINATED_COUNT)){
 			parseVirtualThreadTerminatedCount(dump, line);
+		}
+		else if (line.startsWith(VIRTUAL_THREAD_PINNED_COUNT)){
+			parseVirtualThreadPinnedCount(dump, line);
 		}
 		else if (line.startsWith(MemoryPoolBeanInfoParser.MEMORY_POOL_PREFIX)){
 			memoryPoolParser.parse(dump, line, true);
@@ -201,7 +205,19 @@ public class DumpBeanInfoParser {
 		}
 		
 		dump.getVirtualThreads().setTerminatedCount(vtTerminatedCount);
-	}	
+	}
+
+	private void parseVirtualThreadPinnedCount(ThreadDump dump, String line) {
+		int posStart = line.indexOf(VIRTUAL_THREAD_PINNED_COUNT) + VIRTUAL_THREAD_PINNED_COUNT.length();
+		
+		Integer vtPinnedCount = Ints.tryParse(line.substring(posStart));
+		if (vtPinnedCount == null){
+			logger.warn("Failed to convert virtual thread pinned count : {}", line.substring(posStart));
+			vtPinnedCount = -1;
+		}
+		
+		dump.getVirtualThreads().setPinnedCount(vtPinnedCount);
+	}
 	
 	private void parseSystemCPUInfo(ThreadDump dump, String line) {
 		int posStart = line.indexOf(SYSTEM_CPU) + SYSTEM_CPU.length();

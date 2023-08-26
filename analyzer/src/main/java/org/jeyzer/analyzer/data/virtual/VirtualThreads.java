@@ -21,6 +21,8 @@ public class VirtualThreads {
 
 	private Integer terminated = null;
 	
+	private Integer pinned = null;
+	
 	private Integer diff = null;
 
 	// if JFR events : approximative, as it depends on where we start
@@ -53,6 +55,18 @@ public class VirtualThreads {
 	
 	public boolean hasTerminatedCount() {
 		return this.terminated != null;
+	}
+	
+	public void setPinnedCount(Integer vtPinnedCount) {
+		this.pinned = vtPinnedCount;
+	}
+	
+	public Integer getPinnedCount() {
+		return this.pinned;
+	}
+	
+	public boolean hasPinnedCount() {
+		return this.pinned != null;
 	}
 
 	public void setActiveCount(Integer active) {

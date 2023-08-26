@@ -105,12 +105,16 @@ public class JZRSnapshotMapper {
 			return; // virtual threads not supported (or not available as per jfc)
 		
 		Map<Date, Integer> endCounters = descriptor.getVirtualThreadEndCounters();
+		Map<Date, Integer> pinnedCounters = descriptor.getVirtualThreadPinnedCounters();
 		for (JFRThreadDump dump : this.dumps) {
 			Integer startCounter = startCounters.get(dump.getDate());
 			dump.addVirtualThreadStartCounter(startCounter != null ? startCounter : 0);
 			
 			Integer endCounter = endCounters.get(dump.getDate());
 			dump.addVirtualThreadEndCounter(endCounter != null ? endCounter : 0);
+			
+			Integer pinnedCounter = pinnedCounters.get(dump.getDate());
+			dump.addVirtualThreadPinnedCounter(pinnedCounter != null ? pinnedCounter : 0);
 		}
 	}
 

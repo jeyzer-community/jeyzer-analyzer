@@ -90,8 +90,16 @@ public class JFRDescriptor {
 	private Instant endVTNextTdInstant;
 	private Iterator<RecordedEvent> endTdIterator;
 	private boolean endAllTDsCovered;
+
+	private Map<Date, Integer> endVTCounterMap = new HashMap<>();	
 	
-	private Map<Date, Integer> endVTCounterMap = new HashMap<>();
+	// contextual, optimization for virtual thread events
+	private int pinnedVTCounter;
+	private Instant pinnedVTNextTdInstant;
+	private Iterator<RecordedEvent> pinnedTdIterator;
+	private boolean pinnedAllTDsCovered;
+	
+	private Map<Date, Integer> pinnedVTCounterMap = new HashMap<>();
 	
 	public void addThreadDumpEvent(RecordedEvent event) {
 		Date date = new Date(event.getStartTime().toEpochMilli());
@@ -303,6 +311,10 @@ public class JFRDescriptor {
 		return this.endVTCounterMap;
 	}
 	
+	public Map<Date, Integer> getVirtualThreadPinnedCounters() {
+		return this.pinnedVTCounterMap;
+	}
+	
 	public void incrementVirtualThreadStart(JFRDescriptor jfrDescriptor, Instant endTime) {
 		if (!jfrDescriptor.hasThreadDumpEvents() || startAllTDsCovered)
 			return;
@@ -375,6 +387,44 @@ public class JFRDescriptor {
 			}
 			// last slot
 			endAllTDsCovered = true;
+		}
+	}
+	
+	public void incrementVirtualThreadPinned(JFRDescriptor jfrDescriptor, Instant endTime) {
+		if (!jfrDescriptor.hasThreadDumpEvents() || pinnedAllTDsCovered)
+			return;
+		
+		if (pinnedVTNextTdInstant == null) {
+			// initialize
+			pinnedVTCounterMap = new HashMap<>();
+			pinnedTdIterator = jfrDescriptor.getThreadDumpEvents().iterator();
+			pinnedVTNextTdInstant = jfrDescriptor.getThreadDumpEvents().iterator().next().getEndTime();
+		}		
+
+		if (endTime.isBefore(pinnedVTNextTdInstant)) {
+			pinnedVTCounter++;
+		}
+		else {
+			// store the counter
+			pinnedVTCounterMap.put(Date.from(pinnedVTNextTdInstant), pinnedVTCounter);
+			
+			// move to the next slot
+			while(pinnedTdIterator.hasNext()) {
+				pinnedVTNextTdInstant = pinnedTdIterator.next().getEndTime();
+				
+				if (endTime.isAfter(pinnedVTNextTdInstant)){
+					// store zero and jump to next slot
+					pinnedVTCounterMap.put(Date.from(pinnedVTNextTdInstant), 0);
+					continue;
+				}
+				else {
+					// adequate slot, start new counter
+					pinnedVTCounter = 1;
+					return;
+				}
+			}
+			// last slot
+			pinnedAllTDsCovered = true;
 		}
 	}
 }

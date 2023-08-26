@@ -88,6 +88,7 @@
 				<virtual_thread_created_counter     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-created-counter.xml"/>
 				<virtual_thread_terminated_counter  header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-terminated-counter.xml"/>
 				<virtual_thread_diff                header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-diff.xml"/>
+				<virtual_thread_pinned_counter  	header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-pinned-counter.xml"/>
 				<virtual-thread-mounted-counter     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-mounted-counter.xml"/>
 				<virtual-thread-mounted-cpu-usage-percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-mounted-cpu-usage-percent.xml"/>
 

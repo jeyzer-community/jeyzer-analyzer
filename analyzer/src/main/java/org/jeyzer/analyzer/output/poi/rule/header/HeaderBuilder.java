@@ -248,6 +248,9 @@ public class HeaderBuilder {
 	    	else if (session.areVirtualThreadVariationCountersAvailable() && VirtualThreadTerminatedCounterRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
     			rule = new VirtualThreadTerminatedCounterRule(headerCfg, displayContext);
 	    	
+	    	else if (session.areVirtualThreadVariationCountersAvailable() && VirtualThreadPinnedCounterRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
+    			rule = new VirtualThreadPinnedCounterRule(headerCfg, displayContext);
+	    	
 	    	else if (session.areVirtualThreadVariationCountersAvailable() && VirtualThreadDiffRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
     			rule = new VirtualThreadDiffRule(headerCfg, displayContext);
 	    	

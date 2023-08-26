@@ -35,6 +35,7 @@ public class JFRThreadDump {
 	
 	private static final String VIRTUAL_THREAD_CREATED = JZ_PREFIX + "virtual thread created" + JZR_FIELD_EQUALS;
 	private static final String VIRTUAL_THREAD_TERMINATED = JZ_PREFIX + "virtual thread terminated" + JZR_FIELD_EQUALS;
+	private static final String VIRTUAL_THREAD_PINNED = JZ_PREFIX + "virtual thread pinned" + JZR_FIELD_EQUALS;
 	
 	private static final String MEMORY_HEAP_USED = JZ_PREFIX + "memory:heap:used" + JZR_FIELD_EQUALS;
 	private static final String MEMORY_HEAP_MAX = JZ_PREFIX + "memory:heap:max" + JZR_FIELD_EQUALS;
@@ -69,6 +70,7 @@ public class JFRThreadDump {
 
 	private int virtualThreadStartCounter = -1;
 	private int virtualThreadEndCounter = -1;
+	private int virtualThreadPinnedCounter = -1;
 	
 	public JFRThreadDump(RecordedEvent tdEvent) {
 		this.jfrTd = tdEvent.getString("result");
@@ -123,6 +125,10 @@ public class JFRThreadDump {
 	public void addVirtualThreadEndCounter(int value) {
 		virtualThreadEndCounter = value;
 	}
+	
+	public void addVirtualThreadPinnedCounter(int value) {
+		virtualThreadPinnedCounter = value;
+	}
 
 	public void setJFRGarbageCollection(JFRGarbageCollection gc) {
 		this.gc = gc;
@@ -147,6 +153,8 @@ public class JFRThreadDump {
 			writer.write(VIRTUAL_THREAD_CREATED + this.virtualThreadStartCounter + System.lineSeparator());
 		if (virtualThreadEndCounter != -1)
 			writer.write(VIRTUAL_THREAD_TERMINATED + this.virtualThreadEndCounter + System.lineSeparator());
+		if (virtualThreadPinnedCounter != -1)
+			writer.write(VIRTUAL_THREAD_PINNED + this.virtualThreadPinnedCounter + System.lineSeparator());
 		
 		writeGCData(descriptor, writer);
 		writer.write(System.lineSeparator());
