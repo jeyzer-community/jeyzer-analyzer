@@ -48,7 +48,7 @@ public class DisplayRuleBuilder {
 			// Handle virtual threads in transparent way
 			//  Choice is made to always display the number of virtual threads up front
 			//  Not done for GroupDisplayRuleBuilder as it is handled as part of the group feature
-			rule = new VirtualThreadCountRule(new ConfigDisplay("Virtual thread count"), context);
+			rule = new VirtualUnmountedThreadCounterRule(new ConfigDisplay("Virtual thread count"), context);
 			rules.add(rule);
 		}
 		

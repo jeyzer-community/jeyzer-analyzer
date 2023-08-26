@@ -21,11 +21,11 @@ import org.jeyzer.analyzer.data.Action;
 import org.jeyzer.analyzer.output.poi.context.SequenceSheetDisplayContext;
 
 
-public class VirtualThreadCountRule extends AbstractCellDisplayRule implements DisplayRule {
+public class VirtualUnmountedThreadCounterRule extends AbstractCellDisplayRule implements DisplayRule {
 
-	public static final String RULE_NAME = "Virtual thread count";
+	public static final String RULE_NAME = "Virtual unmounted thread count";
 	
-	public VirtualThreadCountRule (ConfigDisplay displayCfg, SequenceSheetDisplayContext context){
+	public VirtualUnmountedThreadCounterRule (ConfigDisplay displayCfg, SequenceSheetDisplayContext context){
 		super(displayCfg, context);
 	}
 	
@@ -37,10 +37,13 @@ public class VirtualThreadCountRule extends AbstractCellDisplayRule implements D
 		if (!action.isVirtual())
 			return false;
 		
+		if (!action.getThreadStack(0).getState().isUnmountedVirtualThread())
+			return false;
+		
 		// cell value
 		for (int j=0; j< action.size(); j++){
 			cell = cells.get(j);
-			stackSize = "VT x" + Integer.toString(action.getThreadStack(j).getInstanceCount());
+			stackSize = "UVT x" + Integer.toString(action.getThreadStack(j).getInstanceCount());
 			setValue(cell, stackSize);
 		}
 		
