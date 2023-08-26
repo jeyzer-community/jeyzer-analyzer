@@ -13,11 +13,6 @@ package org.jeyzer.analyzer.rule.stack;
  */
 
 
-
-
-
-
-
 import java.util.List;
 
 import org.jeyzer.analyzer.data.ThreadDump;
@@ -29,13 +24,20 @@ import org.jeyzer.analyzer.rule.pattern.Pattern;
 public class OperationRule extends PresetPatternRule {
 	
 	public static final int OPERATION_RULE_DEFAULT_PRIORITY = 2;
+
+	// Native thread limits
+	public static final int OPERATION_RULE_NATIVE_LIMIT = 20;
+	public static final int OPERATION_RULE_NATIVE_LOW_LEVEL_LIMIT = 2;
 	
-	private int limit = 20;
+	// Virtual unmounted threads do contain extra lines to manage the virtual suspension
+	public static final int OPERATION_RULE_UNMOUNTED_LIMIT = 26;
+	public static final int OPERATION_RULE_UNMOUNTED_LOW_LEVEL_LIMIT = 8;
+	
+	private boolean lowLevel;
 	
 	public OperationRule(Pattern pattern){
 		super(pattern, OPERATION_RULE_DEFAULT_PRIORITY);
-		if (this.pattern.isLowLevelPattern())
-			this.limit = 2;
+		lowLevel = this.pattern.isLowLevelPattern();
 	}
 	
 	@Override
@@ -48,6 +50,12 @@ public class OperationRule extends PresetPatternRule {
 	public boolean apply(ThreadStack stack) {
 		List<String> lines = stack.getStackHandler().getCodeLines();
 		int size = lines.size();
+		
+		int limit;
+		if (lowLevel)
+			limit = stack.getState().isUnmountedVirtualThread() ? OPERATION_RULE_UNMOUNTED_LOW_LEVEL_LIMIT : OPERATION_RULE_NATIVE_LOW_LEVEL_LIMIT;
+		else
+			limit = stack.getState().isUnmountedVirtualThread() ? OPERATION_RULE_UNMOUNTED_LIMIT : OPERATION_RULE_NATIVE_LIMIT;
 		
 		if (stack.isOfInterest() && matchPattern(lines,0, size>limit? limit:size)){
 			stack.addOperationTag(this.pattern.getName());
