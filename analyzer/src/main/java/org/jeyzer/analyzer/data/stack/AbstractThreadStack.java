@@ -604,7 +604,7 @@ public abstract class AbstractThreadStack implements ThreadStack {
 
 	private List<String> getMethodNames(){
 		List<String> methodNames = new ArrayList<>(this.codeLines.size());
-
+		
 		if (this.codeLines.isEmpty())
 			return methodNames;
 		
@@ -618,11 +618,19 @@ public abstract class AbstractThreadStack implements ThreadStack {
 			}
 		}
 		else if (this.codeLines.get(0).contains("      ")) { 
-			// jcmd case
+			// Jcmd txt case
 			for (String line : this.codeLines) {
 				int parenthesisPos = line.indexOf('(');
 				if (parenthesisPos != -1)
 					methodNames.add(line.substring(6, parenthesisPos));
+			}
+		}
+		else {
+			// default (and Jcmd JSON case)
+			for (String line : this.codeLines) {
+				int parenthesisPos = line.indexOf('(');
+				if (parenthesisPos != -1)
+					methodNames.add(line.substring(0, parenthesisPos));
 			}
 		}
 

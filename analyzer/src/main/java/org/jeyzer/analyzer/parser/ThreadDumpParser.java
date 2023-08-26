@@ -51,6 +51,7 @@ public abstract class ThreadDumpParser {
 
 	protected static final String VIRTUAL_THREAD_CARRIER_CODE_SIGNATURE = "java.lang.VirtualThread.runContinuation";
 	protected static final String VIRTUAL_THREAD_UNMOUNTED_CODE_SIGNATURE = "java.lang.VirtualThread.yieldContinuation";
+	protected static final String VIRTUAL_THREAD_CODE_SIGNATURE = "java.lang.VirtualThread$VThreadContinuation.lambda$new";
 	
 	protected static final String EMPTY_STRING = "";
 

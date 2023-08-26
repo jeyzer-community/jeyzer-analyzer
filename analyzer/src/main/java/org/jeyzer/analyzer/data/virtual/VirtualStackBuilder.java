@@ -37,6 +37,19 @@ public class VirtualStackBuilder {
 	}	
 	
 	public ThreadStack lookup(String id, ThreadState state, int filePos, String fileName, Date timestamp, List<String> codeLines) {
+		if (!state.isUnmountedVirtualThread()) {
+			// virtual thread running
+			VirtualThreadStackImpl vt = new VirtualThreadStackImpl(
+					id, 
+					state, 
+					filePos, 
+					fileName, 
+					timestamp, 
+					codeLines);
+			vt.integrateStack(id);
+			return vt;
+		}
+		
 		String stackKey = Integer.toString(hashCodeLines(codeLines));
 		String crossId = transversalIds.computeIfAbsent(stackKey, x-> getNextId());
 		

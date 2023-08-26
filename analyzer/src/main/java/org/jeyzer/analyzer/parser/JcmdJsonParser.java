@@ -263,7 +263,7 @@ public class JcmdJsonParser extends ThreadDumpParser {
 	
 		ThreadStack stack;
 		if (virtual) {
-			// perform aggegration
+			// perform aggregration for carrying threads
 			// Name and header have no meaning
 			stack = vtBuilder.lookup(
 							id, 
@@ -296,8 +296,13 @@ public class JcmdJsonParser extends ThreadDumpParser {
 	}
 
 	private boolean detectVirtualThread(String threadName, List<String> codeLines) {
-		return threadName.isEmpty() 
-				&& codeLines.get(1).contains(VIRTUAL_THREAD_UNMOUNTED_CODE_SIGNATURE);
+		// unmounted virtual thread
+		if (threadName.isEmpty() && codeLines.get(1).contains(VIRTUAL_THREAD_UNMOUNTED_CODE_SIGNATURE))
+			return true;
+		// working virtual thread
+		if (codeLines.size() > 2 && codeLines.get(codeLines.size()-3).contains(VIRTUAL_THREAD_CODE_SIGNATURE))
+			return true;
+		return false;
 	}
 	
 	private List<String> internCodeLines(List<String> lines) {
