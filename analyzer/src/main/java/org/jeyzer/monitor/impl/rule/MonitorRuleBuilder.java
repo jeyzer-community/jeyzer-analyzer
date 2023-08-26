@@ -112,6 +112,7 @@ import org.jeyzer.monitor.impl.rule.system.QuietActivityRule;
 import org.jeyzer.monitor.impl.rule.system.RecordingSizeRule;
 import org.jeyzer.monitor.impl.rule.system.SharedProfileRule;
 import org.jeyzer.monitor.impl.rule.system.StickerMatchRule;
+import org.jeyzer.monitor.impl.rule.system.VirtualThreadPresenceRule;
 import org.jeyzer.monitor.impl.rule.task.ContentionTypeTaskRule;
 import org.jeyzer.monitor.impl.rule.task.ExecutionPatternTaskRule;
 import org.jeyzer.monitor.impl.rule.task.FrozenStacksRule;
@@ -361,6 +362,8 @@ public class MonitorRuleBuilder {
 					rule = new QuietActivityRule(def);
 				else if (SharedProfileRule.RULE_NAME.equals(name))
 					rule = new SharedProfileRule(def);
+				else if (VirtualThreadPresenceRule.RULE_NAME.equals(name))
+					rule = new VirtualThreadPresenceRule(def);				
 				
 				if (rule != null)
 					systemRules.add(rule);

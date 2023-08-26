@@ -92,22 +92,9 @@
 				           message="Jeyer Recorder is not logging in file.&#10; You should activate it in the Jeyzer Recorder logging configuration"/>
 			</thresholds>
 		</rule>
-		
-		<!--  If process card property value contains the given pattern, generate event. -->
-		<rule name="Process card property pattern" param_display="Virtual thread usage" param="jzr.analysis.virtual.thread.presence" ref="JZR-PCD-018" stickers="virtual-threads">
-			<narrative>This rule detects the usage of virtual threads.</narrative>
-			<thresholds>
-				<threshold type="system pattern" 
-						   count="1"
-				           pattern="true" 
-				           level="INFO"
-				           sub_level="7" 
-				           message="Java virtual threads are used.&#10; In case of massive usage, you may monitor closely the VM memory."/>
-			</thresholds>
-		</rule>
 
 		<!--  If process card property value contains the given pattern, generate event. -->
-		<rule name="Process card property pattern" param_display="Virtual threads not visible" param="jzr.analysis.virtual.thread.carriers.only" ref="JZR-PCD-019" stickers="virtual-threads">
+		<rule name="Process card property pattern" param_display="Virtual threads not visible" param="jzr.analysis.virtual.thread.carriers.only" ref="JZR-PCD-018" stickers="virtual-threads">
 			<narrative>This rule detects the presence of only virtual thread carriers.</narrative>
 			<thresholds>
 				<threshold type="system pattern" 
@@ -115,7 +102,7 @@
 				           pattern="true" 
 				           level="WARNING"
 				           sub_level="6" 
-				           message="Java virtual threads are used but cannot be displayed (because not available in the recording).&#10;You must use the Jcmd command to get it in your recording.&#10;Command is : jcmd &lt;pid&gt; Thread.dump_to_file -format=text &lt;txt file path&gt;"/>
+				           message="Java virtual threads are used but cannot be displayed (because not available in the recording).&#10;You must use the Jcmd command to get it in your recording.&#10;Command is : jcmd &lt;pid&gt; Thread.dump_to_file -format=text|json &lt;txt file path&gt;"/>
 			</thresholds>
 		</rule>
 		

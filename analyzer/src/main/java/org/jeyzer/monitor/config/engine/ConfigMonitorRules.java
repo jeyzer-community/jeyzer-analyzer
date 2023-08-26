@@ -63,6 +63,7 @@ import org.jeyzer.monitor.impl.rule.system.ProcessCommandLinePropertyPatternRule
 import org.jeyzer.monitor.impl.rule.system.QuietActivityRule;
 import org.jeyzer.monitor.impl.rule.system.RecordingSizeRule;
 import org.jeyzer.monitor.impl.rule.system.SharedProfileRule;
+import org.jeyzer.monitor.impl.rule.system.VirtualThreadPresenceRule;
 import org.jeyzer.monitor.impl.rule.task.advanced.JeyzerMXContextParamNumberTaskRule;
 import org.jeyzer.monitor.impl.rule.task.advanced.JeyzerMXContextParamPatternTaskRule;
 import org.jeyzer.service.location.JzrLocationResolver;
@@ -214,7 +215,8 @@ public class ConfigMonitorRules {
 					|| DiskWriteTimeRule.RULE_NAME.equals(name)
 					|| RecordingSizeRule.RULE_NAME.equals(name)
 					|| QuietActivityRule.RULE_NAME.equals(name)
-					|| SharedProfileRule.RULE_NAME.equals(name)){
+					|| SharedProfileRule.RULE_NAME.equals(name)
+					|| VirtualThreadPresenceRule.RULE_NAME.equals(name)){
 				ruleCfg = new ConfigParamMonitorRule(ruleNode, group, stickerRefs, dynamic);
 			}else if (OperationInPrincipalPercentRule.RULE_NAME.equals(name)
 					|| FunctionInPrincipalPercentRule.RULE_NAME.equals(name)

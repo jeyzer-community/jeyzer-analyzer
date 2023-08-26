@@ -721,7 +721,7 @@ public class JzrSession implements JzrMonitorSession {
 		if (processCard != null) {
 			Properties props = new Properties();
 			
-			props.put(ProcessCard.VIRTUAL_THREAD_PRESENCE, Boolean.toString(virtualThreadPresence));
+			 props.put(ProcessCard.VIRTUAL_THREAD_PRESENCE, Boolean.toString(virtualThreadPresence));
 			
 			if (virtualThreadPresence)
 				props.put(ProcessCard.VIRTUAL_THREAD_CARRIERS_ONLY, Boolean.toString(!virtualThreadsAvailable));
