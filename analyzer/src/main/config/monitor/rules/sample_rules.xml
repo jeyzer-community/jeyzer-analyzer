@@ -574,6 +574,25 @@
    			</thresholds>
 		</rule>
 		
+		<!--  If virtual thread usage is detected, generate event. -->
+		<rule name="Virtual thread presence" ref="JZR-SAMPLE-041">
+			<thresholds>
+				<threshold type="system signal"
+				           level="INFO" 
+				           message="Java virtual threads are used.&#10; In case of massive usage, you may monitor closely the VM memory and CPU."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If unmounted virtuals remain for [count] snapshots or [time] generate event -->
+		<!--    Count must be higher than 8. Time must be higher than 8 x recording period -->
+		<rule name="Virtual thread leak" ref="JZR-SAMPLE-042">
+			<thresholds>
+				<threshold 	type="stack signal with context"
+							count="10" 
+							level="WARNING" 
+							message="Virtual threads not released after some time. These threads could have leak or interacting with very slow backend."/>
+			</thresholds>
+		</rule>
 
 		<!-- ************************************************************************ -->
 		<!--                              ADVANCED RULES                              -->

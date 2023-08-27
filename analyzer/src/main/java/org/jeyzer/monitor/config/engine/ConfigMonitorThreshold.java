@@ -53,6 +53,7 @@ public class ConfigMonitorThreshold {
 	public static final String THRESHOLD_ACTION_VALUE = "action value";
 	public static final String THRESHOLD_ACTION_PATTERN = "action pattern";
 	public static final String THRESHOLD_STACK_SIGNAL = "stack signal";
+	public static final String THRESHOLD_STACK_SIGNAL_WITH_CONTEXT = "stack signal with context";
 	public static final String THRESHOLD_STACK_VALUE = "stack value";
 	public static final String THRESHOLD_STACK_PATTERN = "stack pattern";
 	public static final String THRESHOLD_SESSION_APPLICATIVE = "session applicative";
@@ -89,6 +90,7 @@ public class ConfigMonitorThreshold {
 		supportedTaskThresholds.add(THRESHOLD_ACTION_VALUE);
 		supportedTaskThresholds.add(THRESHOLD_ACTION_PATTERN);
 		supportedTaskThresholds.add(THRESHOLD_STACK_SIGNAL);
+		supportedTaskThresholds.add(THRESHOLD_STACK_SIGNAL_WITH_CONTEXT);
 		supportedTaskThresholds.add(THRESHOLD_STACK_VALUE);
 		supportedTaskThresholds.add(THRESHOLD_STACK_PATTERN);
 		

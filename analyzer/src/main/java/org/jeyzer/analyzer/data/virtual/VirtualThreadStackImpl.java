@@ -41,6 +41,11 @@ public class VirtualThreadStackImpl extends AbstractThreadStack {
 		this.vtIds.add(id);
 	}
 	
+	public List<String> getVirtualThreadIds(){
+		return this.vtIds;
+	}
+	
+	@Override
 	public int getInstanceCount() {
 		return this.vtIds.size();
 	}

@@ -37,8 +37,6 @@ public class VirtualThreadPresenceRule extends MonitorSystemRule implements Sign
 	public static final String RULE_NARRATIVE = "The " + RULE_NAME + " rule permits to detect the usage of virtual threads.\n"
 			+ " Virtual threads have been introduced with Java 17 and are officially released since Java 21.\n"
 			+ " Because it introduces new concepts and push further the performance limits, it must be monitored closely.";
-
-	private String extraInfo;
 	
 	public VirtualThreadPresenceRule(ConfigMonitorRule def) throws JzrInitializationException {
 		super(def, RULE_NAME, 
@@ -62,7 +60,7 @@ public class VirtualThreadPresenceRule extends MonitorSystemRule implements Sign
 
 	@Override
 	public MonitorSystemEvent createSystemEvent(MonitorEventInfo info) {
-		return new VirtualThreadPresenceEvent(this.extraInfo, info);
+		return new VirtualThreadPresenceEvent("Virtual threads detected", info);
 	}
 	
 	@Override

@@ -121,6 +121,7 @@ import org.jeyzer.monitor.impl.rule.task.LockerTaskRule;
 import org.jeyzer.monitor.impl.rule.task.LongRunningTaskRule;
 import org.jeyzer.monitor.impl.rule.task.OperationTaskRule;
 import org.jeyzer.monitor.impl.rule.task.StackOverflowRule;
+import org.jeyzer.monitor.impl.rule.task.VirtualThreadLeakRule;
 import org.jeyzer.monitor.impl.rule.task.advanced.CPUPercentTaskRule;
 import org.jeyzer.monitor.impl.rule.task.advanced.JeyzerMXContextParamNumberTaskRule;
 import org.jeyzer.monitor.impl.rule.task.advanced.JeyzerMXContextParamPatternTaskRule;
@@ -510,6 +511,8 @@ public class MonitorRuleBuilder {
 					rule = new OperationTaskRule(def);
 				else if (FunctionTaskRule.RULE_NAME.equals(name))
 					rule = new FunctionTaskRule(def);
+				else if (VirtualThreadLeakRule.RULE_NAME.equals(name))
+					rule = new VirtualThreadLeakRule(def);
 				
 				if (rule != null)
 					taskRules.add(rule);

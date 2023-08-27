@@ -44,6 +44,7 @@ import org.jeyzer.monitor.engine.rule.threshold.action.ActionValuePercentageThre
 import org.jeyzer.monitor.engine.rule.threshold.action.ActionValueThreshold;
 import org.jeyzer.monitor.engine.rule.threshold.stack.StackPatternThreshold;
 import org.jeyzer.monitor.engine.rule.threshold.stack.StackSignalThreshold;
+import org.jeyzer.monitor.engine.rule.threshold.stack.StackSignalWithContextThreshold;
 import org.jeyzer.monitor.engine.rule.threshold.stack.StackValueThreshold;
 
 import com.google.common.collect.Multimap;
@@ -70,6 +71,9 @@ public abstract class MonitorTaskRule extends MonitorRule {
 			ConfigMonitorTaskThreshold actionThresholdCfg = (ConfigMonitorTaskThreshold) thCfg;
 			if (StackSignalThreshold.THRESHOLD_NAME.equals(thCfg.getName())){
 				addStackThreshold(new StackSignalThreshold(thCfg, this.getDefaultSubLevel()));
+			}
+			else if (StackSignalWithContextThreshold.THRESHOLD_NAME.equals(thCfg.getName())){
+				addStackThreshold(new StackSignalWithContextThreshold(thCfg, this.getDefaultSubLevel()));
 			}
 			else if (ActionSignalThreshold.THRESHOLD_NAME.equals(thCfg.getName())
 					&& !actionThresholdCfg.hasPercentage()){
