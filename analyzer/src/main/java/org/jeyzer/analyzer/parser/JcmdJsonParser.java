@@ -58,7 +58,7 @@ public class JcmdJsonParser extends ThreadDumpParser {
 	public static final String MARKER_STACK = "stack";
 	
 	// Must not be updated
-	public static final List<String> EMPTY_OWNED_LOCKS = new ArrayList<>();
+	protected static final List<String> EMPTY_OWNED_LOCKS = new ArrayList<>();
 	
 	// 2023-07-28T11:33:35.254146100Z
 	public static final String DATE_FORMAT = "yyyy-MM-ddHH:mm:ss";
@@ -237,7 +237,7 @@ public class JcmdJsonParser extends ThreadDumpParser {
 	}
 
 	private List<String> readCodeLines(JsonReader reader) throws IOException {
-		List<String> codeLines = new ArrayList<String>();
+		List<String> codeLines = new ArrayList<>();
 		
 		while (reader.hasNext()) {
 			codeLines.add(reader.nextString());
@@ -255,9 +255,9 @@ public class JcmdJsonParser extends ThreadDumpParser {
 		//  Same for the unmounted threads
 		ThreadState state = ThreadState.UNKNOWN;
 		if (codeLines.size() >= 2) {
-			if (codeLines.get(1).contains(VIRTUAL_THREAD_CARRIER_CODE_SIGNATURE))
+			if (isCarrierThread(codeLines))
 				state = ThreadState.CARRYING_VIRTUAL_THREAD;
-			else if (codeLines.get(1).contains(VIRTUAL_THREAD_UNMOUNTED_CODE_SIGNATURE))
+			else if (isUnmountedVirtualThread(codeLines))
 				state = ThreadState.UNMOUNTED_VIRTUAL_THREAD;
 		}
 	
@@ -294,15 +294,13 @@ public class JcmdJsonParser extends ThreadDumpParser {
 		if (stack.hasUniqueInstance())
 			dump.addStack(stack);
 	}
-
+	
 	private boolean detectVirtualThread(String threadName, List<String> codeLines) {
 		// unmounted virtual thread
-		if (threadName.isEmpty() && codeLines.get(1).contains(VIRTUAL_THREAD_UNMOUNTED_CODE_SIGNATURE))
+		if (threadName.isEmpty() && isUnmountedVirtualThread(codeLines))
 			return true;
 		// working virtual thread
-		if (codeLines.size() > 2 && codeLines.get(codeLines.size()-3).contains(VIRTUAL_THREAD_CODE_SIGNATURE))
-			return true;
-		return false;
+		return codeLines.size() > 2 && codeLines.get(codeLines.size()-3).contains(VIRTUAL_THREAD_CODE_SIGNATURE);
 	}
 	
 	private List<String> internCodeLines(List<String> lines) {

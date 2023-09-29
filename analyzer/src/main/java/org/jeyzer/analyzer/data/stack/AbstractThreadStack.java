@@ -130,7 +130,7 @@ public abstract class AbstractThreadStack implements ThreadStack {
 		
 		this.lockName = lockName;
 		this.lockClassName = lockClassName;
-		this.ownedlocks = new ArrayList<String>(ownedlocks);
+		this.ownedlocks = new ArrayList<>(ownedlocks);
 		this.deadlock = deadlock;
 	}
 	
@@ -716,14 +716,14 @@ public abstract class AbstractThreadStack implements ThreadStack {
 			if (this == obj)
 				return true;
 			
-			if (obj == null || !(obj instanceof AbstractThreadStack.ThreadStackHandlerImpl))
+			if (!(obj instanceof AbstractThreadStack.ThreadStackHandlerImpl))
 				return false;
 			
 			// comparison
 			AbstractThreadStack.ThreadStackHandlerImpl otherStack = (AbstractThreadStack.ThreadStackHandlerImpl)obj;
 			List<String> stackLines = this.stack.getCodeLines();
 			
-			if (otherStack == null || otherStack.getCodeLines() == null)
+			if (otherStack.getCodeLines() == null)
 				return false;
 			
 			List<String> otherLines = otherStack.getCodeLines();

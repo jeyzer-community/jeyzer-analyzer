@@ -28,13 +28,13 @@ import com.google.common.collect.LinkedListMultimap;
 
 public class CellRefRepository {
 	
-	private Map<String, Map<String, CellReference>> sheetCellRefs = new LinkedHashMap<String, Map<String, CellReference>>();
-	private Map<String, Map<Date, CellReference>> sheetColumnRefs = new LinkedHashMap<String, Map<Date, CellReference>>();
+	private Map<String, Map<String, CellReference>> sheetCellRefs = new LinkedHashMap<>();
+	private Map<String, Map<Date, CellReference>> sheetColumnRefs = new LinkedHashMap<>();
 	private LinkedListMultimap<String, CellReference> dateRefs = LinkedListMultimap.create();
 	private LinkedListMultimap<String, CellReference> actionRefs;
 
 	// Not cross sheet yet, but prepare it for later
-	private Map<String, Set<CellReference>> hiatusOrRestartRefs = new LinkedHashMap<String, Set<CellReference>>();
+	private Map<String, Set<CellReference>> hiatusOrRestartRefs = new LinkedHashMap<>();
 
 	private int initialCellRefSize;  // Performance optimization : create maps immediately with the right size. 
 	

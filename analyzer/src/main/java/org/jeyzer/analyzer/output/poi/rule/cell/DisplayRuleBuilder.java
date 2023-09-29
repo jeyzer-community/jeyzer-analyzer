@@ -44,7 +44,7 @@ public class DisplayRuleBuilder {
 		List<DisplayRule> rules = new ArrayList<>();
 		DisplayRule rule;
 
-		if (session.hasVirtualThreads() && displayCfgs.size()>0) {
+		if (session.hasVirtualThreads() && !displayCfgs.isEmpty()) {
 			// Handle virtual threads in transparent way
 			//  Choice is made to always display the number of virtual threads up front
 			//  Not done for GroupDisplayRuleBuilder as it is handled as part of the group feature

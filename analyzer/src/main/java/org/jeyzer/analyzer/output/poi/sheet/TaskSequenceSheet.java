@@ -699,8 +699,6 @@ public class TaskSequenceSheet extends JeyzerSheet {
 				
 				int missingtdOffsetForAction = missingtdOffset;
 				for (int j=0; j< action.size(); j++){
-					if (this.missingTds.get(Integer.valueOf(offset + j + columnOffset + missingtdOffsetForAction)) == null)
-						System.out.println("Null detected");
 					// get extra offset
 					missingtdOffsetForAction = this.missingTds.get(Integer.valueOf(offset + j + columnOffset + missingtdOffsetForAction)).intValue();
 					

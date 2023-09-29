@@ -140,14 +140,8 @@ public class HeaderBuilder {
 	    	else if (GarbageCollectorNameRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
     			rule = new GarbageCollectorNameRule(headerCfg, displayContext);
 	    	
-	    	else if (SectionDelimiterRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName())) {
-	    		// special case for virtual threads..
-	    		String title = (String)headerCfg.getValue(SectionDelimiterRule.TITLE_FIELD);
-	    		if (title.equalsIgnoreCase("Virtual threads") && session.hasVirtualThreadPresence())
-	    			rule = new SectionDelimiterRule(headerCfg, displayContext);
-	    		else
-	    			rule = new SectionDelimiterRule(headerCfg, displayContext);
-	    	}
+	    	else if (SectionDelimiterRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
+	    		rule = new SectionDelimiterRule(headerCfg, displayContext);
 
 	    	else if (GarbageCollectorMemoryPoolRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
     			rule = new GarbageCollectorMemoryPoolRule(headerCfg, displayContext);	    	

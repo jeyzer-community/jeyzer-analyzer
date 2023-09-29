@@ -79,7 +79,7 @@ public class VirtualThreadLeakRule extends MonitorTaskRule implements SignalWith
 		
 		// Update the verif index
 		Integer index = (Integer)context.computeIfAbsent(CONTEXT_KEY_VERIF_INDEX, x-> Integer.valueOf(0));
-		context.put(CONTEXT_KEY_VERIF_INDEX, Integer.valueOf(++index));
+		context.put(CONTEXT_KEY_VERIF_INDEX, ++index);
 		
 		if (index == 1) {
 			// initialize the context
@@ -149,11 +149,9 @@ public class VirtualThreadLeakRule extends MonitorTaskRule implements SignalWith
 	
 	private void checkThresholds(ConfigMonitorRule def) throws JzrInitializationException {
 		for (ConfigMonitorThreshold threshold : def.getConfigMonitorThresholds()) {
-			if (!threshold.isTimeBound()) {
+			if (!threshold.isTimeBound() && threshold.getCount() < VERIF_INDEX_STAGE)
 				// for now we can only handle counts. Time would require to access the session period.
-				if (threshold.getCount() < VERIF_INDEX_STAGE)
-					throw new JzrInitializationException("Rule " + RULE_NAME + " threshold count (" + threshold.getCount()+ ") is invalid. It must be higher than " + VERIF_INDEX_STAGE * 2);
-			}
+				throw new JzrInitializationException("Rule " + RULE_NAME + " threshold count (" + threshold.getCount()+ ") is invalid. It must be higher than " + VERIF_INDEX_STAGE * 2);
 		}
 	}
 }

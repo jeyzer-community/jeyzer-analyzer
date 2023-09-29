@@ -28,7 +28,6 @@ import org.jeyzer.monitor.engine.event.info.MonitorEventWithContextInfo;
 import org.jeyzer.monitor.engine.event.info.Scope;
 import org.jeyzer.monitor.engine.event.info.SubLevel;
 import org.jeyzer.monitor.engine.rule.MonitorTaskRule;
-import org.jeyzer.monitor.engine.rule.condition.task.SignalTaskProvider;
 import org.jeyzer.monitor.engine.rule.condition.task.SignalWithContextTaskProvider;
 import org.jeyzer.monitor.engine.rule.threshold.MonitorTaskThreshold;
 

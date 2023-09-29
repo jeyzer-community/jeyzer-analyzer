@@ -50,7 +50,8 @@ public abstract class ThreadDumpParser {
 	private static final String WEBLO_THREAD_NAME = "ExecuteThread:";
 
 	protected static final String VIRTUAL_THREAD_CARRIER_CODE_SIGNATURE = "java.lang.VirtualThread.runContinuation";
-	protected static final String VIRTUAL_THREAD_UNMOUNTED_CODE_SIGNATURE = "java.lang.VirtualThread.yieldContinuation";
+	protected static final String VIRTUAL_THREAD_UNMOUNTED_CODE_SIGNATURE_21 = "java.lang.VirtualThread.park"; // parkNanos or park
+	protected static final String VIRTUAL_THREAD_UNMOUNTED_CODE_SIGNATURE_20 = "java.lang.VirtualThread.yieldContinuation";
 	protected static final String VIRTUAL_THREAD_CODE_SIGNATURE = "java.lang.VirtualThread$VThreadContinuation.lambda$new";
 	
 	protected static final String EMPTY_STRING = "";
@@ -160,6 +161,15 @@ public abstract class ThreadDumpParser {
 		}
 		
 		return name.intern();
+	}
+	
+	protected boolean isUnmountedVirtualThread(List<String> codeLines) {
+		return codeLines.get(0).contains(VIRTUAL_THREAD_UNMOUNTED_CODE_SIGNATURE_21) 
+				|| codeLines.get(1).contains(VIRTUAL_THREAD_UNMOUNTED_CODE_SIGNATURE_20);
+	}
+	
+	protected boolean isCarrierThread(List<String> codeLines) {
+		return codeLines.get(1).contains(VIRTUAL_THREAD_CARRIER_CODE_SIGNATURE);
 	}
 	
 	public List<ThreadDump> parseThreadDumpFiles(File[] files, SnapshotFileNameFilter filter, Date sinceDate) throws JzrParsingException

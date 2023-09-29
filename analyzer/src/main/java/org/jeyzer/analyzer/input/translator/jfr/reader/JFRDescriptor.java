@@ -338,9 +338,8 @@ public class JFRDescriptor {
 				startVTNextTdInstant = startTdIterator.next().getEndTime();
 				
 				if (endTime.isAfter(startVTNextTdInstant)){
-					// store zero and jump to next slot slot
+					// store zero and jump to next slot
 					startVTCounterMap.put(Date.from(startVTNextTdInstant), 0);
-					continue;
 				}
 				else {
 					startVTCounter = 1;
@@ -377,7 +376,6 @@ public class JFRDescriptor {
 				if (endTime.isAfter(endVTNextTdInstant)){
 					// store zero and jump to next slot
 					endVTCounterMap.put(Date.from(endVTNextTdInstant), 0);
-					continue;
 				}
 				else {
 					// adequate slot, start new counter
@@ -415,7 +413,6 @@ public class JFRDescriptor {
 				if (endTime.isAfter(pinnedVTNextTdInstant)){
 					// store zero and jump to next slot
 					pinnedVTCounterMap.put(Date.from(pinnedVTNextTdInstant), 0);
-					continue;
 				}
 				else {
 					// adequate slot, start new counter

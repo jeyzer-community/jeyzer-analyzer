@@ -184,9 +184,9 @@ public class JcmdTxtParser extends ThreadDumpParser {
 		//  Same for the unmounted threads
 		ThreadState state = ThreadState.UNKNOWN;
 		if (codeLines.size() >= 2) {
-			if (codeLines.get(1).contains(VIRTUAL_THREAD_CARRIER_CODE_SIGNATURE))
+			if (isCarrierThread(codeLines))
 				state = ThreadState.CARRYING_VIRTUAL_THREAD;
-			else if (codeLines.get(1).contains(VIRTUAL_THREAD_UNMOUNTED_CODE_SIGNATURE))
+			else if (isUnmountedVirtualThread(codeLines))
 				state = ThreadState.UNMOUNTED_VIRTUAL_THREAD;
 		}
 
@@ -244,7 +244,7 @@ public class JcmdTxtParser extends ThreadDumpParser {
 		return name.intern();
 	}	
 	
-	protected String parseID(String header) throws ParseException {
+	protected String parseID(String header) {
 		int pos = header.indexOf(' ');
 		return header.substring(1, pos);
 	}

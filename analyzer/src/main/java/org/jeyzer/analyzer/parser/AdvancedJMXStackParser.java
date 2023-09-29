@@ -263,7 +263,7 @@ public class AdvancedJMXStackParser extends ThreadDumpParser {
 			codeLines.add(lineToIntern.intern());
 		}
 		
-		if (codeLines.size() >= 2 && codeLines.get(1).contains(VIRTUAL_THREAD_CARRIER_CODE_SIGNATURE))
+		if (codeLines.size() >= 2 && isCarrierThread(codeLines))
 			state = ThreadState.CARRYING_VIRTUAL_THREAD;
 
 		return new ThreadStackImpl(header, name, id, state, suspended,
