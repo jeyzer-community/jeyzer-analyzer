@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.jeyzer</groupId>
 		<artifactId>jeyzer-all</artifactId>
-		<version>3.1</version>
+		<version>3.2-SNAPSHOT</version>
 		<relativePath>../../../../jeyzer-all/pom.xml</relativePath>
 	</parent>
 
@@ -12,7 +12,7 @@
 	<groupId>org.jeyzer</groupId>
 	<artifactId>jeyzer-tomcat</artifactId>
 	<packaging>pom</packaging>
-	<version>3.1</version>
+	<version>3.2-SNAPSHOT</version>
 	<name>Jeyzer Tomcat</name>
 	
 	<properties>
