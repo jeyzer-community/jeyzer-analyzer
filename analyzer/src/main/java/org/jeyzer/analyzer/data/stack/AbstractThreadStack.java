@@ -641,8 +641,8 @@ public abstract class AbstractThreadStack implements ThreadStack {
 		if (this.stackText != null)
 			return this.stackText;
 		
-		
-		if (this.fileName.endsWith(JSON_EXTENSION)) {
+		// If JSON extension is not there, file pos will be negative : interpret it as json
+		if (this.fileName.endsWith(JSON_EXTENSION) || this.filePos == -1) {
 			// JCMD JSON format includes only code lines, 
 			// so the stack text can be directly set with the stack code lines
 			this.stackText = buildJsonStackText();
