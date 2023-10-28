@@ -146,5 +146,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
