@@ -38,7 +38,7 @@ import com.google.gson.stream.JsonReader;
 public class JcmdJsonParser extends ThreadDumpParser {
 
 	// format name
-	public static final String FORMAT_NAME = "Jcmd JSON tool";
+	public static final String FORMAT_NAME = "Jcmd JSON";
 	public static final String FORMAT_SHORT_NAME = "Jcmd JSON";
 
 	private static final Logger logger = LoggerFactory.getLogger(JcmdJsonParser.class);

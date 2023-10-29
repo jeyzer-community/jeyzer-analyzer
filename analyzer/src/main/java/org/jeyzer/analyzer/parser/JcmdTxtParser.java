@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 public class JcmdTxtParser extends ThreadDumpParser {
 
 	// format name
-	public static final String FORMAT_NAME = "Jcmd txt tool";
+	public static final String FORMAT_NAME = "Jcmd txt";
 	public static final String FORMAT_SHORT_NAME = "Jcmd txt";
 
 	private static final Logger logger = LoggerFactory.getLogger(JcmdTxtParser.class);
