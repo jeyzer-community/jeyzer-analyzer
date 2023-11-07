@@ -45,6 +45,8 @@ public class ContentionTypeGlobalPercentRule extends MonitorSystemRule implement
 	public static final String RULE_NARRATIVE = "The " + RULE_NAME + " rule permits to detect global contentions. "
 			+ "It is particularely useful to detect for example unusual database access. ";
 	
+	private static final int TRIGGER_LIMIT = 50;
+	
 	private String contentionType;
 	private String paramDisplay;
 	private Operator operator;
@@ -79,6 +81,10 @@ public class ContentionTypeGlobalPercentRule extends MonitorSystemRule implement
     	// get percentage
 		// total number of active stacks
     	int globalActionsStackSize = session.getActionsStackSize();
+    	// Set must be representative	
+    	if (globalActionsStackSize < TRIGGER_LIMIT)
+    		return false;
+    	
     	int tagPercent = FormulaHelper.percentRound(tagCount, globalActionsStackSize);
     	
 		switch(operator){

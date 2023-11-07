@@ -46,6 +46,8 @@ public class FunctionGlobalPercentRule extends MonitorSystemRule implements Valu
 	public static final String RULE_NARRATIVE = "The " + RULE_NAME + " rule permits to detect any high applicative activity based on functions. "
 			+ "It is useful to track intensive activities based on function names which are known as problematic.";
 	
+	private static final int TRIGGER_LIMIT = 50;
+	
 	private String function;
 	private String paramDisplay;
 	private Operator operator;
@@ -80,6 +82,10 @@ public class FunctionGlobalPercentRule extends MonitorSystemRule implements Valu
     	// get percentage
 		// total number of active stacks
     	int globalActionsStackSize = session.getActionsStackSize();
+    	// Set must be representative	
+    	if (globalActionsStackSize < TRIGGER_LIMIT)
+    		return false;
+    	
     	int tagPercent = FormulaHelper.percentRound(tagCount, globalActionsStackSize);
     	
 		switch(operator){
