@@ -209,7 +209,7 @@
 		</rule>
 		
 		<!--  If number of threads greater than [value], generate event -->
-		<rule name="Global virtual thread limit" ref="JZR-STD-017">
+		<rule name="Global virtual thread limit" stickers="performance" ref="JZR-STD-017">
 			<thresholds>
 				<threshold type="global value" 
 						   count="20"
@@ -220,7 +220,7 @@
 		</rule>
 		
 		<!--  If virtual thread usage is detected, generate event. -->
-		<rule name="Virtual thread presence" ref="JZR-STD-018">
+		<rule name="Virtual thread presence" stickers="environment" ref="JZR-STD-018">
 			<thresholds>
 				<threshold type="system signal"
 				           level="INFO" 
@@ -230,12 +230,30 @@
 
 		<!--  If unmounted virtuals remain for [count] snapshots or [time] generate event -->
 		<!--    Count must be higher than 8. Time must be higher than 8 x recording period -->
-		<rule name="Virtual thread leak" ref="JZR-STD-019">
+		<rule name="Virtual thread leak" stickers="performance" ref="JZR-STD-019">
 			<thresholds>
 				<threshold 	type="stack signal with context"
 							count="10" 
 							level="WARNING" 
 							message="Virtual threads not released after some time. These threads could have leak or interacting with very slow backend."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of contention type is greater or equal to [value] across current session, generate event. -->
+		<rule name="Contention type global percentage" param_display="Collection access" param="Collection" stickers="performance" ref="JZR-STD-020">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="60" 
+				           level="WARN"
+				           sub_level="6" 
+				           message="Massive data collection access contention (map, list..).&#10; You should review the related actions.&#10;It could also traduce a process slowdown under high load."/>
+				<threshold type="system value" 
+						   count="1"
+				           value="30" 
+				           level="INFO"
+				           sub_level="7" 
+				           message="Important data collection access contention (map, list..).&#10; You may review the related actions."/>
 			</thresholds>
 		</rule>
 
