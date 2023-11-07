@@ -1,0 +1,11 @@
+## Apache Velocity template
+## 
+## Zabbix fields :
+##   $application_id is the Zabbix host, mapped here to the monitoring instance
+##   user.action is the Zabbix key
+##   3rd field is Zabbix value. It contains the event details. $event.NameExtraInfo is the user action
+## Zabbix format : see https://www.zabbix.com/documentation/current/en/manpages/zabbix_sender
+## 
+#foreach( $event in $events_list )
+"$application_id" "user.action" "$event.NameExtraInfo - $event.StartDate - $event.EndDate - $event.Duration"
+#end

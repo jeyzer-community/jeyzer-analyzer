@@ -24,7 +24,9 @@ import org.jeyzer.monitor.config.publisher.ConfigPublisher;
 import org.jeyzer.monitor.config.publisher.ConfigSoundPublisher;
 import org.jeyzer.monitor.config.publisher.ConfigWebPublisher;
 import org.jeyzer.monitor.config.publisher.jira.ConfigJiraPublisher;
+import org.jeyzer.monitor.config.publisher.zabbix.ConfigZabbixPublisher;
 import org.jeyzer.monitor.publisher.jira.JiraPublisher;
+import org.jeyzer.monitor.publisher.zabbix.ZabbixPublisher;
 
 
 public class PublisherBuilder {
@@ -60,6 +62,10 @@ public class PublisherBuilder {
 			}
 			else if (ConfigJiraPublisher.NAME.equals(publisherCfg.getName())){
 				publisher = new JiraPublisher((ConfigJiraPublisher)publisherCfg);
+				publishers.add(publisher);
+			}
+			else if (ConfigZabbixPublisher.NAME.equals(publisherCfg.getName())){
+				publisher = new ZabbixPublisher((ConfigZabbixPublisher)publisherCfg);
 				publishers.add(publisher);
 			}
 			else{

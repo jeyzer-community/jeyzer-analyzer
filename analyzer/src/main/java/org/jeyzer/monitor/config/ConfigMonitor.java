@@ -34,6 +34,7 @@ import org.jeyzer.monitor.config.publisher.ConfigPublisher;
 import org.jeyzer.monitor.config.publisher.ConfigSoundPublisher;
 import org.jeyzer.monitor.config.publisher.ConfigWebPublisher;
 import org.jeyzer.monitor.config.publisher.jira.ConfigJiraPublisher;
+import org.jeyzer.monitor.config.publisher.zabbix.ConfigZabbixPublisher;
 import org.jeyzer.monitor.config.sticker.ConfigStickers;
 import org.jeyzer.monitor.report.HTMLLogger.HTMLLoggerDefinition;
 import org.jeyzer.monitor.report.MonitorLogger.MonitorLoggerDefinition;
@@ -275,6 +276,8 @@ public class ConfigMonitor {
 				publisherCfg = new ConfigWebPublisher(publisherNode);
 			else if (ConfigJiraPublisher.NAME.equals(publisherNode.getNodeName()))
 				publisherCfg = new ConfigJiraPublisher(publisherNode);
+			else if (ConfigZabbixPublisher.NAME.equals(publisherNode.getNodeName()))
+				publisherCfg = new ConfigZabbixPublisher(publisherNode);
 			
 			if (publisherCfg != null && publisherCfg.isEnabled())
 				publisherDefs.add(publisherCfg);
