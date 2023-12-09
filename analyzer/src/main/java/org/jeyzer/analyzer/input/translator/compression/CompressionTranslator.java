@@ -56,18 +56,25 @@ public class CompressionTranslator implements Translator {
 	}
 
 	@Override
-	public TranslateData translate(TranslateData input, SnapshotFileNameFilter filter, Date sinceDate) throws JzrTranslatorException {
+	public boolean accept(TranslateData input) throws JzrTranslatorException {
 		if (input.getDirectory() == null || input.getDirectory().isDirectory())
-			return input;
+			return false;
 		
 		String zipPathCandidate = input.getDirectory().getAbsolutePath();
 		if (ZipHelper.isJFRFile(zipPathCandidate))
-			return input;
+			return false;
 		
 		if (!ZipHelper.isZipFile(zipPathCandidate) && !ZipHelper.isGzipFile(zipPathCandidate)){
 			logger.error("Failed to uncompress the recording. File must have extension gz or zip. Provided file is : " + input.getDirectory().getName());
 			throw new JzrTranslatorException("Failed to uncompress the recording. File must have extension gz or zip.");
 		}
+
+		return true;
+	}
+	
+	@Override
+	public TranslateData translate(TranslateData input, SnapshotFileNameFilter filter, Date sinceDate) throws JzrTranslatorException {		
+		String zipPathCandidate = input.getDirectory().getAbsolutePath();
 		
 		// unzip files. In case of failure, files get deleted on the translator closure if configured to do so
 		this.uncompressedFiles = ZipHelper.uncompress(zipPathCandidate, this.compressCfg);			

@@ -52,30 +52,35 @@ public class JFRTranslator implements Translator {
 	public JFRTranslator(ConfigJFRDecompression cfg) {
 		this.jfrCfg = cfg;
 	}
-
+	
 	@Override
-	public TranslateData translate(TranslateData input, SnapshotFileNameFilter filter, Date sinceDate) throws JzrTranslatorException {
+	public boolean accept(TranslateData input) throws JzrTranslatorException {
 		if (input.getDirectory() == null)
-			return input;
+			return false;
 
-		if (input.getDirectory().isDirectory()) {
-			if (input.getTDs().length != 1 || !ZipHelper.isJFRFile(input.getTDs()[0].getName()))
-				return input;
-			// take the zip content as JFR
-			input = new TranslateData(
-					input.getTDs(),
-					input.getProcessCard(),
-					input.getProcessJarPaths(),
-					input.getProcessModules(),
-					input.getJVMFlags(),
-					input.getTDs()[0]
-					);
-		}
-				
+		if (input.getDirectory().isDirectory()
+			&& (input.getTDs().length != 1 || !ZipHelper.isJFRFile(input.getTDs()[0].getName())))
+				return false;
+		
 		if (!this.jfrCfg.isEnabled()) {
 			logger.error("JFR analysis not supported on the JDK used by the Jeyzer Analyzer");
 			throw new JzrTranslatorException("JFR analysis not supported on the JDK used by the Jeyzer Analyzer. Please ask your administrator to run it on Java 11+.");
 		}
+		
+		return true;
+	}
+
+	@Override
+	public TranslateData translate(TranslateData input, SnapshotFileNameFilter filter, Date sinceDate) throws JzrTranslatorException {
+		// take the zip content as JFR
+		input = new TranslateData(
+				input.getTDs(),
+				input.getProcessCard(),
+				input.getProcessJarPaths(),
+				input.getProcessModules(),
+				input.getJVMFlags(),
+				input.getTDs()[0]
+				);
 		
 		logger.info("Loading the JFR recording : {}", input.getDirectory().getName());
 		

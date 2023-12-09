@@ -24,6 +24,8 @@ import org.jeyzer.analyzer.status.JeyzerStatusEvent;
 
 public interface Translator {
 	
+	public boolean accept(TranslateData input) throws JzrTranslatorException;
+	
 	public TranslateData translate(TranslateData input, SnapshotFileNameFilter filter, Date sinceDate) throws JzrTranslatorException;
 	
 	public JeyzerStatusEvent.STATE getStatusEventState();

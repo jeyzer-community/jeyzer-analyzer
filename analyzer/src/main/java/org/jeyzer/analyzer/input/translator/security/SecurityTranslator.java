@@ -104,10 +104,12 @@ public class SecurityTranslator implements Translator, TDTranslator {
 	}
 
 	@Override
+	public boolean accept(TranslateData input) throws JzrTranslatorException {
+		return translateCfg.isEnabled();
+	}	
+	
+	@Override
 	public TranslateData translate(TranslateData inputData, SnapshotFileNameFilter filter, Date sinceDate) throws JzrTranslatorException {
-		if (!translateCfg.isEnabled())
-			return inputData;
-
 		logger.info("Executing security translator");
 						
 		// create the output directory

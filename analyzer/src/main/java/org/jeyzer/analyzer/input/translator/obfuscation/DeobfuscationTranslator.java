@@ -88,6 +88,11 @@ public abstract class DeobfuscationTranslator implements Translator, TDTranslato
 		checkDeobfuscatorLibrary();
 		checkConfigurationFile();
 	}
+	
+	@Override
+	public boolean accept(TranslateData input) throws JzrTranslatorException {
+		return true;
+	}
 
 	@Override
 	public TranslateData translate(TranslateData inputData, SnapshotFileNameFilter filter, Date sinceDate) throws JzrTranslatorException {

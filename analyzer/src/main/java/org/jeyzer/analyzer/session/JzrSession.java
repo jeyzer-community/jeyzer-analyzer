@@ -598,9 +598,11 @@ public class JzrSession implements JzrMonitorSession {
 			List<Translator> transls = TranslatorsFactory.createTranslators(translatorCfg, inputData);
 			this.translators.addAll(transls);
 			for (Translator translator : transls){
-				this.eventDispatcher.fireStatusEvent(translator.getStatusEventState());
-				outputData = translator.translate(inputData, filter, this.sinceDate);
-				inputData = outputData;
+				if (translator.accept(inputData)) {
+					this.eventDispatcher.fireStatusEvent(translator.getStatusEventState());
+					outputData = translator.translate(inputData, filter, this.sinceDate);
+					inputData = outputData;
+				}
 			}
 		}
 
