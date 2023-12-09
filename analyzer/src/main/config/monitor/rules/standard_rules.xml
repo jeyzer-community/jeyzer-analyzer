@@ -245,7 +245,7 @@
 				<threshold type="system value" 
 						   count="1"
 				           value="60" 
-				           level="WARN"
+				           level="WARNING"
 				           sub_level="6" 
 				           message="Massive data collection access contention (map, list..).&#10; You should review the related actions.&#10;It could also traduce a process slowdown under high load."/>
 				<threshold type="system value" 
