@@ -88,7 +88,7 @@ public class ConfigZabbixPublisher extends ConfigPublisher {
 		try {
 			doc = ConfigUtil.loadXMLFile(path);
 			if (doc == null){
-				logger.error("Failed to open the Zabbix configuration resource using path : " + path);
+				logger.error("Failed to open the Zabbix configuration resource using path : {}", path);
 				throw new JzrInitializationException("Failed to open the Zabbix configuration resource using path : " + path);
 			}
 		} catch (JzrInitializationException e) {
@@ -101,7 +101,7 @@ public class ConfigZabbixPublisher extends ConfigPublisher {
 		NodeList nodes = doc.getElementsByTagName(nodeName);
 		Element zabbixNode = (Element)nodes.item(0);
 		if (zabbixNode == null){
-			logger.error("Zabbix configuration " + path + " is invalid.");
+			logger.error("Zabbix configuration {} is invalid.", path);
 			throw new JzrInitializationException("Zabbix configuration " + path + " is invalid.");
 		}
 		

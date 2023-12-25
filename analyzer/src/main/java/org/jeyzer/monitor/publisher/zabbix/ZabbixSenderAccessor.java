@@ -38,7 +38,7 @@ public class ZabbixSenderAccessor {
 		
 		try {
 	        if (logger.isDebugEnabled())
-	        	logger.debug("Executing command line : " + command);
+	        	logger.debug("Executing command line : {}", command);
 	    	startTime = System.currentTimeMillis();
 	        final Process p = Runtime.getRuntime().exec(command);
 	        
@@ -61,12 +61,12 @@ public class ZabbixSenderAccessor {
 	        duration = endTime - startTime;
 
 	        if (logger.isDebugEnabled())
-	        	logger.debug("Zabbix sender execution time : " + duration + " ms");        
+	        	logger.debug("Zabbix sender execution time : {} ms", duration);        
 			
 	        logResult(result, command);
 	        
 		}catch (Exception e) {
-			logger.error("Zabbix sender command line is : " + command);
+			logger.error("Zabbix sender command line is : {}", command);
 			logger.error("Failed to execute the Zabbix sender", e);
 		}
 	}
@@ -78,19 +78,19 @@ public class ZabbixSenderAccessor {
         else if (result == 1){
 			logger.error("Zabbix sending failed. Process exit status is 1");
 			logger.error("Reexecute the Zabbix sender command line from a shell to examine the error in console.");
-			logger.error("Zabbix sender command line is : " + command);
+			logger.error("Zabbix sender command line is : {}", command);
        }
        else if (result == 2){
      	    logger.error("Zabbix server processing failed. Process exit status is 2");
 			logger.error("The Zabbix sender transmitted the data but the Zabbix server failed to process at least one entry.");
 			logger.error("Please check the Zabbix server logs.");
 			logger.error("You can still execute the Zabbix sender command line to get the number of errors.");
-			logger.error("Zabbix sender command line is : " + command);
+			logger.error("Zabbix sender command line is : {}", command);
        }
        else {
-			logger.error("Failed to execute the Zabbix sender. Process result is : " + result);
+			logger.error("Failed to execute the Zabbix sender. Process result is : {}", result);
 			logger.error("Reexecute the Zabbix sender command line from a shell to examine the console error.");
-			logger.error("Zabbix sender command line is : " + command);
+			logger.error("Zabbix sender command line is : {}", command);
        }
 	}
 }

@@ -75,7 +75,7 @@ public class ZabbixPublisher implements Publisher{
 	
 	private void cleanInput(File input) {
 		if (!this.cfg.getSetupCfg().isKeepFiles() && !input.delete())
-			logger.warn("Failed to delete the Zabbix input file : " + input.getAbsolutePath());
+			logger.warn("Failed to delete the Zabbix input file : {}", input.getAbsolutePath());
 	}
 
 	private File buildInputFile(List<MonitorEvent> events, JzrSession session) {

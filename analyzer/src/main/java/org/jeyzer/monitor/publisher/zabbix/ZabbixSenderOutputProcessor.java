@@ -40,7 +40,7 @@ public class ZabbixSenderOutputProcessor implements Runnable {
             String line = null;
             while ( (line = br.readLine()) != null)
             {
-            	logger.info("Zabbix sender output :", line);
+            	logger.info("Zabbix sender output : {}", line);
             }
         } catch (IOException ioe){
         	logger.error("Failed to read Zabbix sender output.", ioe);  

@@ -63,7 +63,7 @@ public class VirtualJsonParser extends VirtualDumpParser {
 				}
 				else {
 					// Should not happen
-					logger.warn("Json parser - Unknown thread attribute : " + name);
+					logger.warn("Json parser - Unknown thread attribute : {}", name);
 					reader.skipValue();
 				}				
 			}
@@ -145,7 +145,7 @@ public class VirtualJsonParser extends VirtualDumpParser {
 				}
 				else {
 					// Should not happen
-					logger.warn("Json parser - Unknown thread attribute : " + name);
+					logger.warn("Json parser - Unknown thread attribute : {}", name);
 					reader.skipValue();
 				}
 			}
@@ -157,7 +157,7 @@ public class VirtualJsonParser extends VirtualDumpParser {
 					createThreadStackImpl(dump, id, threadName, codeLines, container);
 				else
 					if (logger.isDebugEnabled())
-						logger.debug("Json parser - thread " + threadName + " has no stack");
+						logger.debug("Json parser - thread {} has no stack", threadName);
 			}
 			else {
 				throw new JzrParsingException("Invalid json content : one of the thread attributes is missing");

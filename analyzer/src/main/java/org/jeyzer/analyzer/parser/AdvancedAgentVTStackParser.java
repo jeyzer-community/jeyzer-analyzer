@@ -81,7 +81,7 @@ public class AdvancedAgentVTStackParser extends ThreadDumpParser {
 		}
 		
 		if (file.getName().endsWith(JZR_FILE_JZR_EXTENSION))
-			this.parseBeanFile(file, date, dump);
+			this.parseBeanFile(file, dump);
 		if (file.getName().endsWith(JZR_FILE_JZR_VT_EXTENSION))
 			this.parseVTFile(file, date, dump);
 	}
@@ -171,7 +171,7 @@ public class AdvancedAgentVTStackParser extends ThreadDumpParser {
 		return true;
 	}
 
-	public void parseBeanFile(File file, Date date, ThreadDump dump) {
+	public void parseBeanFile(File file, ThreadDump dump) {
 		logger.info("Reading snapshot file : {}", file.getName());
 		String line = null;
 		int lineCount = 0;
@@ -182,7 +182,7 @@ public class AdvancedAgentVTStackParser extends ThreadDumpParser {
 			)
 		{
 			// First line --> ignore - "Full Advanced Java thread dump with locks info"
-			reader.readLine();
+			line = reader.readLine();
 			lineCount++;
 
 			line = reader.readLine();

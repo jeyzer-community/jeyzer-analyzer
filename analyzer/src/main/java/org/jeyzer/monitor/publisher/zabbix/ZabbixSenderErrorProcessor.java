@@ -40,7 +40,7 @@ public class ZabbixSenderErrorProcessor implements Runnable {
             String line=null;
             while ( (line = br.readLine()) != null)
             {
-           		logger.error("Zabbix sender error message : " + line);
+           		logger.error("Zabbix sender error message : {}", line);
             }
         } catch (IOException ioe){
         	logger.error("Failed to read the Zabbix sender error message.");  

@@ -16,7 +16,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -126,7 +125,7 @@ public class VirtualTxtParser extends VirtualDumpParser {
 		}
 	}
 	
-	public ThreadStack parseThreadStack(StackContext context) throws ParseException {
+	public ThreadStack parseThreadStack(StackContext context) {
 		// header section
 		String header = context.threadLines.get(0).intern();
 		String name = parseName(header);
