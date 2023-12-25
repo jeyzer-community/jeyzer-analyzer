@@ -257,6 +257,24 @@
 			</thresholds>
 		</rule>
 
+		<!--  If percentage of contention type is greater or equal to [value] across current session, generate event. -->
+		<rule name="Contention type global percentage" param_display="Cryptographic activity" param="Crypto" stickers="performance" ref="JZR-STD-021">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="50" 
+				           level="WARNING"
+				           sub_level="10" 
+				           message="Massive cryptography operations.&#10; You should review the related actions.&#10;It may reflect a system under stress running out of memory."/>
+				<threshold type="system value" 
+						   count="1"
+				           value="10" 
+				           level="INFO"
+				           sub_level="9" 
+				           message="Important volume of cryptographic operations.&#10; You should review the related actions.&#10;It may reflect a system under stress running out of memory."/>
+			</thresholds>
+		</rule>
+
 		<!--  If number of active threads greater than [value] for [count] thread dumps or [time], generate event -->
 		<!--
 		<rule name="Active thread limit" ref="JZR-STD-014">
