@@ -72,15 +72,17 @@ public class JFRTranslator implements Translator {
 
 	@Override
 	public TranslateData translate(TranslateData input, SnapshotFileNameFilter filter, Date sinceDate) throws JzrTranslatorException {
-		// take the zip content as JFR
-		input = new TranslateData(
-				input.getTDs(),
-				input.getProcessCard(),
-				input.getProcessJarPaths(),
-				input.getProcessModules(),
-				input.getJVMFlags(),
-				input.getTDs()[0]
-				);
+		if (input.getDirectory().isDirectory()) {
+			// take the zip content as JFR
+			input = new TranslateData(
+					input.getTDs(),
+					input.getProcessCard(),
+					input.getProcessJarPaths(),
+					input.getProcessModules(),
+					input.getJVMFlags(),
+					input.getTDs()[0]
+					);
+		}
 		
 		logger.info("Loading the JFR recording : {}", input.getDirectory().getName());
 		

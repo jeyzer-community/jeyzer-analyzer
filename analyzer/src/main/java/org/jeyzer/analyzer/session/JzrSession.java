@@ -1948,6 +1948,11 @@ public class JzrSession implements JzrMonitorSession {
 
 		prev = ThreadDumpFileDateHelper.getFileDate(filter, files[0]);
 		for (int i=1; i<files.length; i++){
+			
+			if (files[i].getName().endsWith(".jzr.vt"))
+				// ignore the VT files which are duplicates
+				continue;
+			
 			next = ThreadDumpFileDateHelper.getFileDate(filter, files[i]);
 			
 			if (!prev.equals(next)){

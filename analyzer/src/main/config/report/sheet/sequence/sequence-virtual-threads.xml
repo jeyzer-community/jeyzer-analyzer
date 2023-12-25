@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="sequence" name="Virtual Threads" link_type="Vth">
+		
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays the virtual thread info.</description>
+		
+			<headers formats="Jcmd txt,Jcmd JSON">
+			
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<average/>
+					<max/>
+				</math_functions>
+			
+				<!-- Headers -->
+				<native_thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/native-thread-counter.xml"/>
+				<virtual_thread_counter       header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-counter.xml"/>
+				<virtual-thread-mounted-counter   header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-mounted-counter.xml"/>
+				<tendency_contention_type/>
+			</headers>
+		
+			<headers formats="Advanced JMX,Advanced Agent">
+				
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<average/>
+					<min/>
+					<max/>
+				</math_functions>
+			
+				<!-- Headers -->
+				<capture_time          header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/capture-time.xml"/>
+				<thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
+				<locked_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/locked-thread-counter.xml"/>
+				<frozen_code_state_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/frozen-code-state-thread-counter.xml"/>
+				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+				<virtual-thread-mounted-counter     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-mounted-counter.xml"/>
+				<virtual-thread-mounted-cpu-usage-percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-mounted-cpu-usage-percent.xml"/>
+			</headers>
+
+			<headers formats="Advanced VT Agent">
+				
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<average/>
+					<min/>
+					<max/>
+				</math_functions>
+			
+				<!-- Headers -->
+				<capture_time          header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/capture-time.xml"/>
+				<thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
+				<locked_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/locked-thread-counter.xml"/>
+				<frozen_code_state_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/frozen-code-state-thread-counter.xml"/>
+				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+				<virtual-thread-mounted-counter     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-mounted-counter.xml"/>
+				<virtual-thread-mounted-cpu-usage-percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-mounted-cpu-usage-percent.xml"/>
+				<process_cpu          header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/process-cpu.xml"/>
+				<memory_pool          header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/mp/memory-pool-heap-used.xml"/>
+			</headers>
+			
+			<headers formats="JFR Recording">
+				
+				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
+				<math_functions>
+					<average/>
+					<min/>
+					<max/>
+				</math_functions>
+			
+				<!-- Headers -->
+				<capture_time          header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/capture-time.xml"/>
+				<thread_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/thread-counter.xml"/>
+				<locked_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/locked-thread-counter.xml"/>
+				<frozen_code_state_thread_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/frozen-code-state-thread-counter.xml"/>
+				<action_counter        header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/action-counter.xml"/>
+
+				<!-- This section may be skipped programmaticaly  -->
+				<section_delimiter title="Virtual threads" color="RGB-201-208-168"/>
+				<virtual_thread_counter             header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-counter.xml"/>
+				<virtual_thread_created_counter     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-created-counter.xml"/>
+				<virtual_thread_terminated_counter  header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-terminated-counter.xml"/>
+				<virtual_thread_diff                header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-diff.xml"/>
+				<virtual_thread_pinned_counter  	header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-pinned-counter.xml"/>
+				<virtual-thread-mounted-counter     header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-mounted-counter.xml"/>
+				<virtual-thread-mounted-cpu-usage-percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/virtual-thread/virtual-thread-mounted-cpu-usage-percent.xml"/>
+			</headers>
+		
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_type/>
+				<contention_type_principal/>
+				<action_stack_size/>
+			</row_headers>
+		
+			<display>
+
+				<advanced_contention_type all_contention_types="true">
+					<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/contention-types.xml"/> 
+				</advanced_contention_type>
+
+				<advanced_operation all_operations="false">
+					<highlight name="(ATBI)" color="GREY_25_PERCENT"/>
+					<highlight name="Massive - 10 thousands virtual threads created" color="RGB-243-238-141"/>  <!-- Yellow-->
+					<highlight name="Massive - One thousand virtual threads created with CPU burst" color="RGB-243-238-141"/>  <!-- Yellow-->
+					<highlight name="Massive - Two thousands virtual threads created with CPU burst in 2 executors" color="RGB-243-238-141"/>  <!-- Yellow-->
+					<highlight name="Lock - Reentrant Lock test" color="RGB-243-238-141"/>  <!-- Yellow-->
+					<highlight name="Lock - Reentrant Lock with deadlock test" color="RGB-243-238-141"/>  <!-- Yellow-->
+					<highlight name="Lock - Classic synchro test" color="RGB-243-238-141"/>  <!-- Yellow-->
+				</advanced_operation>
+
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+
+				<!-- Identical consecutive stacks : add colored borders  -->
+				<!--  frozen_code_state color="RED" stats="true"/ -->
+				
+				<!-- Operation display. Color applies for OTBI -->
+				<!--  operation color="GREY_25_PERCENT" />-->
+
+			</display>
+		</sheet>
+		
+<!-- Supported colors :    
+	HSSFColor.AQUA, 
+	HSSFColor.AUTOMATIC, 
+	HSSFColor.BLACK, 
+	HSSFColor.BLUE, 
+	HSSFColor.BLUE_GREY, 
+	HSSFColor.BRIGHT_GREEN, 
+	HSSFColor.BROWN, 
+	HSSFColor.CORAL, 
+	HSSFColor.CORNFLOWER_BLUE, 
+	HSSFColor.DARK_BLUE, 
+	HSSFColor.DARK_GREEN, 
+	HSSFColor.DARK_RED, 
+	HSSFColor.DARK_TEAL, 
+	HSSFColor.DARK_YELLOW, 
+	HSSFColor.GOLD, 
+	HSSFColor.GREEN, 
+	HSSFColor.GREY_25_PERCENT, 
+	HSSFColor.GREY_40_PERCENT, 
+	HSSFColor.GREY_50_PERCENT, 
+	HSSFColor.GREY_80_PERCENT, 
+	HSSFColor.INDIGO, 
+	HSSFColor.LAVENDER, 
+	HSSFColor.LEMON_CHIFFON, 
+	HSSFColor.LIGHT_BLUE, 
+	HSSFColor.LIGHT_CORNFLOWER_BLUE, 
+	HSSFColor.LIGHT_GREEN, 
+	HSSFColor.LIGHT_ORANGE, 
+	HSSFColor.LIGHT_TURQUOISE, 
+	HSSFColor.LIGHT_YELLOW, 
+	HSSFColor.LIME, 
+	HSSFColor.MAROON, 
+	HSSFColor.OLIVE_GREEN, 
+	HSSFColor.ORANGE, 
+	HSSFColor.ORCHID, 
+	HSSFColor.PALE_BLUE, 
+	HSSFColor.PINK, 
+	HSSFColor.PLUM, 
+	HSSFColor.RED, 
+	HSSFColor.ROSE, 
+	HSSFColor.ROYAL_BLUE, 
+	HSSFColor.SEA_GREEN, 
+	HSSFColor.SKY_BLUE, 
+	HSSFColor.TAN, 
+	HSSFColor.TEAL, 
+	HSSFColor.TURQUOISE, 
+	HSSFColor.VIOLET, 
+	HSSFColor.WHITE, 
+	HSSFColor.YELLOW 
+-->

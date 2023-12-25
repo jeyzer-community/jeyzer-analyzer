@@ -6,7 +6,7 @@
 			<description>Displays actions in a time line manner, focusing on large stacks and on main indicators such as CPU, memory and thread count.&#10;Permits to get a good overview of the active stacks, in a generic approach.</description>
 		
 			<!-- Optional -->
-			<headers formats="Advanced JMX,Advanced Agent" title_column_index="1">s
+			<headers formats="Advanced JMX,Advanced Agent,Advanced VT Agent" title_column_index="1">s
 				
 				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
 				<math_functions>

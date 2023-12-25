@@ -34,6 +34,7 @@ import org.jeyzer.analyzer.error.JzrLineParsingException;
 import org.jeyzer.analyzer.parser.advanced.DumpBeanInfoParser;
 import org.jeyzer.analyzer.parser.advanced.ThreadBeanInfoParser;
 import org.jeyzer.analyzer.parser.advanced.ThreadBeanInfoParser.ThreadBeanInfo;
+import org.jeyzer.analyzer.parser.virtual.VirtualDumpParser;
 import org.jeyzer.analyzer.setup.JzrSetupManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -263,7 +264,7 @@ public class AdvancedJMXStackParser extends ThreadDumpParser {
 			codeLines.add(lineToIntern.intern());
 		}
 		
-		if (codeLines.size() >= 2 && isCarrierThread(codeLines))
+		if (codeLines.size() >= 2 && VirtualDumpParser.isCarrierThread(codeLines))
 			state = ThreadState.CARRYING_VIRTUAL_THREAD;
 
 		return new ThreadStackImpl(header, name, id, state, suspended,

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-		<sheet type="sequence" name="Garbage Collection" formats="Advanced JMX,Advanced Agent,JFR Recording">
+		<sheet type="sequence" name="Garbage Collection" formats="Advanced JMX,Advanced Agent,Advanced VT Agent,JFR Recording">
 
 			<!-- Sheet description. Use &#10; as carriage return -->
 			<description>Displays exhaustive garbage collecting details.&#10;Includes GC graphs.</description>		

@@ -28,8 +28,8 @@ public class JzrPattern extends SnapshotFileNamePattern{
 	
 	public static final String JZR_FILE_DATE_FORMAT_NO_TIME_ZONE = "yyyy-MM-dd---HH-mm-ss-SSS";
 	
-	private static final String JZR_FILE_NAME_REGEX = "snap\\-(jzr|c|p|jfr)\\-(.*).jzr$"; 	
-	private static final String JZR_TIME_ZONE_REGEX = "snap\\-(jzr|c|p|jfr)\\-\\d\\d\\d\\d-\\d\\d-\\d\\d---\\d\\d-\\d\\d-\\d\\d-\\d\\d\\d-(.*).jzr$"; 
+	private static final String JZR_FILE_NAME_REGEX = "snap\\-(jzr|c|p|jfr)\\-(.*).(jzr|jzr.vt)$"; 	
+	private static final String JZR_TIME_ZONE_REGEX = "snap\\-(jzr|c|p|jfr)\\-\\d\\d\\d\\d-\\d\\d-\\d\\d---\\d\\d-\\d\\d-\\d\\d-\\d\\d\\d-(.*).(jzr|jzr.vt)$"; 
 	
 	private Pattern regex = Pattern.compile(JZR_FILE_NAME_REGEX);	
 	private Pattern timeZoneRegex = Pattern.compile(JZR_TIME_ZONE_REGEX);

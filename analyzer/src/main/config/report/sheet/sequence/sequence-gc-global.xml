@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-		<sheet type="sequence" name="Memory GC Global" formats="Advanced JMX,Advanced Agent,JFR Recording" link_type="GCg">
+		<sheet type="sequence" name="Memory GC Global" formats="Advanced JMX,Advanced Agent,Advanced VT Agent,JFR Recording" link_type="GCg">
 		
 			<!-- Sheet description. Use &#10; as carriage return -->
 			<description>Displays global garbage collecting figures such as execution time, executed GC, released memory..&#10;Permits to identify GC dysfunctions and potential memory leaks. Includes GC graphs.</description>

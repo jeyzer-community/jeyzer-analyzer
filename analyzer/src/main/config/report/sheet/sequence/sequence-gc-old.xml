@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-		<sheet type="sequence" name="Memory GC Old" formats="Advanced JMX,Advanced Agent,JFR Recording" link_type="GCo">
+		<sheet type="sequence" name="Memory GC Old" formats="Advanced JMX,Advanced Agent,Advanced VT Agent,JFR Recording" link_type="GCo">
 		
 			<!-- Sheet description. Use &#10; as carriage return -->
 			<description>Displays garbage collecting figures for the Old Generation memory zone.&#10;Permits to spot out of memory cases. Includes GC graphs.</description>

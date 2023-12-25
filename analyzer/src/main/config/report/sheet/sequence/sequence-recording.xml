@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-		<sheet type="sequence" name="Recording state" link_type="Rec" formats="Advanced Agent">
+		<sheet type="sequence" name="Recording state" link_type="Rec" formats="Advanced Agent,Advanced VT Agent">
 		
 			<!-- Sheet description. Use &#10; as carriage return -->
 			<description>Displays recording state measurements like recording collection time and write speed.&#10;Permits to see how the recording behaved.</description>

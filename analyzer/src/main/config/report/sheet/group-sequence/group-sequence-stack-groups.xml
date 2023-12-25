@@ -6,7 +6,7 @@
 			<description>Displays groups of similar stacks on a time line.&#10;Permits to get a good overview of the different process activities in a large multi-threaded environment.</description>
 		
 			<!-- Optional -->
-			<headers formats="Advanced JMX,Advanced Agent" title_column_index="1">
+			<headers formats="Advanced JMX,Advanced Agent,Advanced VT Agent" title_column_index="1">
 				
 				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
 				<math_functions>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-		<sheet type="sequence" name="Memory" formats="Advanced JMX,Advanced Agent,JFR Recording" link_type="Mem">
+		<sheet type="sequence" name="Memory" formats="Advanced JMX,Advanced Agent,Advanced VT Agent,JFR Recording" link_type="Mem">
 		
 			<!-- Sheet description. Use &#10; as carriage return -->
 			<description>Displays actions in a time line manner, focusing on process and thread memory consumption.&#10;Permits to identify high memory consuming actions. Includes memory graphs.</description>		
 		
 			<!-- Optional -->
-			<headers title_column_index="1" formats="Advanced JMX,Advanced Agent">
+			<headers title_column_index="1" formats="Advanced JMX,Advanced Agent,Advanced VT Agent">
 			
 				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
 				<math_functions>

@@ -43,7 +43,7 @@ public class ThreadDumpParserFactory {
 		logger.debug("Opening thread dump file {} to determine the thread dump parser to use.",file.getName());
 
 		ThreadDumpParser parser = null;
-		List<String> lines = new ArrayList<>(LINES_LIMIT);		
+		List<String> lines = new ArrayList<>(LINES_LIMIT);
 		
 		try (
 				FileReader fr = new FileReader(file);
@@ -65,6 +65,13 @@ public class ThreadDumpParserFactory {
 				return parser;
 			}
 			
+			// let's try Agent VT advanced format : 1st line starts with "Full Agent Advanced VT Java thread dump with locks info"
+			if (!lines.isEmpty() && lines.get(0).startsWith(AdvancedAgentVTStackParser.FIRST_LINE)) {
+				logger.info(LOG_FORMAT_DETECTED_PREFIX + AdvancedAgentVTStackParser.FORMAT_SHORT_NAME);
+				parser = new AdvancedAgentVTStackParser(setupMgr);
+				return parser;
+			}
+			
 			// let's try JFR format : 1st line starts with "JFR Recording"
 			if (!lines.isEmpty() && lines.get(0).startsWith(JFRStackParser.FIRST_LINE)) {
 				logger.info(LOG_FORMAT_DETECTED_PREFIX + JFRStackParser.FORMAT_SHORT_NAME);
@@ -72,7 +79,7 @@ public class ThreadDumpParserFactory {
 				return parser;
 			}
 			
-			// let's try JCMD format : 1st line starts with process id
+			// let's try JCMD txt format : 1st line starts with process id
 			if (!lines.isEmpty() && lines.get(0).matches("\\d+(\\.\\d+)?")) {
 				logger.info(LOG_FORMAT_DETECTED_PREFIX + JcmdTxtParser.FORMAT_SHORT_NAME);
 				parser = new JcmdTxtParser(setupMgr);

@@ -6,7 +6,7 @@
 			<description>Displays actions in a time line manner, focusing on main indicators such as CPU, memory and thread count.&#10;Permits to get a good overview of the different process activities, including long running tasks.</description>
 		
 			<!-- Optional -->
-			<headers formats="Advanced JMX,Advanced Agent,JFR Recording" title_column_index="1">
+			<headers formats="Advanced JMX,Advanced Agent,Advanced VT Agent,JFR Recording" title_column_index="1">
 				
 				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
 				<math_functions>
