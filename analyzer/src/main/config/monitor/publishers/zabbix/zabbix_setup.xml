@@ -11,7 +11,8 @@
 		<!-- Zabbix host (-z)   : IP or hostname of the Zabbix server -->
 		<!-- Zabbix port (-p)   : port of the Zabbix server -->
 		<!-- Host (-s)          : JEYZER_TARGET_NAME is node name. Any other variable could be used and defined in multi_monitor.xml  -->
-		<!-- Input file (-i)    : not specified, added automatically -->
+		<!-- Zabbix IP (-I)     : source IP address -->
+		<!-- Input file (-i)    : not specified here, added automatically by the Jeyzer publisher -->
 		<parameters value="-z ${ZABBIX_HOST} -p ${ZABBIX_PORT} -s ${JEYZER_TARGET_NAME} -I ${ZABBIX_SOURCE_IP}"/>
 
 		<!-- Zabbix input file configuration -->

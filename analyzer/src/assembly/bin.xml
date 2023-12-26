@@ -47,7 +47,7 @@
 			<directory>${basedir}/src/main/config/monitor</directory>
 			<outputDirectory>config/monitor</outputDirectory>
 			<excludes>
-			    <!-- jira template -->
+			    <!-- jira and zabbix templates -->
 				<exclude>**/*.installer.xml</exclude>
 				<exclude>**/*.private.xml</exclude>
 			</excludes>
