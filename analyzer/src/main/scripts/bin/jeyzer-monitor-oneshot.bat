@@ -90,7 +90,10 @@ rem Replay
 set JEYZER_ANALYZER_REPLAY_ENABLED=false
 
 rem JIRA
-set set JEYZER_MONITOR_JIRA_ENABLED=false
+set JEYZER_MONITOR_JIRA_ENABLED=false
+
+rem ZABBIX
+set JEYZER_MONITOR_ZABBIX_ENABLED=false
 
 rem Not used : prevent from configuration warning
 set JEYZER_DYNAMIC_GRAPH_MODE=action_single

@@ -36,6 +36,12 @@ if [ "$JEYZER_INSTALLER_DEPLOYMENT" != "true" ]; then
     export JEYZER_MONITOR_JIRA_ENABLED
   fi
 
+  # Activate Zabbix connectivity
+  if [ -z "$JEYZER_MONITOR_ZABBIX_ENABLED" ]; then
+    JEYZER_MONITOR_ZABBIX_ENABLED=false
+    export JEYZER_MONITOR_ZABBIX_ENABLED
+  fi
+
   # Deploy on the web the monitoring event docs
   if [ -z "$JEYZER_MONITOR_WEB_ENABLED" ]; then
     JEYZER_MONITOR_WEB_ENABLED=true
@@ -86,8 +92,14 @@ else
   
   # Activate JIRA connectivity
   if [ -z "$JEYZER_MONITOR_JIRA_ENABLED" ]; then
-    JEYZER_MONITOR_JIRA_ENABLED=${jeyzer.monitor.publish.jira}
+    JEYZER_MONITOR_JIRA_ENABLED=%{jeyzer.monitor.publish.jira}
     export JEYZER_MONITOR_JIRA_ENABLED
+  fi
+
+  # Activate Zabbix connectivity
+  if [ -z "$JEYZER_MONITOR_ZABBIX_ENABLED" ]; then
+    JEYZER_MONITOR_ZABBIX_ENABLED=%{jeyzer.monitor.publish.zabbix}
+    export JEYZER_MONITOR_ZABBIX_ENABLED
   fi
 
   # Deploy on the web the monitoring event docs

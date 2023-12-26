@@ -35,6 +35,11 @@ if not "%JEYZER_MONITOR_JIRA_ENABLED%" == "" goto gotMonitorJiraEnabled
 set JEYZER_MONITOR_JIRA_ENABLED=false
 :gotMonitorJiraEnabled
 
+rem Activate Zabbix connectivity
+if not "%JEYZER_MONITOR_ZABBIX_ENABLED%" == "" goto gotMonitorZabbixEnabled
+set JEYZER_MONITOR_ZABBIX_ENABLED=false
+:gotMonitorZabbixEnabled
+
 rem Deploy on the web the monitoring event docs
 if not "%JEYZER_MONITOR_WEB_ENABLED%" == "" goto gotMonitorWebEnabled
 set JEYZER_MONITOR_WEB_ENABLED=false
@@ -83,6 +88,11 @@ rem Activate JIRA connectivity
 if not "%JEYZER_MONITOR_JIRA_ENABLED%" == "" goto gotMonitorJiraEnabled
 set JEYZER_MONITOR_JIRA_ENABLED=${jeyzer.monitor.publish.jira}
 :gotMonitorJiraEnabled
+
+rem Activate Zabbix connectivity
+if not "%JEYZER_MONITOR_ZABBIX_ENABLED%" == "" goto gotMonitorZabbixEnabled
+set JEYZER_MONITOR_ZABBIX_ENABLED=${jeyzer.monitor.publish.zabbix}
+:gotMonitorZabbixEnabled
 
 rem Deploy on the web the monitoring event docs
 if not "%JEYZER_MONITOR_WEB_ENABLED%" == "" goto gotMonitorWebEnabled
