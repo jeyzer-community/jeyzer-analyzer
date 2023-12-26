@@ -325,6 +325,13 @@
                   					<filtering>false</filtering>
                 				</resource>
                 				<resource>
+                  					<directory>src/main/config/monitor/publishers/zabbix</directory>
+                  					<includes>
+          								<include>zabbix_setup.installer.xml</include>
+       								</includes>
+                  					<filtering>false</filtering>
+                				</resource>
+                				<resource>
                   					<directory>src/main/scripts</directory>
                   					<includes>
           								<include>bin/preset/template/*.bat</include>

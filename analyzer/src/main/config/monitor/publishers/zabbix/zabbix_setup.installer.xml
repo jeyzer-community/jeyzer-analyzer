@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zabbix_setup>
+
+	<zabbix_sender>
+	
+		<!-- Path to zabbix_sender.exe or zabbix_sender -->
+		<process path="%{jeyzer.monitor.publish.zabbix.sender.path}"/>
+
+		<!-- Zabbix sender parameters -->
+		<!-- Zabbix host (-z)   : IP or hostname of the Zabbix server -->
+		<!-- Zabbix port (-p)   : port of the Zabbix server -->
+		<!-- Host (-s)          : JEYZER_TARGET_NAME is node name. Any other variable could be used and defined in multi_monitor.xml  -->
+		<!-- Zabbix IP (-I)     : source IP address -->
+		<!-- Input file (-i)    : not specified here, added automatically by the Jeyzer publisher -->
+		<parameters value="-z %{jeyzer.monitor.publish.zabbix.host} -p %{jeyzer.monitor.publish.zabbix.port} -s ${JEYZER_TARGET_NAME} -I %{jeyzer.monitor.publish.zabbix.source.ip}"/>
+
+		<!-- Zabbix input file configuration -->
+		<!-- storage : generation directory, files get time stamped -->
+		<!-- keep : keep it for debugging -->
+		<input_file storage_directory="${JEYZER_RECORD_DIRECTORY}/monitor/zabbix-inputs" keep="true"/>
+
+	</zabbix_sender>
+
+</zabbix_setup>
