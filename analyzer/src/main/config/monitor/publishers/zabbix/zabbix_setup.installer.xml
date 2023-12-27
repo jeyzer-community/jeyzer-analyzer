@@ -14,6 +14,13 @@
 		<!-- Zabbix IP (-I)     : source IP address -->
 		<!-- Input file (-i)    : not specified here, added automatically by the Jeyzer publisher -->
 		<parameters value="-z %{jeyzer.monitor.publish.zabbix.host} -p %{jeyzer.monitor.publish.zabbix.port} -s ${JEYZER_TARGET_NAME} -I %{jeyzer.monitor.publish.zabbix.source.ip}"/>
+		
+		<!-- To rely on environment variables, replace the previous sections by the below -->
+		<!-- Set the ZABBIX variables in your start script or environment -->
+		<!--
+		<process path="${ZABBIX_SENDER_PATH}"/>
+		<parameters value="-z ${ZABBIX_HOST} -p ${ZABBIX_PORT} -s ${JEYZER_TARGET_NAME} -I ${ZABBIX_SOURCE_IP}"/>
+		-->
 
 		<!-- Zabbix input file configuration -->
 		<!-- storage : generation directory, files get time stamped -->
