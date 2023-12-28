@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.jeyzer</groupId>
         <artifactId>jeyzer-all</artifactId>
-        <version>3.2-SNAPSHOT</version>
+        <version>3.2</version>
 		<relativePath>../../jeyzer-all/pom.xml</relativePath>
     </parent>
   
@@ -12,7 +12,7 @@
 	<groupId>org.jeyzer</groupId>
 	<artifactId>jeyzer-analyzer</artifactId>
 	<packaging>jar</packaging>
-	<version>3.2-SNAPSHOT</version>
+	<version>3.2</version>
 	<name>Jeyzer Analyzer</name>
 	<url>https://jeyzer.org</url>
 	<description>The Jeyzer Analyzer and Monitor project</description>
