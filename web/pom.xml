@@ -4,7 +4,7 @@
     <groupId>org.jeyzer.web</groupId>
     <artifactId>jeyzer-web</artifactId>
     <name>Jeyzer Web</name>
-    <version>3.2</version>
+    <version>3.3-SNAPSHOT</version>
     <packaging>war</packaging>
 	<url>https://jeyzer.org</url>
     <description>The Jeyzer Web Analyzer project</description>
