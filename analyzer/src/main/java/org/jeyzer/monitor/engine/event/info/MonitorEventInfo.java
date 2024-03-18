@@ -16,10 +16,17 @@ package org.jeyzer.monitor.engine.event.info;
 
 
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class MonitorEventInfo {
 	
-	private final String id;
+	// If MAX is reached, will go to MIN value. Unlikely to happen.
+	private static AtomicLong extIdCount = new AtomicLong(0);
+	
+	// Event identification, unique within the Jeyzer Monitor scope
+	private final String id;                                    // Technical id, built from rule, time stamp and context info - used in the event retrieval
+	private long extId = -1L;  	// External id suitable for display, initiated when the event gets elected
+	
 	private final String ref;
 	private final String rank;
 	private final Level level;
@@ -46,6 +53,14 @@ public class MonitorEventInfo {
 
 	public String getId(){
 		return id;
+	}
+	
+	public String getExtId(){
+		return String.valueOf(extId);
+	}
+	
+	public void initiateExtId() {
+		this.extId = extIdCount.incrementAndGet();
 	}
 	
 	public String getRef(){

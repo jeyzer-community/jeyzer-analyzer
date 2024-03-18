@@ -7,5 +7,5 @@
 ## Zabbix format : see https://www.zabbix.com/documentation/current/en/manpages/zabbix_sender
 ## 
 #foreach( $event in $events_list )
-"$application_id" "user.action" "$event.NameExtraInfo - $event.StartDate - $event.EndDate - $event.Duration"
+"$application_id" "user.action" "$application_id/$event.ExtId #if( $event.NameExtraInfo ) $event.Name : $event.NameExtraInfo #else $event.Name #end - $event.StartDate - $event.EndDate - $event.Duration"
 #end

@@ -101,6 +101,7 @@
 			</headers>
 		
 			<row_headers>
+				<event_ext_id/>
 				<event_level>
 					<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/monitoring-event-row-levels.xml"/>
 				</event_level>

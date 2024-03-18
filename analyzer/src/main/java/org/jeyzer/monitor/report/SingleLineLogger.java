@@ -13,11 +13,6 @@ package org.jeyzer.monitor.report;
  */
 
 
-
-
-
-
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Date;
@@ -72,22 +67,24 @@ public class SingleLineLogger extends MonitorLogger {
 		
 		List<String> params = event.getPrintableParameters();
 		
-		// handle "EVENT : <event> <REF> <SCOPE> <LEVEL> <SUB LEVEL>"
+		// handle "EVENT : <event> <EXT ID> <REF> <SCOPE> <LEVEL> <SUB LEVEL>
 		line.append(params.get(0));
 		line.append(this.getFieldPresenter());
 		line.append(params.get(1));
 		line.append(this.getFieldSeparator());
-		line.append(params.get(3)); // ref
+		line.append(params.get(3)); // ext id
 		line.append(this.getFieldSeparator());
-		line.append(params.get(4)); // scope
+		line.append(params.get(5)); // ref
 		line.append(this.getFieldSeparator());
-		line.append(params.get(5)); // level
+		line.append(params.get(6)); // scope
 		line.append(this.getFieldSeparator());
-		line.append(params.get(6)); // sub level
+		line.append(params.get(7)); // level
+		line.append(this.getFieldSeparator());
+		line.append(params.get(8)); // sub level
 		line.append(this.getFieldSeparator());
 		
 		int count = 2;
-		for (String param : params.subList(7, params.size())){
+		for (String param : params.subList(9, params.size())){
 			line.append(param.replace("\n", " ")); // remove carriage returns for Excel.
 			line.append((count % 2 == 0)?
 					this.getFieldPresenter():

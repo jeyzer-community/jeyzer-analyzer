@@ -14,10 +14,6 @@ package org.jeyzer.monitor.engine.event;
 
 
 
-
-
-
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -42,6 +38,7 @@ public abstract class MonitorEvent {
 	
 	// Printable attributes
 	public static final String PRINT_EVENT = "EVENT";
+	public static final String PRINT_EXT_ID = "EXT ID";
 	public static final String PRINT_REF = "REF";
 	public static final String PRINT_SCOPE = "SCOPE";
 	public static final String PRINT_LEVEL = "LEVEL";
@@ -60,25 +57,27 @@ public abstract class MonitorEvent {
 	// Attribute indexes
 	public static final int PARAM_EVENT_FIELD_INDEX = 0;
 	public static final int PARAM_EVENT_VALUE_INDEX = 1;
-	public static final int PARAM_REF_FIELD_INDEX = 2;
-	public static final int PARAM_REF_VALUE_INDEX = 3;
-	public static final int PARAM_SCOPE_VALUE_INDEX = 4;
-	public static final int PARAM_LEVEL_VALUE_INDEX = 5;
-	public static final int PARAM_SUB_LEVEL_VALUE_INDEX = 6;
-	public static final int PARAM_ACTION_FIELD_INDEX = 7;
-	public static final int PARAM_ACTION_VALUE_INDEX = 8;
-	public static final int PARAM_THREAD_FIELD_INDEX = 9;
-	public static final int PARAM_THREAD_VALUE_INDEX = 10;
-	public static final int PARAM_START_DATE_FIELD_INDEX = 11;
-	public static final int PARAM_START_DATE_VALUE_INDEX = 12;
-	public static final int PARAM_END_DATE_FIELD_INDEX = 13;
-	public static final int PARAM_END_DATE_VALUE_INDEX = 14;
-	public static final int PARAM_DURATION_FIELD_INDEX = 15;
-	public static final int PARAM_DURATION_VALUE_INDEX = 16;
-	public static final int PARAM_RECOMMENDATION_FIELD_INDEX = 17;
-	public static final int PARAM_RECOMMENDATION_VALUE_INDEX = 18;
-	public static final int PARAM_COUNT_FIELD_INDEX = 19;
-	public static final int PARAM_COUNT_VALUE_INDEX = 20;	
+	public static final int PARAM_EXT_ID_FIELD_INDEX = 2;
+	public static final int PARAM_EXT_ID_VALUE_INDEX = 3;
+	public static final int PARAM_REF_FIELD_INDEX = 4;
+	public static final int PARAM_REF_VALUE_INDEX = 5;
+	public static final int PARAM_SCOPE_VALUE_INDEX = 6;
+	public static final int PARAM_LEVEL_VALUE_INDEX = 7;
+	public static final int PARAM_SUB_LEVEL_VALUE_INDEX = 8;
+	public static final int PARAM_ACTION_FIELD_INDEX = 9;
+	public static final int PARAM_ACTION_VALUE_INDEX = 10;
+	public static final int PARAM_THREAD_FIELD_INDEX = 11;
+	public static final int PARAM_THREAD_VALUE_INDEX = 12;
+	public static final int PARAM_START_DATE_FIELD_INDEX = 13;
+	public static final int PARAM_START_DATE_VALUE_INDEX = 14;
+	public static final int PARAM_END_DATE_FIELD_INDEX = 15;
+	public static final int PARAM_END_DATE_VALUE_INDEX = 16;
+	public static final int PARAM_DURATION_FIELD_INDEX = 17;
+	public static final int PARAM_DURATION_VALUE_INDEX = 18;
+	public static final int PARAM_RECOMMENDATION_FIELD_INDEX = 19;
+	public static final int PARAM_RECOMMENDATION_VALUE_INDEX = 20;
+	public static final int PARAM_COUNT_FIELD_INDEX = 21;
+	public static final int PARAM_COUNT_VALUE_INDEX = 22;	
 	
 	public static class MonitorEventComparable implements Comparator<MonitorEvent>{
 		 
@@ -161,6 +160,10 @@ public abstract class MonitorEvent {
 	public String getId(){
 		return this.info.getId();
 	}
+	
+	public String getExtId(){
+		return this.info.getExtId();
+	}
 
 	public String dump() {
 		StringBuilder msg = new StringBuilder(400);
@@ -189,6 +192,7 @@ public abstract class MonitorEvent {
 	
 	public void elect(){
 		this.elected = true;
+		this.info.initiateExtId();
 	}
 	
 	public boolean isElected(){
@@ -303,6 +307,8 @@ public abstract class MonitorEvent {
 		List<String> params = new ArrayList<>();
 		params.add(PRINT_EVENT);
 		params.add(this.name);
+		params.add(PRINT_EXT_ID);
+		params.add(this.info.getExtId());
 		params.add(PRINT_REF);
 		params.add(this.info.getRef());
 		params.add(this.info.getScope().toString());
@@ -329,6 +335,7 @@ public abstract class MonitorEvent {
 	protected void dumpHeader(StringBuilder msg, String event) {
 		msg.append("===============================\n");
 		msg.append("EVENT : " + event + "\n");
+		msg.append("EXT ID : " + this.info.getExtId() + "\n");
 		msg.append("REF : " + this.info.getRef() + "\n");
 		msg.append("LEVEL : " + this.info.getLevel() + "\n");
 		msg.append("SUB LEVEL : " + this.info.getSubLevel() + "\n");

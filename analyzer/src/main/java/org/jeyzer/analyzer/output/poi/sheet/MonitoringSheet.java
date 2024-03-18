@@ -138,7 +138,7 @@ public class MonitoringSheet extends JeyzerSheet {
 		if (criticalAlert && sheetCfg.getCriticalColor() != null)
     		((XSSFSheet)sheet).setTabColor(sheetCfg.getCriticalColor());
 		
-    	addTopBar(sheet, 25);
+    	addTopBar(sheet, 26);
     	addMenuLink(sheet, sheetCfg, STYLE_THEME_TOP_BAR_JEYZER_TITLE, 0, 1);
     	
     	close(this.sheetCfg);
@@ -357,6 +357,10 @@ public class MonitoringSheet extends JeyzerSheet {
 		Cell cell = addCell(row, rowPos++, eventId, STYLE_CELL_CENTERED_WRAPPED);
 		setColorHighlight(cell, rank, this.rankingHighlights);
 
+		// event ext id
+		String extId = params.get(PARAM_EXT_ID_VALUE_INDEX);
+		cell = addCell(row, rowPos++, Long.parseLong(extId), STYLE_CELL_CENTERED, HorizontalAlignment.CENTER);
+		
 		// recommendation
 		String recommendation =  params.get(PARAM_RECOMMENDATION_VALUE_INDEX);
 		cell = addCell(row, rowPos++, recommendation, STYLE_CELL_SMALL_TEXT_WRAPPED);
@@ -574,6 +578,9 @@ public class MonitoringSheet extends JeyzerSheet {
         
     	sheet.setColumnWidth(rowPos, 34*256);
     	addHeaderCell(row, rowPos++, "Event", STYLE_THEME_HEADER2);
+    	
+    	sheet.setColumnWidth(rowPos, 6*256);
+    	addHeaderCell(row, rowPos++, "Id", STYLE_THEME_HEADER2);
     	
     	sheet.setColumnWidth(rowPos, 60*256);
     	addHeaderCell(row, rowPos++, "Recommendation", STYLE_THEME_HEADER2);

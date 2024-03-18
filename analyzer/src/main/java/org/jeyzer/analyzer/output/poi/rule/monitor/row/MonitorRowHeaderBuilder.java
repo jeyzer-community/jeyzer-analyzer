@@ -14,10 +14,6 @@ package org.jeyzer.analyzer.output.poi.rule.monitor.row;
 
 
 
-
-
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +46,8 @@ public class MonitorRowHeaderBuilder {
 
 	    	if (EventIdRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
     			rule = new EventIdRule(headerCfg, displayContext);
+	    	else if (EventExtIdRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
+    			rule = new EventExtIdRule(headerCfg, displayContext);
 	    	else if (EventNameRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))
     			rule = new EventNameRule(headerCfg, displayContext);
 	    	else if (EventRefRule.RULE_NAME.equalsIgnoreCase(headerCfg.getName()))

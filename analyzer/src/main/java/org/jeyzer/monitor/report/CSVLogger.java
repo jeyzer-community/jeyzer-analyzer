@@ -14,10 +14,6 @@ package org.jeyzer.monitor.report;
 
 
 
-
-
-
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +27,7 @@ import org.jeyzer.monitor.util.MonitorHelper;
 
 public class CSVLogger extends MonitorLogger {
 
-	public static final String CSV_SEP = ",";
+	public static final String CSV_SEP = ";";
 	
 	private boolean emptyFile = true;
 	
@@ -53,6 +49,8 @@ public class CSVLogger extends MonitorLogger {
 		out.write("REPORT TIMESTAMP" + CSV_SEP);
 		out.write("NODE" + CSV_SEP);
 		out.write(MonitorEvent.PRINT_EVENT + CSV_SEP);
+		out.write(MonitorEvent.PRINT_EXT_ID + CSV_SEP);
+		out.write(MonitorEvent.PRINT_REF + CSV_SEP);
 		out.write(MonitorEvent.PRINT_SCOPE + CSV_SEP);
 		out.write(MonitorEvent.PRINT_LEVEL + CSV_SEP);
 		out.write(MonitorEvent.PRINT_SUB_LEVEL + CSV_SEP);
@@ -96,28 +94,31 @@ public class CSVLogger extends MonitorLogger {
 		
 		List<String> params = event.getPrintableParameters();
 		
-		// handle "<event> <REF> <SCOPE> <LEVEL> <SUB LEVEL>"
+		// handle "<event> <EXT ID> <REF> <SCOPE> <LEVEL> <SUB LEVEL>"
 		line.append(params.get(1));
 		line.append(CSV_SEP);
 		line.append(params.get(3));
-		line.append(CSV_SEP);
-		line.append(params.get(4));
 		line.append(CSV_SEP);
 		line.append(params.get(5));
 		line.append(CSV_SEP);
 		line.append(params.get(6));
 		line.append(CSV_SEP);
+		line.append(params.get(7));
+		line.append(CSV_SEP);
+		line.append(params.get(8));
+		line.append(CSV_SEP);
 		
 		String crappyPrefix = "";
 		
+		// <ACTION>	<THREAD> <START DATE> <END DATE> <DURATION> <RECOMMENDATION> <COUNT> <OTHER INFO>
 		int count = 2;
 		// print 1 out of 2 fields
-		for (String param : params.subList(7, params.size())){
+		for (String param : params.subList(9, params.size())){
 			if (count % 2 != 0){
 				line.append(crappyPrefix + param.replace('\n', ' ')); // remove carriage returns for Excel.
 				line.append(CSV_SEP);
 			}
-			if (count==19 || count==21  || count==23) // super crappy hack 2..
+			if (count==21 || count==23  || count==25) // super crappy hack 2..
 				// crappy hack : keep Field name for Other Info column 
 				crappyPrefix = param + " : " ;
 			else
@@ -135,6 +136,5 @@ public class CSVLogger extends MonitorLogger {
 	public boolean isAppend() {
 		return true;
 	}
-
 	
 }
