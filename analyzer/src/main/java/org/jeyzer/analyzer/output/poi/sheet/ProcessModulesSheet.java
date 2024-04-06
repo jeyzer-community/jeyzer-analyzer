@@ -104,17 +104,19 @@ public class ProcessModulesSheet extends JeyzerSheet {
 		// automatic
 		addCell(row, rowPos++, module.isAutomatic() ? "true" : "false", STYLE_CELL_CENTERED_WRAPPED);
 		
+		// JEYZ-96 : secure the cell display (exports could be huge)
+		
 		// requires
-		addCell(row, rowPos++, AnalyzerHelper.getListAsString(module.getRequires()), STYLE_CELL_CENTERED_WRAPPED);
+		addCell(row, rowPos++, secureCellDisplayValue(AnalyzerHelper.getListAsString(module.getRequires())), STYLE_CELL_CENTERED_WRAPPED);
 		
 		// exports
-		addCell(row, rowPos++, AnalyzerHelper.getListAsString(module.getExports()), STYLE_CELL_SMALL_TEXT_WRAPPED);
+		addCell(row, rowPos++, secureCellDisplayValue(AnalyzerHelper.getListAsString(module.getExports())), STYLE_CELL_SMALL_TEXT_WRAPPED);
     	
 		// uses
-		addCell(row, rowPos++, AnalyzerHelper.getListAsString(module.getUses()), STYLE_CELL_SMALL_TEXT_WRAPPED);
+		addCell(row, rowPos++, secureCellDisplayValue(AnalyzerHelper.getListAsString(module.getUses())), STYLE_CELL_SMALL_TEXT_WRAPPED);
 		
 		// provides
-		addCell(row, rowPos++, AnalyzerHelper.getListAsString(module.getProvides()), STYLE_CELL_SMALL_TEXT_WRAPPED);
+		addCell(row, rowPos++, secureCellDisplayValue(AnalyzerHelper.getListAsString(module.getProvides())), STYLE_CELL_SMALL_TEXT_WRAPPED);
 		
 		// class loader
 		addCell(row, rowPos++, module.getClassLoader() != null ? module.getClassLoader() : "", STYLE_CELL_CENTERED_WRAPPED);
