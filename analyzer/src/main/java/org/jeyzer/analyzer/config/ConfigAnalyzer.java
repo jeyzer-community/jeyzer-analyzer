@@ -20,8 +20,10 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
@@ -204,7 +206,7 @@ public class ConfigAnalyzer {
 		loadVersion();
 
 		setBuiltinProperties();
-
+		
 		dumpProperties();
 	}
 
@@ -746,15 +748,24 @@ public class ConfigAnalyzer {
 	}
 
 	public void dumpProperties() {
+		if (!logger.isInfoEnabled())
+			return;
+		
 		Enumeration<?> e = config.propertyNames();
+		Map<String,String> startupProps = new TreeMap<>();
 
 		logger.info("Analysis startup properties :");
 		while (e.hasMoreElements()) {
 			String key = (String) e.nextElement();
 			String value = config.getProperty(key);
+			if (value != null)
+				startupProps.put(key, value);
+		}
+		
+		// display it ordered
+		for (String key : startupProps.keySet()) {
 			// format paths in correct way
-			logger.info("- {} : {}", key, value.replace('\\', '/'));
+			logger.info("- {} : {}", key, startupProps.get(key).replace('\\', '/'));			
 		}
 	}
-
 }
