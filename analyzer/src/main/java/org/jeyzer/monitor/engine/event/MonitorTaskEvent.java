@@ -13,11 +13,6 @@ package org.jeyzer.monitor.engine.event;
  */
 
 
-
-
-
-
-
 import java.util.List;
 
 import org.jeyzer.analyzer.data.ThreadAction;
@@ -42,6 +37,9 @@ public abstract class MonitorTaskEvent extends MonitorEvent {
 	
 	protected StackText stackText; // may be null
 
+	protected String operation;
+	protected String contentionType;
+	
 	public MonitorTaskEvent(String eventName, MonitorEventInfo info, ThreadAction action){
 		super(eventName, info);
 		this.threadName = action.getName();
@@ -59,6 +57,16 @@ public abstract class MonitorTaskEvent extends MonitorEvent {
 		this.functionPrincipal = action.getPrincipalCompositeFunction();
 		
 		this.realDuration = Scope.STACK.equals(this.info.getScope())? 0 : 1; // Influences the duration computation
+		
+		this.operation = action.getCompositeOperation();
+		if (this.operation == null || this.operation.isEmpty()){
+			this.operation = "OTBI";
+		}
+		
+		this.contentionType = action.getPrincipalCompositeContentionType();
+		if (this.contentionType == null || this.contentionType.isEmpty()){
+			this.contentionType = "CTTBI";
+		}
 	}
 	
 	public MonitorTaskEvent(String eventName, MonitorEventInfo info, ThreadAction action, ThreadStackHandler stack){
@@ -81,6 +89,12 @@ public abstract class MonitorTaskEvent extends MonitorEvent {
 				getPrintableDuration()
 				);
 		
+		params.add("Operation");
+		params.add(this.operation);
+		
+		params.add("Contention type");
+		params.add(this.contentionType);
+		
 		addPrintableExtraParameters(params);
 		
 		return params;
@@ -96,6 +110,8 @@ public abstract class MonitorTaskEvent extends MonitorEvent {
 		// task specifics
 		msg.append("ACTION : " + this.function + "\n");
 		msg.append("THREAD : " + this.threadId + " / " + this.threadName + "\n");
+		msg.append("OPER   : " + this.operation + "\n");
+		msg.append("CONT T.: " + this.contentionType + "\n");
 		
 		dumpExtraParameters(msg);
 		dumpFooter(msg);
@@ -128,6 +144,14 @@ public abstract class MonitorTaskEvent extends MonitorEvent {
 	
 	public String getPrincipalFunction() {
 		return functionPrincipal;
+	}
+	
+	public String getOperation() {
+		return operation;
+	}
+	
+	public String getContentionType() {
+		return contentionType;
 	}
 	
 	public void updateTime(long time){

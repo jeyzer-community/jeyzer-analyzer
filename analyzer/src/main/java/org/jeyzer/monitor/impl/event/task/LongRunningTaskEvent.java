@@ -14,10 +14,6 @@ package org.jeyzer.monitor.impl.event.task;
 
 
 
-
-
-
-
 import java.util.List;
 
 import org.jeyzer.analyzer.data.ThreadAction;
@@ -36,18 +32,27 @@ public class LongRunningTaskEvent extends MonitorTaskEvent {
 	
 	@Override
 	public void updateContext(ThreadStack stack) {
-		// do nothing
+		// Update the operation : take the latest one
+		this.operation = stack.getPrincipalOperation();
+		if (this.operation == null || this.operation.isEmpty()){
+			this.operation = "OTBI";
+		}
+		
+		// Update the contention type
+		this.contentionType = stack.getPrincipalContentionType();
+		if (this.contentionType == null || this.contentionType.isEmpty()){
+			this.contentionType = "CTTBI";
+		}
 	}
 
 	@Override
 	public void addPrintableExtraParameters(List<String> params) {
-		// nothing to add
+		// Nothing to do
 	}
 
 	@Override
 	protected void dumpExtraParameters(StringBuilder msg) {
-		// nothing to add
+		// Nothing to do
 	}
 	
 }
-
