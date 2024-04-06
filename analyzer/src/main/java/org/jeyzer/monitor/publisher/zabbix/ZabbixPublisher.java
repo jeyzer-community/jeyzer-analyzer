@@ -79,8 +79,11 @@ public class ZabbixPublisher implements Publisher{
 	}
 
 	private File buildInputFile(List<MonitorEvent> events, JzrSession session) {
-        String content = buildInput(events, session, this.cfg.getInputTemplateCfg());
+        // Sort it by external id
+        events.sort((MonitorEvent event1, MonitorEvent event2) -> event1.getExtId().compareTo(event2.getExtId()));
 		
+        String content = buildInput(events, session, this.cfg.getInputTemplateCfg());
+		        
 		File storageDir = this.cfg.getSetupCfg().getStorageDirectory();
 		String fileName = FileUtil.getTimeStampedFileName("zabbix_input-", new Date(), ".txt");
 		File input = new File(storageDir, fileName);
