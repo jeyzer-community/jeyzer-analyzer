@@ -145,7 +145,7 @@ public class JzrLocationResolver {
 			repoIds.addAll(this.repoResolver.getRepositoryIds());
 			for (ProcessModule module : processModules.getProcessModules())
 				if (isJeyzerManagedModule(module)) // optimization
-					resolveDynamicLocations(module, repoIds, paths, LocationType.PATTERN_SET);
+					resolveDynamicLocations(module, repoIds, paths, LocationType.MONITOR_RULE_SET);
 		}
 		// no warning as JDK 8 could be used (no modules).
 		
