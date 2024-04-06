@@ -19,10 +19,10 @@ public class ConfigDynamicLoading {
 	private static final String JZRA_DECLARED_REPOSITORY_ONLY = "declared_repository_only";
 	
 	private boolean dynamicLoadingActive = false;
-	private boolean declaredRepositoryOnly = true;
+	private boolean declaredRepositoryOnly = false;
 	
 	public ConfigDynamicLoading(Element dynamicNode) {
-		if (dynamicNode == null)
+		if (dynamicNode == null || dynamicNode.getFirstChild() == null)
 			return;
 		
 		this.dynamicLoadingActive = true;
