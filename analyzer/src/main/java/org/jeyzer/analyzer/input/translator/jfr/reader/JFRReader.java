@@ -227,8 +227,8 @@ public class JFRReader {
 			jfrDescriptor.incrementVirtualThreadStart(jfrDescriptor, event.getStartTime());
 		else if (JFR_JDK_VIRTUALTHREADEND.equals(event.getEventType().getName()))
 			jfrDescriptor.incrementVirtualThreadEnd(jfrDescriptor, event.getStartTime());
-//		else if (JFR_JDK_VIRTUALTHREADSUBMITFAILED.equals(event.getEventType().getName()))
-//			logger.info("Virtual thread submit failed detected");
+		else if (JFR_JDK_VIRTUALTHREADSUBMITFAILED.equals(event.getEventType().getName()))
+			logger.info("Virtual thread submit failed detected");
 		else if (JFR_JDK_VIRTUALTHREADPINNED.equals(event.getEventType().getName()))
 			jfrDescriptor.incrementVirtualThreadPinned(jfrDescriptor, event.getStartTime());
 		else if (JFR_JDK_INITIALSYSTEMPROPERTY.equals(event.getEventType().getName()))
