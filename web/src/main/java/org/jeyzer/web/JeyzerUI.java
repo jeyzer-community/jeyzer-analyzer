@@ -40,6 +40,7 @@ import org.jeyzer.analyzer.error.JzrNoThreadDumpFileFound;
 import org.jeyzer.analyzer.error.JzrTranslatorJFRInvalidVersionException;
 import org.jeyzer.analyzer.error.JzrTranslatorJFRThreadDumpEventNotFoundException;
 import org.jeyzer.analyzer.error.JzrTranslatorLimitViolationException;
+import org.jeyzer.analyzer.error.JzrTranslatorMultipleJFRFilesException;
 import org.jeyzer.analyzer.error.JzrTranslatorRecordingSnapshotNotFoundException;
 import org.jeyzer.analyzer.error.JzrTranslatorZipInvalidFileException;
 import org.jeyzer.analyzer.error.JzrTranslatorZipPasswordProtectedException;
@@ -47,6 +48,7 @@ import org.jeyzer.analyzer.output.ReportDescriptor;
 import org.jeyzer.analyzer.parser.io.SnapshotFileNameFilter;
 import org.jeyzer.analyzer.status.JeyzerStatusEventDispatcher;
 import org.jeyzer.analyzer.util.AnalyzerHelper;
+import org.jeyzer.analyzer.util.JFRHelper;
 import org.jeyzer.analyzer.util.SystemHelper;
 import org.jeyzer.analyzer.util.TimeZoneInfoHelper;
 import org.jeyzer.analyzer.util.ZipHelper;
@@ -72,7 +74,6 @@ import com.github.juchar.colorpicker.ColorPickerField;
 import com.vaadin.flow.component.AbstractField.ComponentValueChangeEvent;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Html;
-import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
@@ -826,7 +827,7 @@ public class JeyzerUI extends Div implements PageConfigurator, RouterLayout {
 			logger.info("JZR report generation could not complete." + buildRefMessage(request), e);
 			ui.getSession().lock(); // mandatory for the notifyUser
 			notifyUser("JZR Recording " + buildOriginalFileName(zipFileId) + " could not be loaded.<br/>" + buildExceptionMessage(e), NotificationLevel.WARNING);
-		} catch (JzrTranslatorJFRInvalidVersionException | JzrTranslatorJFRThreadDumpEventNotFoundException e) {
+		} catch (JzrTranslatorJFRInvalidVersionException | JzrTranslatorJFRThreadDumpEventNotFoundException | JzrTranslatorMultipleJFRFilesException e) {
 			logger.info("JZR report generation could not complete." + buildRefMessage(request), e);
 			ui.getSession().lock(); // mandatory for the notifyUser
 			notifyUser("JZR Recording " + buildOriginalFileName(zipFileId) + " could not be analyzed.<br/>" + buildExceptionMessage(e), NotificationLevel.WARNING);
@@ -1118,7 +1119,7 @@ public class JeyzerUI extends Div implements PageConfigurator, RouterLayout {
 		logger.info("Recording file received");
 		
 		// Accept only jfr, zip or gzip file
-		if (!ZipHelper.isCompressedFile(event.getFileName()) && !ZipHelper.isJFRFile(event.getFileName())) {
+		if (!ZipHelper.isCompressedFile(event.getFileName()) && !JFRHelper.isJFRFile(event.getFileName())) {
 			notifyUser("Drag and drop a zip or tar.gz or jfr file", NotificationLevel.WARNING);
 			logger.warn("Recording file rejected : attempt to load non supported recording file format");
 			upload.getElement().executeJavaScript(JS_CLEAR_FILES);
@@ -1174,7 +1175,7 @@ public class JeyzerUI extends Div implements PageConfigurator, RouterLayout {
 	
 	private void selectTimeZone(String localPath) {
 		// select it even if time zone detection is checked
-		if (ZipHelper.isJFRFile(localPath)) {
+		if (JFRHelper.isJFRFile(localPath)) {
 			this.recordingTimeZoneList.setValue("UTC");
 			this.recordingTimeZoneList.setReadOnly(true);
 			

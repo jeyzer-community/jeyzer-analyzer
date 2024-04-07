@@ -46,7 +46,7 @@ public class TimeZoneInfoHelper {
 		if (fileName == null || filter == null)
 			return new TimeZoneInfo();
 		
-		if (fileName.endsWith(ZipHelper.JFR_EXTENSION)) // JFR in zip file
+		if (fileName.endsWith(JFRHelper.JFR_EXTENSION)) // JFR in zip file
 			return new TimeZoneInfo(TimeZoneOrigin.JFR, "UTC");
 		
 		SnapshotFileNamePattern pattern = filter.getFilePattern(fileName);

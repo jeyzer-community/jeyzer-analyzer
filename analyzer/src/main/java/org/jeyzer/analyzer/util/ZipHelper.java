@@ -51,7 +51,6 @@ public class ZipHelper {
 
 	public static final String ZIP_EXTENSION = ".zip";
 	public static final String GZIP_EXTENSION = ".gz";
-	public static final String JFR_EXTENSION = ".jfr";
 	public static final String TAR_EXTENSION = ".tar";
 
 	private static final int BUFFER = 2048;
@@ -68,10 +67,6 @@ public class ZipHelper {
 
 	public static boolean isGzipFile(String filename) {
 		return filename != null && filename.toLowerCase().endsWith(GZIP_EXTENSION);
-	}
-	
-	public static boolean isJFRFile(String filename) {
-		return filename != null && filename.toLowerCase().endsWith(JFR_EXTENSION);
 	}
 	
 	public static boolean isTarFile(File file) {

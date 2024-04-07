@@ -35,6 +35,7 @@ import org.jeyzer.analyzer.parser.io.ThreadDumpFileDateComparator;
 import org.jeyzer.analyzer.parser.io.SnapshotFileNameFilter;
 import org.jeyzer.analyzer.status.JeyzerStatusEvent;
 import org.jeyzer.analyzer.status.JeyzerStatusEvent.STATE;
+import org.jeyzer.analyzer.util.JFRHelper;
 import org.jeyzer.analyzer.util.SystemHelper;
 import org.jeyzer.analyzer.util.ZipHelper;
 import org.slf4j.Logger;
@@ -61,7 +62,7 @@ public class CompressionTranslator implements Translator {
 			return false;
 		
 		String zipPathCandidate = input.getDirectory().getAbsolutePath();
-		if (ZipHelper.isJFRFile(zipPathCandidate))
+		if (JFRHelper.isJFRFile(zipPathCandidate))
 			return false;
 		
 		if (!ZipHelper.isZipFile(zipPathCandidate) && !ZipHelper.isGzipFile(zipPathCandidate)){

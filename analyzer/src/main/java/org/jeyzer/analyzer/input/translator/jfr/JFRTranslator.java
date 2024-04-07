@@ -23,6 +23,7 @@ import org.jeyzer.analyzer.config.translator.ConfigTranslator;
 import org.jeyzer.analyzer.config.translator.jfr.ConfigJFRDecompression;
 import org.jeyzer.analyzer.error.JzrTranslatorException;
 import org.jeyzer.analyzer.error.JzrTranslatorJFRInvalidVersionException;
+import org.jeyzer.analyzer.error.JzrTranslatorMultipleJFRFilesException;
 import org.jeyzer.analyzer.input.translator.TranslateData;
 import org.jeyzer.analyzer.input.translator.Translator;
 import org.jeyzer.analyzer.input.translator.jfr.mapper.JZRRecordingMapper;
@@ -31,8 +32,8 @@ import org.jeyzer.analyzer.input.translator.jfr.reader.JFRReader;
 import org.jeyzer.analyzer.parser.io.SnapshotFileNameFilter;
 import org.jeyzer.analyzer.status.JeyzerStatusEvent;
 import org.jeyzer.analyzer.status.JeyzerStatusEvent.STATE;
+import org.jeyzer.analyzer.util.JFRHelper;
 import org.jeyzer.analyzer.util.SystemHelper;
-import org.jeyzer.analyzer.util.ZipHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,10 +59,14 @@ public class JFRTranslator implements Translator {
 		if (input.getDirectory() == null)
 			return false;
 
-		if (input.getDirectory().isDirectory()
-			&& (input.getTDs().length != 1 || !ZipHelper.isJFRFile(input.getTDs()[0].getName())))
-				return false;
-		
+		if (input.getDirectory().isDirectory()){
+			if (JFRHelper.detectJFRFile(input.getTDs()) && input.getTDs().length != 1){
+				logger.error("Multiple files submitted for one JFR analysis");
+				throw new JzrTranslatorMultipleJFRFilesException("JFR analysis applies only on one JFR file. Please submit the JFR file alone (zipped or not).");					
+			}
+			return false;
+		}
+
 		if (!this.jfrCfg.isEnabled()) {
 			logger.error("JFR analysis not supported on the JDK used by the Jeyzer Analyzer");
 			throw new JzrTranslatorException("JFR analysis not supported on the JDK used by the Jeyzer Analyzer. Please ask your administrator to run it on Java 11+.");
@@ -114,7 +119,7 @@ public class JFRTranslator implements Translator {
 
 	private RecordingFile validateJFRFile(TranslateData input) throws JzrTranslatorException {
 		String jfrPath = input.getDirectory().getAbsolutePath();
-		if (!ZipHelper.isJFRFile(jfrPath)){
+		if (!JFRHelper.isJFRFile(jfrPath)){
 			logger.error("Failed to read the JFR recording. File must have extension jfr. Provided file is : " + input.getDirectory().getName());
 			throw new JzrTranslatorException("Failed to read the JFR recording. File extension must be .jfr");
 		}

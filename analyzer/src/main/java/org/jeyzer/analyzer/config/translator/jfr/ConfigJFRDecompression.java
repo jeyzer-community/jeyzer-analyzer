@@ -24,9 +24,9 @@ import org.jeyzer.analyzer.data.TimeZoneInfo;
 import org.jeyzer.analyzer.data.TimeZoneInfo.TimeZoneOrigin;
 import org.jeyzer.analyzer.error.JzrInitializationException;
 import org.jeyzer.analyzer.math.FormulaHelper;
+import org.jeyzer.analyzer.util.JFRHelper;
 import org.jeyzer.analyzer.util.SystemHelper;
 import org.jeyzer.analyzer.util.TimeZoneInfoHelper;
-import org.jeyzer.analyzer.util.ZipHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
@@ -73,7 +73,7 @@ public class ConfigJFRDecompression extends ConfigTranslator {
 		if (translatorNode == null)
 			return;
 		
-		supportedInputFileExtensions.add(ZipHelper.JFR_EXTENSION);
+		supportedInputFileExtensions.add(JFRHelper.JFR_EXTENSION);
 		
 		loadJFRCompression(translatorNode, threadDumpDirectory);
 	}
