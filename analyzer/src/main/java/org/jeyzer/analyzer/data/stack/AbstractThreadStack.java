@@ -563,6 +563,7 @@ public abstract class AbstractThreadStack implements ThreadStack {
 		for (String operation : this.operations){
 			b.append("    - " + operation + CR);
 		}
+		b.append(" - Locker     : " + (this.codeLockedName == null ? "None":this.codeLockedName) + CR);
 		b.append(" - Contentions : " + (this.contentionTypes.isEmpty() ? LOG_TRACE_NOT_SET:"") + CR);
 		for (String contentionType : this.contentionTypes){
 			b.append("    - " + contentionType + CR);
