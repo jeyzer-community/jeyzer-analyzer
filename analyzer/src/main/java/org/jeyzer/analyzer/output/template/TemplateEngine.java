@@ -36,6 +36,7 @@ public class TemplateEngine {
 	public static final String EVENT_KEY 		    = "event";
 	public static final String LAST_EVENT_KEY 		= "last_event";
 	public static final String REFRESH_PERIOD_KEY	= "refresh_period";
+	public static final String HOST_NAME_KEY 		= "host_name";
 
 	// velocity specific
 	private static final String TEMPLATE_DIRECTORY_PROPERTY = "file.resource.loader.path";
