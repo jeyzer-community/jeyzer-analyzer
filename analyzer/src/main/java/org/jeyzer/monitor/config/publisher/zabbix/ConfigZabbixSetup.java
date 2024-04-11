@@ -13,6 +13,7 @@ package org.jeyzer.monitor.config.publisher.zabbix;
  */
 
 import java.io.File;
+import java.time.Duration;
 
 import org.jeyzer.analyzer.config.ConfigUtil;
 import org.jeyzer.analyzer.error.JzrInitializationException;
@@ -32,12 +33,14 @@ public class ConfigZabbixSetup {
 	private static final String JEYZER_MONITOR_ZABBIX_STORAGE_DIRECTORY = "storage_directory";
 	private static final String JEYZER_MONITOR_ZABBIX_KEEP = "keep";
 	
+	
+	
 	private File sender;
 	private String paramsValue;
 
 	private File storageDirectory;
-	private boolean keepFiles;
-	
+	private Duration keepFiles;
+
 	public ConfigZabbixSetup(Element zabbixSetupNode) throws JzrInitializationException {
 		if (zabbixSetupNode == null)
 			throw new JzrInitializationException(
@@ -65,7 +68,7 @@ public class ConfigZabbixSetup {
 		return storageDirectory;
 	}
 
-	public boolean isKeepFiles() {
+	public Duration getKeepDuration() {
 		return keepFiles;
 	}
 
@@ -86,7 +89,10 @@ public class ConfigZabbixSetup {
 			throw new JzrInitializationException(
 					"Failed to initialize the monitor Zabbix sender : Zabbix storage directory cannot be created : " + storageDirectory.getAbsolutePath());
 		
-		this.keepFiles = Boolean.parseBoolean(ConfigUtil.getAttributeValue(zabbixInputFileNode, JEYZER_MONITOR_ZABBIX_KEEP));
+		this.keepFiles = ConfigUtil.getAttributeDuration(zabbixInputFileNode, JEYZER_MONITOR_ZABBIX_KEEP);
+		if (this.keepFiles == null)
+			throw new JzrInitializationException(
+					"Failed to initialize the monitor Zabbix sender : Zabbix input file keep parameter is not a duration.");
 	}
 
 	private void loadParameters(Element zabbixSenderNode) throws JzrInitializationException {

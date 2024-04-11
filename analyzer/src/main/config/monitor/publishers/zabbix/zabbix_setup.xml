@@ -17,8 +17,8 @@
 
 		<!-- Zabbix input file configuration -->
 		<!-- storage : generation directory, files get time stamped -->
-		<!-- keep : keep it for debugging -->
-		<input_file storage_directory="${JEYZER_RECORD_DIRECTORY}/monitor/zabbix-inputs" keep="true"/>
+		<!-- keep : input files retention, expressed as duration -->
+		<input_file storage_directory="${JEYZER_RECORD_DIRECTORY}/monitor/zabbix-inputs" keep="48h"/>
 
 	</zabbix_sender>
 
