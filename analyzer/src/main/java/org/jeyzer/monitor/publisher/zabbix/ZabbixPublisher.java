@@ -16,15 +16,19 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.jeyzer.analyzer.config.ConfigTemplate;
 import org.jeyzer.analyzer.error.JzrMonitorException;
 import org.jeyzer.analyzer.output.template.TemplateEngine;
 import org.jeyzer.analyzer.session.JzrMonitorSession;
 import org.jeyzer.analyzer.session.JzrSession;
+import org.jeyzer.analyzer.util.SystemHelper;
+import org.jeyzer.analyzer.util.SystemHelper.OldFileFilter;
 import org.jeyzer.monitor.config.publisher.zabbix.ConfigZabbixPublisher;
 import org.jeyzer.monitor.engine.event.MonitorEvent;
 import org.jeyzer.monitor.publisher.Publisher;
@@ -35,6 +39,9 @@ import org.slf4j.LoggerFactory;
 public class ZabbixPublisher implements Publisher{
 
 	public static final Logger logger = LoggerFactory.getLogger(ZabbixPublisher.class);	
+	
+	public static final String ZABBIX_INPUT_FILE_PREFIX = "zabbix_input-";
+	public static final String ZABBIX_INPUT_FILE_SUFFIX = ".txt";
 	
 	private ConfigZabbixPublisher cfg;
 	private ZabbixSenderAccessor sender;
@@ -70,12 +77,21 @@ public class ZabbixPublisher implements Publisher{
 		
 		sender.executeSender(input);
 		
-		cleanInput(input);
+		cleanInput();
 	}
 	
-	private void cleanInput(File input) {
-		if (!this.cfg.getSetupCfg().isKeepFiles() && !input.delete())
-			logger.warn("Failed to delete the Zabbix input file : {}", input.getAbsolutePath());
+	private void cleanInput() {
+		long time = Calendar.getInstance().getTimeInMillis();
+		long delay = this.cfg.getSetupCfg().getKeepDuration().toMillis();
+		
+		OldFileFilter filter = new OldFileFilter(ZABBIX_INPUT_FILE_PREFIX, ZABBIX_INPUT_FILE_SUFFIX, time - delay);		
+		File storageDir = this.cfg.getSetupCfg().getStorageDirectory();
+		
+		File[] filesToDelete = storageDir.listFiles(filter);
+		for (File file : filesToDelete) {
+			if (!file.delete())
+				logger.warn("Failed to delete the Zabbix input file : {}", file.getAbsolutePath());
+		}
 	}
 
 	private File buildInputFile(List<MonitorEvent> events, JzrSession session) {
@@ -85,7 +101,7 @@ public class ZabbixPublisher implements Publisher{
         String content = buildInput(events, session, this.cfg.getInputTemplateCfg());
 		        
 		File storageDir = this.cfg.getSetupCfg().getStorageDirectory();
-		String fileName = FileUtil.getTimeStampedFileName("zabbix_input-", new Date(), ".txt");
+		String fileName = FileUtil.getTimeStampedFileName(ZABBIX_INPUT_FILE_PREFIX, new Date(), ZABBIX_INPUT_FILE_SUFFIX);
 		File input = new File(storageDir, fileName);
 		
 		try (
@@ -113,6 +129,9 @@ public class ZabbixPublisher implements Publisher{
         templateEngine.addContextEntry(
         		TemplateEngine.APPLICATION_TYPE_KEY, 
         		session.getApplicationId());
+        templateEngine.addContextEntry(
+        		TemplateEngine.HOST_NAME_KEY, 
+        		SystemHelper.getHostName("NA"));
         
         return templateEngine.generate();
 	}

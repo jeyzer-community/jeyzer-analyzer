@@ -17,11 +17,14 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Date;
 
 import org.jeyzer.analyzer.error.JzrException;
@@ -54,6 +57,14 @@ public class SystemHelper {
 
 	public static boolean isWindows(){
 		return WINDOWS_OS;
+	}
+	
+	public static String getHostName(String defaultHost) {
+		try {
+			return InetAddress.getLocalHost().getHostName();
+		} catch (UnknownHostException e) {
+			return defaultHost;
+		}
 	}
 	
 	public static boolean isAtLeastJdK9() {
@@ -233,5 +244,25 @@ public class SystemHelper {
 	        }
 	    }
 	    return buffer;
+	}
+	
+	public static class OldFileFilter implements FilenameFilter {
+		String ext;
+		String prefix;
+		long maxUpperTime;
+
+		public OldFileFilter(String prefix, String ext, long maxUpperTime) {
+			this.prefix = prefix;
+			this.ext = ext;
+			this.maxUpperTime = maxUpperTime;
+		}
+
+		@Override
+		public boolean accept(File dir, String name) {
+			File file = new File(dir.getPath() + File.separator + name);
+			return name.startsWith(prefix) 
+					&& name.endsWith(ext) 
+					&& file.lastModified() < maxUpperTime;
+		}
 	}
 }
