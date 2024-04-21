@@ -360,6 +360,7 @@ public class MonitoringSheet extends JeyzerSheet {
 		// event ext id
 		String extId = params.get(PARAM_EXT_ID_VALUE_INDEX);
 		cell = addCell(row, rowPos++, Long.parseLong(extId), STYLE_CELL_CENTERED, HorizontalAlignment.CENTER);
+		setColorHighlight(cell, rank, this.rankingHighlights);
 		
 		// recommendation
 		String recommendation =  params.get(PARAM_RECOMMENDATION_VALUE_INDEX);
