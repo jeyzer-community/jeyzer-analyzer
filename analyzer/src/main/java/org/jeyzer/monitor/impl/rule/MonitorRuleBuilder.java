@@ -54,6 +54,7 @@ import org.jeyzer.monitor.impl.rule.session.SuspendedThreadsRule;
 import org.jeyzer.monitor.impl.rule.session.advanced.CPUPercentProcessRule;
 import org.jeyzer.monitor.impl.rule.session.advanced.CPUPercentSystemRule;
 import org.jeyzer.monitor.impl.rule.session.advanced.CPURunnableVsCPUCapacityRule;
+import org.jeyzer.monitor.impl.rule.session.advanced.ContentionTypeAndCPUProcessRule;
 import org.jeyzer.monitor.impl.rule.session.advanced.DiskSpaceFreePercentRule;
 import org.jeyzer.monitor.impl.rule.session.advanced.DiskSpaceFreeRule;
 import org.jeyzer.monitor.impl.rule.session.advanced.DiskSpaceUsedPercentRule;
@@ -470,6 +471,8 @@ public class MonitorRuleBuilder {
 					rule = new OpenFileDescriptorPercentRule(def);
 				else if (VirtualThreadsCPUPercentRule.RULE_NAME.equals(name))
 					rule = new VirtualThreadsCPUPercentRule(def);
+				else if (ContentionTypeAndCPUProcessRule.RULE_NAME.equals(name))
+					rule = new ContentionTypeAndCPUProcessRule(def);
 				
 				if (rule != null)
 					sessionRules.add(rule);
