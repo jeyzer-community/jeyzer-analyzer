@@ -312,6 +312,28 @@
 			</thresholds>
 		</rule>
 		
+		<!--  If the process CPU percentage is higher than [process_cpu_percent] respectively and the [contention_type] is detected, generate event. -->
+		<rule name="Contention type and high process CPU" extra_info="Consuming regular expression" ref="JZR-ADV-022">
+			<thresholds>
+				<threshold type="session custom"
+						   count="2"
+						   process_cpu_percent="20"
+						   contention_type="Regular expression"
+				           level="INFO" 
+				           sub_level="9"
+				           trust_factor="60"
+				           message="Regular expression is detected and process consumes more than 20% of CPU.&#10;You may check if any regular expression may not be the root cause of this CPU activity.&#10;It could be that the regular expression is not well designed."/>
+				<threshold type="session custom"
+						   count="3"
+						   process_cpu_percent="70"
+						   contention_type="Regular expression"
+				           level="WARNING"
+				           sub_level="9"
+				           trust_factor="80"
+				           message="Regular expression is detected and process consumes more than 70% of CPU.&#10;You should check if any regular expression may not be the root cause of this CPU burst.&#10;It could be that the regular expression is not well designed."/>
+			</thresholds>
+		</rule>
+		
 	</rules>
 
 </monitor>
