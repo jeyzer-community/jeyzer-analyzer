@@ -60,11 +60,15 @@ public class JFRTranslator implements Translator {
 			return false;
 
 		if (input.getDirectory().isDirectory()){
-			if (JFRHelper.detectJFRFile(input.getTDs()) && input.getTDs().length != 1){
-				logger.error("Multiple files submitted for one JFR analysis");
-				throw new JzrTranslatorMultipleJFRFilesException("JFR analysis applies only on one JFR file. Please submit the JFR file alone (zipped or not).");					
+			if (JFRHelper.detectJFRFile(input.getTDs())){
+				if (input.getTDs().length != 1) {
+					logger.error("Multiple files submitted for one JFR analysis");
+					throw new JzrTranslatorMultipleJFRFilesException("JFR analysis applies only on one JFR file. Please submit the JFR file alone (zipped or not).");
+				}
 			}
-			return false;
+			else {
+				return false;
+			}
 		}
 
 		if (!this.jfrCfg.isEnabled()) {
