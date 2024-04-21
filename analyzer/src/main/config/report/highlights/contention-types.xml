@@ -29,6 +29,7 @@
 			<highlight name="Code execution" color="RGB-55-225-124"/> <!-- Light green -->
 			<highlight name="Native" color="RGB-55-225-124"/> <!-- Light green -->
 			<highlight name="Collection" color="RGB-72-181-11"/> <!-- Green -->
+			<highlight name="Regular expression" color="RGB-72-181-11"/> <!-- Green -->
 			<highlight name="String" color="RGB-72-181-11"/> <!-- Green -->
 			<highlight name="Random generation" color="RGB-72-181-11"/> <!-- Green -->
 			<highlight name="Exception" color="RGB-72-181-11"/> <!-- Green -->

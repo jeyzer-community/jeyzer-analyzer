@@ -201,6 +201,7 @@
 					<contention_type name="Code execution"/>
 					<contention_type name="Collection"/>
 					<contention_type name="String"/>
+					<contention_type name="Regular expression"/>
 					<contention_type name="Random generation"/>
 					<contention_type name="Exception"/>
 					<contention_type name="Native"/>
