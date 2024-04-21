@@ -12,12 +12,6 @@ package org.jeyzer.analyzer.config.patterns;
  * ----------------------------LICENSE_END----------------------------
  */
 
-
-
-
-
-
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.LinkedHashMap;
@@ -187,7 +181,8 @@ public class ConfigSinglePatterns implements ConfigPatterns {
 				pattern.updatePriority(priority);
 			}
 		}
-		logger.info(" - " + patternNodes.getLength() + " " + patternType + " patterns loaded");
+		if (logger.isDebugEnabled())
+			logger.debug(" - " + patternNodes.getLength() + " " + patternType + " patterns loaded");
 	}
 
 	private void setDiscoveryPatterns(Element patternsNode, String patternType) throws JzrInitializationException {
@@ -227,7 +222,8 @@ public class ConfigSinglePatterns implements ConfigPatterns {
 			// priority is not considered
 		}
 		distinctPatternCounts.put(patternType, patterns.size());
-		logger.info(" - " + patterns.size() + " " + patternType + " patterns loaded");
+		if (logger.isDebugEnabled())
+			logger.debug(" - " + patterns.size() + " " + patternType + " patterns loaded");
 	}
 
 	private void loadDiscoveryPattterns(Element patternNode, FOCUS focus,
