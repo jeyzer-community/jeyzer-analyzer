@@ -955,7 +955,7 @@ public class JeyzerUI extends Div implements PageConfigurator, RouterLayout {
 	}
 
 	private String buildFileFormats(Set<String> supportedFileFormats) {
-		String message = "Please use one of these recording/thread dump file formats :<BR/>";
+		String message = "Please use one of these recording/thread dump file formats/extensions :<BR/>";
 		for (String format : supportedFileFormats)
 			message += " - " + format + "<BR/>";
 		return message;
