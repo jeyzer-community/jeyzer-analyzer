@@ -6,20 +6,23 @@
 ## Zabbix fields :
 ##   $application_id is the Zabbix host (tenant), mapped here to the monitoring instance (target)
 ##   user.action is the Zabbix key
-##   3rd field is the Zabbix value, JSON formatted for immediate integration in Zabbix
+##   3rd field is Zabbix value, in flat format
 ##     It contains the event details. $event.NameExtraInfo is the user action
 ##
 ## Zabbix sender file format : see https://www.zabbix.com/documentation/current/en/manpages/zabbix_sender
 ##
 ## 
 #foreach( $event in $events_list )
-"$application_id" "user.action[allmetrics]" "{\"HOSTNAME\": \"$host_name\", \"TENANT_ID\": \"$application_id\", \"ACTION\": \"#nameExtraInfo( $event )-$event.ExtId\", \"OPERATION\": \"#operation( $event )\", \"CONTENTION_TYPE\": \"#contention_type( $event )\", \"START_DATE\": \"$event.StartDate\", \"END_DATE\": \"$event.EndDate\", \"DURATION\": \"$event.Duration\"}"
+"$application_id" "user.action" "$host_name $application_id/#nameExtInfo( $event )-$event.ExtId #name( $event )#operation( $event )#contention_type( $event )- $event.StartDate - $event.EndDate - $event.Duration"
 #end
-#macro( nameExtraInfo $event ) 
+#macro( name $event )
+#if( $event.NameExtraInfo ) $event.Name : $event.NameExtraInfo #else $event.Name #end
+#end
+#macro( nameExtInfo $event )
 $event.NameExtraInfo#end
 #macro( operation $event )
-#if( $event.Operation )$event.Operation#end
+#if( $event.Operation )- $event.Operation #end
 #end
 #macro( contention_type $event )
-#if( $event.ContentionType )$event.ContentionType#end
+#if( $event.ContentionType )- $event.ContentionType #end
 #end

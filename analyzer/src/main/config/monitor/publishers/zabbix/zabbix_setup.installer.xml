@@ -21,11 +21,17 @@
 		<process path="${ZABBIX_SENDER_PATH}"/>
 		<parameters value="-z ${ZABBIX_HOST} -p ${ZABBIX_PORT} -s ${JEYZER_TARGET_NAME} -I ${ZABBIX_SOURCE_IP}"/>
 		-->
+		<!-- Variant -->
+		<!-- Zabbix agent configuration (-c)  : zabbix_agentd.conf file path -->
+		<!-- Zabbix IP (-I)                   : source IP address -->
+		<!--
+		<parameters value="-c ${ZABBIX_AGENT_CONF_PATH} -I ${ZABBIX_SOURCE_IP}"/>
+		-->
 
 		<!-- Zabbix input file configuration -->
 		<!-- storage : generation directory, files get time stamped -->
 		<!-- keep : keep it for debugging -->
-		<input_file storage_directory="${JEYZER_RECORD_DIRECTORY}/monitor/zabbix-inputs" keep="true"/>
+		<input_file storage_directory="${JEYZER_RECORD_DIRECTORY}/monitor/zabbix-inputs" keep="48h"/>
 
 	</zabbix_sender>
 

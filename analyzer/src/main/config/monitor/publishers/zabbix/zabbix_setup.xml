@@ -14,6 +14,11 @@
 		<!-- Zabbix IP (-I)     : source IP address -->
 		<!-- Input file (-i)    : not specified here, added automatically by the Jeyzer publisher -->
 		<parameters value="-z ${ZABBIX_HOST} -p ${ZABBIX_PORT} -s ${JEYZER_TARGET_NAME} -I ${ZABBIX_SOURCE_IP}"/>
+		
+		<!-- Zabbix sender parameters - variant -->
+		<!-- Zabbix agent configuration (-c)  : zabbix_agentd.conf file path -->
+		<!-- Zabbix IP (-I)                   : source IP address -->
+		<!-- parameters value="-c ${ZABBIX_AGENT_CONF_PATH} -I ${ZABBIX_SOURCE_IP}"/-->
 
 		<!-- Zabbix input file configuration -->
 		<!-- storage : generation directory, files get time stamped -->
