@@ -8,7 +8,8 @@
 			
 			<!-- Locker identified -->
 			<highlight name="Code locked" color="RGB-119-165-233"/> <!-- Blue light -->
-					
+			
+			<!-- Remote servers : db, mail -->		
 			<highlight name="Database" color="RGB-255-255-0"/> <!-- Yellow -->
 			<highlight name="Oracle" color="RGB-255-255-0"/> <!-- Yellow -->
 			<highlight name="MSSQL" color="RGB-255-255-0"/> <!-- Yellow -->
@@ -16,6 +17,7 @@
 			<highlight name="MySQL" color="RGB-255-255-0"/> <!-- Yellow -->
 			<highlight name="PostgreSQL" color="RGB-255-255-0"/> <!-- Yellow -->
 			<highlight name="Redis" color="RGB-255-255-0"/> <!-- Yellow -->
+			<highlight name="Mail" color="RGB-255-255-0"/> <!-- Yellow -->
 					
 			<highlight name="File" color="RGB-184-113-54"/> <!-- Maroon -->
 			<highlight name="Class loader" color="RGB-184-113-54"/> <!-- Maroon -->

@@ -218,6 +218,7 @@
 					<contention_type name="Redis"/>
 					<contention_type name="PostgreSQL"/>
 					<contention_type name="DB2"/>
+					<contention_type name="Mail"/>
 					<contention_type name="Log"/>
 					<contention_type name="Resource pool"/>
 					<contention_type name="Network"/>
