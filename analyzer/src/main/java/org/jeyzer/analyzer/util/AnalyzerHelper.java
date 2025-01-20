@@ -181,8 +181,13 @@ public class AnalyzerHelper {
 			}
 			else {
 				// Strip the module name
-				// at jdk.jfr@11.0.6/jdk.jfr.internal.PlatformRecorder$$Lambda$141/0x0000000100220040.run(PlatformRecorder$$Lambda.java)
-				pos = codeLine.indexOf('/');
+				// at org.jboss.resteasy.resteasy-jaxrs@3.15.9.Final-redhat-00001//org.jboss.resteasy.core.SynchronousDispatcher.invoke(SynchronousDispatcher.java:440)				
+				pos = codeLine.indexOf("//");
+				if (pos == -1)
+					// at jdk.jfr@11.0.6/jdk.jfr.internal.PlatformRecorder$$Lambda$141/0x0000000100220040.run(PlatformRecorder$$Lambda.java)
+					pos = codeLine.indexOf('/');
+				else
+					pos++; // take the next char
 			}
 		}
 		else {
