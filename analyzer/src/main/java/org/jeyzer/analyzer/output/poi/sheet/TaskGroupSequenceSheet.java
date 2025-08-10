@@ -20,6 +20,7 @@ import static org.jeyzer.analyzer.output.poi.style.DefaultCellStyles.*;
 import static org.jeyzer.analyzer.output.poi.theme.AbstractTheme.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -649,8 +650,12 @@ public class TaskGroupSequenceSheet extends JeyzerSheet {
 			
 			missingtdOffset = this.missingTds.get(Integer.valueOf(offset + columnOffset + missingtdOffset)).intValue();
 			
+			// Sort it
+			List<ThreadStackGroupAction> actionList = new ArrayList<>(actions);
+			actionList.sort(new ThreadStackGroupActionComparator());
+			
 			boolean firstAction = true;
-			for(ThreadStackGroupAction action : actions){
+			for(ThreadStackGroupAction action : actionList){
 
 				row = sheet.createRow(linePos);
 				
@@ -1045,4 +1050,18 @@ public class TaskGroupSequenceSheet extends JeyzerSheet {
 			i++;
 		}
     }
+	
+	public static class ThreadStackGroupActionComparator implements Comparator<ThreadStackGroupAction> {
+
+		@Override
+		public int compare(ThreadStackGroupAction g1, ThreadStackGroupAction g2) {
+			if (g1.getStackSize() == g2.getStackSize())
+				// small groups first
+				return g1.getGroupSize(0) < g2.getGroupSize(0) ? -1 : 1;
+			
+			// short actions first
+			return g1.getStackSize() < g2.getStackSize() ? -1 : 1;
+		}
+		
+	}
 }
