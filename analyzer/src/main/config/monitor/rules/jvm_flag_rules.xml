@@ -19,7 +19,7 @@
 				           pattern="true" 
 				           level="CRITICAL"
 				           sub_level="8"
-				           message="Heap dump is active each time a is performed.&#10;This is a disk space invasive operation.&#10;Make sure is active on purpose."/>
+				           message="Heap dump is performed each time a full GC is performed.&#10;This is a disk space invasive operation.&#10;Make sure is enabled on purpose."/>
 			</thresholds>
 		</rule>
 		
