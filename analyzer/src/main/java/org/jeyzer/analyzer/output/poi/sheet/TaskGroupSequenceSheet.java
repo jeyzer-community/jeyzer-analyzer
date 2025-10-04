@@ -1055,9 +1055,13 @@ public class TaskGroupSequenceSheet extends JeyzerSheet {
 
 		@Override
 		public int compare(ThreadStackGroupAction g1, ThreadStackGroupAction g2) {
-			if (g1.getStackSize() == g2.getStackSize())
+			if (g1.getStackSize() == g2.getStackSize()) {
+				// JEYZ-108 missing equality case
+				if (g1.getGroupSize(0) == g2.getGroupSize(0))
+					return 0;
 				// small groups first
-				return g1.getGroupSize(0) < g2.getGroupSize(0) ? -1 : 1;
+				return g1.getGroupSize(0) < g2.getGroupSize(0) ? -1 : 1;				
+			}
 			
 			// short actions first
 			return g1.getStackSize() < g2.getStackSize() ? -1 : 1;
