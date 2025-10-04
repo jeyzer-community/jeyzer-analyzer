@@ -28,6 +28,7 @@ import org.jeyzer.analyzer.data.stack.ThreadStack;
 import org.jeyzer.analyzer.data.stack.ThreadStackImpl;
 import org.jeyzer.analyzer.data.stack.ThreadState;
 import org.jeyzer.analyzer.error.JzrLineParsingException;
+import org.jeyzer.analyzer.error.JzrParsingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -166,6 +167,13 @@ public class JstackHungParser extends ThreadDumpParser {
 					|| line.startsWith(NO_DEADLOCKS_FOUND_TAG))) {
 				line = reader.readLine();
 				lineCount++;
+				
+				// security - end of file reached which means file is not of same format
+				if (line == null) {
+					// JEYZ-106 - Jstack 1.6+ Hung parser could fail with various mixed thread dump formats
+					logger.warn("Thread dump file has different format than current " + FORMAT_SHORT_NAME);
+					throw new JzrParsingException("Thread dump file has different format than current " + FORMAT_SHORT_NAME);
+				}
 				
 				if (line.startsWith(FOUND_ONE_JAVA_DEADLOCK)){
 					lineCount = extractDeadLock(dump, reader, lineCount);
