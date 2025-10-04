@@ -13,6 +13,7 @@ import java.util.List;
 import org.jeyzer.analyzer.config.translator.jfr.ConfigJFRDecompression;
 import org.jeyzer.analyzer.error.JzrException;
 import org.jeyzer.analyzer.error.JzrTranslatorException;
+import org.jeyzer.analyzer.error.JzrTranslatorJFRInvalidVersionException;
 import org.jeyzer.analyzer.error.JzrTranslatorJFRThreadDumpEventNotFoundException;
 import org.jeyzer.analyzer.util.SystemHelper;
 import org.slf4j.Logger;
@@ -26,7 +27,7 @@ import jdk.jfr.consumer.RecordingFile;
  * ---------------------------LICENSE_START---------------------------
  * Jeyzer Analyzer
  * --
- * Copyright (C) 2020 - 2021 Jeyzer
+ * Copyright (C) 2020 - 2025 Jeyzer
  * --
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -340,6 +341,14 @@ public class JFRReader {
 				}
 			}
 		} catch (IOException ex) {
+			// Case not detected during the JFR validation
+			if (ex.getMessage().startsWith("Not a Flight Recorder file")) {
+				String message = "Submitted JFR recording cannot be parsed by the Open JDK. "
+						+ "If your application is running under Java 8, please migrate to the latest OpenJDK 8 to get a JFR 1.0 recording. "
+						+ "Under Java 7, use the Jeyzer Recorder agent to get a JZR recording.";
+				throw new JzrTranslatorJFRInvalidVersionException(message);
+			}
+			
 			throw new JzrTranslatorException("Failed to iterate over the JFR events.", ex);
 		}
 		
