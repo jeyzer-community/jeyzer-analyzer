@@ -569,8 +569,13 @@ public abstract class AbstractThreadStack implements ThreadStack {
 			b.append("    - " + contentionType + CR);
 		}
 		b.append(" - Code lines (" + this.codeLines.size()  + ") : " + CR);
+		int lineCount = 1;
 		for (String line : this.codeLines){
-			b.append("    - " + line + CR);
+			if (lineCount != 20)
+				b.append("    - " + line + CR);
+			else
+				b.append("20  - " + line + CR);
+			lineCount++;
 		}
 		if (this.codeLines.size() < 20) {
 			b.append(" - Exclude candidate : " + CR);
@@ -628,6 +633,14 @@ public abstract class AbstractThreadStack implements ThreadStack {
 				int parenthesisPos = line.indexOf('(');
 				if (parenthesisPos != -1)
 					methodNames.add(line.substring(6, parenthesisPos));
+			}
+		}
+		else if (this.codeLines.get(0).contains(" - ")) { 
+			// Debugger case (Java 25)
+			for (String line : this.codeLines) {
+				int parenthesisPos = line.indexOf('(');
+				if (parenthesisPos != -1)
+					methodNames.add(line.substring(3, parenthesisPos));
 			}
 		}
 		else {
