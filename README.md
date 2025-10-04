@@ -23,6 +23,6 @@ Development is done under Eclipse using a recent Tomcat version.
  License
 -------
 
-Copyright 2000-2024 Jeyzer.
+Copyright 2000-2025 Jeyzer.
 
 Licensed under the [Mozilla Public License, Version 2.0](https://www.mozilla.org/media/MPL/2.0/index.815ca599c9df.txt)
